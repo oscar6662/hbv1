@@ -12,3 +12,6 @@ public class Hbv1Application {
     }
 
 }
+
+
+//This is team member Dagbjört Þorgrímsdóttir
