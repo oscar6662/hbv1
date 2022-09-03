@@ -14,4 +14,5 @@ public class Hbv1Application {
 }
 
 
-//This is team member Dagbjört Þorgrímsdóttir
+// This is team member Dagbjört Þorgrímsdóttir
+// This is team member Óskar Helgi Berenguer
