@@ -19,7 +19,7 @@ public class Child {
     private Enum relation;
 
     @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private List<Parent> children = new ArrayList<>();
+    private List<Parent> parents = new ArrayList<>();
 
     public Child() {
     }
@@ -88,12 +88,12 @@ public class Child {
         this.relation = relation;
     }
 
-    public List<Parent> getChildren() {
-        return children;
+    public List<Parent> getParents() {
+        return parents;
     }
 
-    public void setChildren(List<Parent> children) {
-        this.children = children;
+    public void setParents(List<Parent> children) {
+        this.parents = children;
     }
 }
 
