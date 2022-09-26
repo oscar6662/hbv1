@@ -16,7 +16,9 @@ public class Child {
     private String fullName;
     private String firstName;
     private String lastName;
-    private Enum relation;
+
+    @OneToOne(mappedBy = "daycare-worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    private DaycareWorker daycareWorker;
 
     @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private List<Parent> parents = new ArrayList<>();
@@ -37,7 +39,6 @@ public class Child {
         this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.relation = relation;
     }
 
     public UUID getId() {
@@ -80,12 +81,12 @@ public class Child {
         this.lastName = lastName;
     }
 
-    public Enum getRelation() {
-        return relation;
+    public DaycareWorker getDaycareWorker() {
+        return daycareWorker;
     }
 
-    public void setRelation(Enum relation) {
-        this.relation = relation;
+    public void setDaycareWorker(DaycareWorker dcw) {
+        this.daycareWorker = dcw;
     }
 
     public List<Parent> getParents() {
