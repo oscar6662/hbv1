@@ -16,7 +16,6 @@ public class Child {
     private String fullName;
     private String firstName;
     private String lastName;
-    private String mobile;
     private Enum relation;
 
     @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -38,7 +37,6 @@ public class Child {
         this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.mobile = mobile;
         this.relation = relation;
     }
 
@@ -80,14 +78,6 @@ public class Child {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public Enum getRelation() {
