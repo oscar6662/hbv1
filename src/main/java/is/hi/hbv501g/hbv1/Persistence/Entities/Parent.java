@@ -18,7 +18,9 @@ public class Parent {
     private String lastName;
     private String mobile;
     private Enum relation;
-    private Child[] children;
+
+    @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private List<Child> parent = new ArrayList<>();
 
     public Parent(
             UUID id,
@@ -98,12 +100,12 @@ public class Parent {
         this.relation = relation;
     }
 
-    public Child[] getChildren() {
-        return children;
+    public List<Child> getParent() {
+        return parent;
     }
 
-    public void setChildren(Child[] children) {
-        this.children = children;
+    public void setParent(List<Child> parent) {
+        this.parent = parent;
     }
 }
 
