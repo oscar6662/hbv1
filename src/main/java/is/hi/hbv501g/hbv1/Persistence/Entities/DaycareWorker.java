@@ -19,11 +19,15 @@ public class DaycareWorker {
     private String firstName;
     private String lastName;
     private String mobile;
-    private List<Child> children = new ArrayList<>();
     private int experienceInYears;
     private String address;
     private String location;
     private int locationCode;
+
+    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Child> children = new ArrayList<>();
+
+    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> waitingList = new ArrayList<>();
 
     public DaycareWorker() {
@@ -41,7 +45,7 @@ public class DaycareWorker {
             String location,
             int locationCode
     ) {
-        this.id = id;
+        this.id = UUID.randomUUID();
         this.ssn = ssn;
         this.fullName = fullName;
         this.firstName = firstName;
