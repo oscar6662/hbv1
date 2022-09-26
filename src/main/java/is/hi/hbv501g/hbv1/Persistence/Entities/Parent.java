@@ -20,7 +20,7 @@ public class Parent {
     private Enum relation;
 
     @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private List<Child> parent = new ArrayList<>();
+    private List<Child> children = new ArrayList<>();
 
     public Parent(
             UUID id,
@@ -100,12 +100,12 @@ public class Parent {
         this.relation = relation;
     }
 
-    public List<Child> getParent() {
-        return parent;
+    public List<Child> getChildren() {
+        return children;
     }
 
-    public void setParent(List<Child> parent) {
-        this.parent = parent;
+    public void setChildren(List<Child> children) {
+        this.children = children;
     }
 }
 
