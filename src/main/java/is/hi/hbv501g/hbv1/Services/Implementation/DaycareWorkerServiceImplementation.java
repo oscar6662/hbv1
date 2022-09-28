@@ -3,18 +3,19 @@ package is.hi.hbv501g.hbv1.Services.Implementation;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class DaycareWorkerServiceImplementation implements DaycareWorkerService {
     private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();
 
     @Autowired
     public DaycareWorkerServiceImplementation() {
-        // create 3 random dcw for our dummy repo, removed when jpa added
+        // create 3 random dcw for our dummy repo, remove when jpa is added
         daycareWorkerRepository.add(
                 new DaycareWorker("0101803333",
                         "Guðrún Jónsdóttir",
@@ -75,6 +76,18 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
+    public DaycareWorker findById(UUID id) {
+        System.out.println("id sem leitað er að: " + id);
+        for(DaycareWorker d: daycareWorkerRepository){
+            System.out.println(d.getId());
+            if(d.getId().equals(id)) {
+                return d;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<DaycareWorker> findAll() {
         return daycareWorkerRepository;
     }
@@ -88,6 +101,8 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
 
     @Override
     public void delete(DaycareWorker daycareWorker) {
+        System.out.println("Delete" + daycareWorker);
         daycareWorkerRepository.remove(daycareWorker);
     }
+
 }
