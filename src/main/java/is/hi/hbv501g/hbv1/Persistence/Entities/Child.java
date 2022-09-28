@@ -17,7 +17,8 @@ public class Child {
     private String firstName;
     private String lastName;
 
-    @OneToOne(mappedBy = "daycare-worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
+    @JoinColumn(name = "daycareworker_id", referencedColumnName = "id")
     private DaycareWorker daycareWorker;
 
     @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
@@ -26,27 +27,16 @@ public class Child {
     public Child() {
     }
 
-    public Child(UUID id,
-                 String ssn,
-                 String fullName,
-                 String firstName,
-                 String lastName,
-                 String mobile,
-                 Enum relation
+    public Child(
+            String ssn,
+            String fullName,
+            String firstName,
+            String lastName
     ) {
-        this.id = id;
         this.ssn = ssn;
         this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getSsn() {

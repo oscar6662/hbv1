@@ -24,7 +24,7 @@ public class DaycareWorker {
     private String location;
     private int locationCode;
 
-    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "daycareworker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -34,7 +34,6 @@ public class DaycareWorker {
 
     }
     public DaycareWorker(
-            UUID id,
             String ssn,
             String fullName,
             String firstName,
@@ -45,7 +44,6 @@ public class DaycareWorker {
             String location,
             int locationCode
     ) {
-        this.id = UUID.randomUUID();
         this.ssn = ssn;
         this.fullName = fullName;
         this.firstName = firstName;
@@ -56,7 +54,6 @@ public class DaycareWorker {
         this.location = location;
         this.locationCode = locationCode;
     }
-
 
     public UUID getId() {
         return id;
