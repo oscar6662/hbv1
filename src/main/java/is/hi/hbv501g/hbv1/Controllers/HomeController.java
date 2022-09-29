@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -45,8 +46,8 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String deleteDaycareWorker(@PathVariable("id") UUID id, Model model) {
-        DaycareWorker daycareWorker = daycareWorkerService.findById(id);
+    public String deleteDaycareWorker(@PathVariable("id") Long id, Model model) {
+        Optional<DaycareWorker> daycareWorker = daycareWorkerService.findById(id);
         daycareWorkerService.delete(daycareWorker);
         return "redirect:/";
     }

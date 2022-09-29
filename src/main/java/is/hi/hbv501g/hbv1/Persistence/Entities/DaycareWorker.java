@@ -1,10 +1,10 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import org.springframework.context.annotation.ComponentScan;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
 
 @Entity
 @Table(name= "daycareworkers")
@@ -12,7 +12,7 @@ public class DaycareWorker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
 
     private String ssn;
     private String fullName;
@@ -55,11 +55,11 @@ public class DaycareWorker {
         this.locationCode = locationCode;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

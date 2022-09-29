@@ -11,7 +11,7 @@ import java.util.List;
 public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
     private String ssn;
     private String fullName;
     private String firstName;
@@ -23,7 +23,6 @@ public class Parent {
     private List<Child> children = new ArrayList<>();
 
     public Parent(
-            UUID id,
             String ssn,
             String fullName,
             String firstName,
@@ -31,7 +30,6 @@ public class Parent {
             String mobile,
             Enum relation) {
 
-        this.id = UUID.randomUUID();
         this.ssn = ssn;
         this.fullName = fullName;
         this.firstName = firstName;
@@ -44,11 +42,11 @@ public class Parent {
 
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -3,7 +3,6 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "children")
@@ -11,7 +10,7 @@ public class Child {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
     private String ssn;
     private String fullName;
     private String firstName;

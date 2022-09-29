@@ -16,6 +16,7 @@
                     <th>Name</th>
                     <th>Address</th>
                     <th>Location</th>
+                    <th>Location Code</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -24,6 +25,7 @@
                     <td th:text="${daycareworker.fullName}"></td>
                     <td th:text="${daycareworker.address}"></td>
                     <td th:text="${daycareworker.location}"></td>
+                    <td th:text="${daycareworker.locationCode}"></td>
                     <td><a th:href="@{/delete/{id}(id=${daycareworker.id})}">DELETE</a></td>
                 </tr>
                 </tbody>

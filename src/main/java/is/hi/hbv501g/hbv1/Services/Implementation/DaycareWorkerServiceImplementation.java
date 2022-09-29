@@ -1,108 +1,57 @@
 package is.hi.hbv501g.hbv1.Services.Implementation;
 
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
+import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerRepository;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class DaycareWorkerServiceImplementation implements DaycareWorkerService {
-    private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();
+//    private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();
+    private DaycareWorkerRepository daycareWorkerRepository;
 
     @Autowired
-    public DaycareWorkerServiceImplementation() {
+    public DaycareWorkerServiceImplementation(DaycareWorkerRepository daycareWorkerRepository) {
         // create 3 random dcw for our dummy repo, remove when jpa is added
-        daycareWorkerRepository.add(
-                new DaycareWorker("0101803333",
-                        "Guðrún Jónsdóttir",
-                        "Guðrún",
-                        "Jónsdóttir",
-                        "8885522",
-                        10,
-                        "Guðrúnargata 18",
-                        "Reykjavík",
-                        101));
-        daycareWorkerRepository.add(
-                new DaycareWorker("1010556623",
-                        "Bjarni Guðmundsson",
-                        "Bjarni",
-                        "Guðmundsson",
-                        "9996663",
-                        2,
-                        "Langabrekka 7",
-                        "Kópavogur",
-                        200));
-        daycareWorkerRepository.add(
-                new DaycareWorker("2315648212",
-                        "Dagbjört Þorgrímsdóttir",
-                        "Dagbjört",
-                        "Þorgrímsdóttir",
-                        "2651111",
-                        8,
-                        "Hlíðarhjalli 66",
-                        "Kópavogur",
-                        200));
-
-        // jpa adds the id but here we do it manually
-        for (DaycareWorker d: daycareWorkerRepository) {
-            d.setId(UUID.randomUUID());
-        }
+        this.daycareWorkerRepository = daycareWorkerRepository;
     }
 
     @Override
     public List<DaycareWorker> findByLocation(String location) {
-        List<DaycareWorker> list = new ArrayList<>();
-        for(DaycareWorker d: daycareWorkerRepository) {
-            if(d.getLocation().equals(location)) {
-                list.add(d);
-            }
-        }
-        return list;
+        return daycareWorkerRepository.findByLocation(location);
     }
 
     @Override
     public List<DaycareWorker> findByLocationCode(int locationCode) {
-        List<DaycareWorker> list = new ArrayList<>();
-        for(DaycareWorker d: daycareWorkerRepository) {
-            if(d.getLocationCode() == locationCode) {
-                list.add(d);
-            }
-        }
-        return list;
+        return daycareWorkerRepository.findByLocationCode(locationCode);
     }
 
     @Override
-    public DaycareWorker findById(UUID id) {
-        System.out.println("id sem leitað er að: " + id);
-        for(DaycareWorker d: daycareWorkerRepository){
-            System.out.println(d.getId());
-            if(d.getId().equals(id)) {
-                return d;
-            }
-        }
-        return null;
+    public Optional<DaycareWorker> findById(Long id) {
+        return daycareWorkerRepository.findById(id);
     }
 
     @Override
     public List<DaycareWorker> findAll() {
-        return daycareWorkerRepository;
+        return daycareWorkerRepository.findAll();
     }
 
     @Override
     public DaycareWorker addDaycareWorker(DaycareWorker daycareWorker) {
-        daycareWorker.setId(UUID.randomUUID());
-        daycareWorkerRepository.add(daycareWorker);
+        daycareWorkerRepository.addDaycareWorker(daycareWorker);
         return daycareWorker;
     }
 
     @Override
-    public void delete(DaycareWorker daycareWorker) {
+    public void delete(Optional<DaycareWorker> daycareWorker) {
         System.out.println("Delete" + daycareWorker);
-        daycareWorkerRepository.remove(daycareWorker);
+        daycareWorkerRepository.delete(daycareWorker);
     }
 
 }
