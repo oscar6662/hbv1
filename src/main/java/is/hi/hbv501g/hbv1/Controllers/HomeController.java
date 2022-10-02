@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 public class HomeController {
@@ -21,6 +20,9 @@ public class HomeController {
     @Autowired
     public HomeController(DaycareWorkerService daycareWorkerService) {
         this.daycareWorkerService = daycareWorkerService;
+    }
+
+    public HomeController() {
     }
 
     @RequestMapping("/")
@@ -47,7 +49,7 @@ public class HomeController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteDaycareWorker(@PathVariable("id") Long id, Model model) {
-        Optional<DaycareWorker> daycareWorker = daycareWorkerService.findById(id);
+        DaycareWorker daycareWorker = daycareWorkerService.findDaycareWorkerById(id);
         daycareWorkerService.delete(daycareWorker);
         return "redirect:/";
     }

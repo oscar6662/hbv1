@@ -4,12 +4,9 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerRepository;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DaycareWorkerServiceImplementation implements DaycareWorkerService {
@@ -18,7 +15,6 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
 
     @Autowired
     public DaycareWorkerServiceImplementation(DaycareWorkerRepository daycareWorkerRepository) {
-        // create 3 random dcw for our dummy repo, remove when jpa is added
         this.daycareWorkerRepository = daycareWorkerRepository;
     }
 
@@ -33,8 +29,8 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
-    public Optional<DaycareWorker> findById(Long id) {
-        return daycareWorkerRepository.findById(id);
+    public DaycareWorker findDaycareWorkerById(Long id) {
+        return daycareWorkerRepository.findDaycareWorkerById(id);
     }
 
     @Override
@@ -44,13 +40,12 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
 
     @Override
     public DaycareWorker addDaycareWorker(DaycareWorker daycareWorker) {
-        daycareWorkerRepository.addDaycareWorker(daycareWorker);
+        daycareWorkerRepository.save(daycareWorker);
         return daycareWorker;
     }
 
     @Override
-    public void delete(Optional<DaycareWorker> daycareWorker) {
-        System.out.println("Delete" + daycareWorker);
+    public void delete(DaycareWorker daycareWorker) {
         daycareWorkerRepository.delete(daycareWorker);
     }
 
