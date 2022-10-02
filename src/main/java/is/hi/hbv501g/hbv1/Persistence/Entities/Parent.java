@@ -19,7 +19,12 @@ public class Parent {
     private String mobile;
     private Enum relation;
 
-    @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "parents_children",
+            joinColumns = @JoinColumn(name = "parent_id"),
+            inverseJoinColumns = @JoinColumn(name = "child_id")
+    )
     private List<Child> children = new ArrayList<>();
 
     public Parent(

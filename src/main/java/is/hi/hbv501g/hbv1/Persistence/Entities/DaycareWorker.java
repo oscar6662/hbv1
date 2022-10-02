@@ -24,10 +24,10 @@ public class DaycareWorker {
     private String location;
     private int locationCode;
 
-    @OneToMany(mappedBy = "daycareworker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
-    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> waitingList = new ArrayList<>();
 
     public DaycareWorker() {

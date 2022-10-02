@@ -16,11 +16,10 @@ public class Child {
     private String firstName;
     private String lastName;
 
-    @ManyToOne
-    @JoinColumn(name = "daycareworker_id", referencedColumnName = "id")
+    @ManyToOne(fetch=FetchType.LAZY)
     private DaycareWorker daycareWorker;
 
-    @ManyToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "children")
     private List<Parent> parents = new ArrayList<>();
 
     public Child() {
