@@ -29,6 +29,7 @@ const Home = () => {
   const [data, setData] = useState<DaycareWorker | []>([]);
   const [location, setLocation] = useState<String | undefined>(undefined);
   const [loading, setLoading] = useState<Boolean>(false);
+  const [noContent, setNoContent] = useState<Boolean>(false);
 
   useEffect(() => {
     fetchDaycareWorkers();
@@ -42,9 +43,19 @@ const Home = () => {
     if (!daycareWorkers.ok) {
       console.error('Villa!');
     } else {
-      const json = await daycareWorkers.json();
-      setData(json);
+      if (daycareWorkers.status === 204) {
+        setNoContent(true);
+      } else {
+        const json = await daycareWorkers.json();
+        setData(json);
+      }
     }
+  };
+
+  const handleSearchByLocation = async () => {
+    setLoading(true);
+    await fetchDaycareWorkers();
+    setLoading(false);
   };
 
   return (
@@ -56,7 +67,7 @@ const Home = () => {
       </p>
 
       <div className="searchBox">
-        <label htmlFor="fullName">Search by location: </label>
+        <label htmlFor="fullName">Leita eftir staðsetningu: </label>
         <select
           onChange={(e) => setLocation(e.target.value)}
           name="cars"
@@ -70,18 +81,30 @@ const Home = () => {
             );
           })}
         </select>
+
+        <div>
+          <input type="submit" onClick={handleSearchByLocation} />
+        </div>
       </div>
 
-      <div className="daycareWorkers">
-        {data.map((dcw: DaycareWorker, i: Number) => {
-          return (
-            <div key={i}>
-              <h2>Nafn: {dcw.fullName}</h2>
-              <h2>Staðdesning: {dcw.location}</h2>
-            </div>
-          );
-        })}
-      </div>
+      {loading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <div className="daycareWorkers">
+          {noContent ? (
+            <h2>Ekkert dagforeldri fannst á þessari staðsetnigu</h2>
+          ) : (
+            data.map((dcw: DaycareWorker, i: Number) => {
+              return (
+                <div key={i}>
+                  <h2>Nafn: {dcw.fullName}</h2>
+                  <h2>Staðdesning: {dcw.location}</h2>
+                </div>
+              );
+            })
+          )}
+        </div>
+      )}
     </>
   );
 };
