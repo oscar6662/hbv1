@@ -26,30 +26,33 @@ const locations = [
 const link = 'http://localhost:8080';
 
 const Home = () => {
-  const [data, setData] = useState<DaycareWorker | []>([]);
+  const [data, setData] = useState<DaycareWorker[] | []>([]);
   const [location, setLocation] = useState<String | undefined>(undefined);
   const [loading, setLoading] = useState<Boolean>(false);
   const [noContent, setNoContent] = useState<Boolean>(false);
 
   useEffect(() => {
     fetchDaycareWorkers();
-  }, []);
+  }, [location]);
 
   const fetchDaycareWorkers = async () => {
+    setLoading(true)
     const daycareWorkers = await fetch(
       `${link}/api/daycareworkers${location ? `?location=${location}` : ''}`
     );
 
     if (!daycareWorkers.ok) {
-      console.error('Villa!');
-    } else {
+      console.error('Villa!');}
+    else {
       if (daycareWorkers.status === 204) {
-        setNoContent(true);
-      } else {
+        setNoContent(true);}
+      else {
         const json = await daycareWorkers.json();
         setData(json);
+        setNoContent(false)
       }
     }
+    setLoading(false)
   };
 
   const handleSearchByLocation = async () => {
@@ -70,21 +73,21 @@ const Home = () => {
         <label htmlFor="fullName">Leita eftir staðsetningu: </label>
         <select
           onChange={(e) => setLocation(e.target.value)}
-          name="cars"
-          id="cars"
+          name="location"
+          id="location"
         >
           {locations.map((town: String, i: Number) => {
             return (
-              <option key={i} value={`${town}`}>
+              <option key={`option-town-${i}`} value={town.toString()}>
                 {town}
               </option>
             );
           })}
         </select>
 
-        <div>
-          <input type="submit" onClick={handleSearchByLocation} />
-        </div>
+        {/*<div>*/}
+        {/*  <input type="submit" onClick={handleSearchByLocation} />*/}
+        {/*</div>*/}
       </div>
 
       {loading ? (
@@ -92,13 +95,13 @@ const Home = () => {
       ) : (
         <div className="daycareWorkers">
           {noContent ? (
-            <h2>Ekkert dagforeldri fannst á þessari staðsetnigu</h2>
+            <h2>Ekkert dagforeldri fannst á þessari staðsetningu</h2>
           ) : (
             data.map((dcw: DaycareWorker, i: Number) => {
               return (
-                <div key={i}>
+                <div key={`daycare-worker-item-${i}`}>
                   <h2>Nafn: {dcw.fullName}</h2>
-                  <h2>Staðdesning: {dcw.location}</h2>
+                  <h2>Staðsetning: {dcw.location}</h2>
                 </div>
               );
             })
