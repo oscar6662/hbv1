@@ -22,6 +22,9 @@ public class Child {
     @ManyToMany(mappedBy = "children")
     private List<Parent> parents = new ArrayList<>();
 
+    @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DayReport> dayReports = new ArrayList<>();
+
     public Child() {
     }
 
@@ -35,6 +38,14 @@ public class Child {
         this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public List<DayReport> getDayReports() {
+        return dayReports;
+    }
+
+    public void setDayReports(List<DayReport> dayReports) {
+        this.dayReports = dayReports;
     }
 
     public String getSsn() {

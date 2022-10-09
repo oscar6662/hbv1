@@ -30,6 +30,10 @@ public class DaycareWorker {
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> waitingList = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DayReport> dayReports = new ArrayList<>();
+
     public DaycareWorker() {
 
     }
@@ -53,6 +57,14 @@ public class DaycareWorker {
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
+    }
+
+    public List<DayReport> getDayReports() {
+        return dayReports;
+    }
+
+    public void setDayReports(List<DayReport> dayReports) {
+        this.dayReports = dayReports;
     }
 
     public Long getId() {
