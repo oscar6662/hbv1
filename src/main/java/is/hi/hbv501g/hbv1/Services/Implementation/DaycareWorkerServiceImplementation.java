@@ -24,7 +24,7 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
-    public List<DaycareWorker> findByLocationCode(int locationCode) {
+    public List<DaycareWorker> findByLocationCode(String locationCode) {
         return daycareWorkerRepository.findByLocationCode(locationCode);
     }
 

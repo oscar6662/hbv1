@@ -9,23 +9,23 @@ import is.hi.hbv501g.hbv1.Services.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class ParentImplementation  implements ParentService {
-    private ParentRepository parentRepository;
-
-    @Autowired
-    public ParentImplementation(ParentRepository parentRepository) {
-        this.parentRepository = parentRepository;
-    }
-
-
-    @Override
-    public Boolean requestDaycareWorker(DaycareWorker daycareWorker, Parent parent) {
-        return null;
-    }
-
-    @Override
-    public DayReport getChildReport(Child child) {
-        return null;
-    }
-}
+//@Service
+//public class ParentImplementation  implements ParentService {
+//    private ParentRepository parentRepository;
+//
+//    @Autowired
+//    public ParentImplementation(ParentRepository parentRepository) {
+//        this.parentRepository = parentRepository;
+//    }
+//
+//
+//    @Override
+//    public Boolean requestDaycareWorker(DaycareWorker daycareWorker, Parent parent) {
+//        return null;
+//    }
+//
+//    @Override
+//    public DayReport getChildReport(Child child) {
+//        return null;
+//    }
+//}

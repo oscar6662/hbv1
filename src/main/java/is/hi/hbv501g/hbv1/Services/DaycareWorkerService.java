@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DaycareWorkerService {
     List<DaycareWorker> findByLocation(String location);
-    List<DaycareWorker> findByLocationCode(int locationCode);
+    List<DaycareWorker> findByLocationCode(String locationCode);
     DaycareWorker findDaycareWorkerById(Long id);
     List<DaycareWorker> findAll();
     DaycareWorker addDaycareWorker(DaycareWorker daycareWorker);

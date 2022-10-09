@@ -22,7 +22,7 @@ public class DaycareWorker {
     private int experienceInYears;
     private String address;
     private String location;
-    private int locationCode;
+    private String locationCode;
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
@@ -46,7 +46,7 @@ public class DaycareWorker {
             int experienceInYears,
             String address,
             String location,
-            int locationCode
+            String locationCode
     ) {
         this.ssn = ssn;
         this.fullName = fullName;
@@ -147,11 +147,11 @@ public class DaycareWorker {
         this.location = location;
     }
 
-    public int getLocationCode() {
+    public String getLocationCode() {
         return locationCode;
     }
 
-    public void setLocationCode(int locationCode) {
+    public void setLocationCode(String locationCode) {
         this.locationCode = locationCode;
     }
 

@@ -8,13 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,20 +37,48 @@ public class HomeController {
 //    }
 
     @GetMapping("/daycareworkers")
-    public ResponseEntity<List<DaycareWorker>> getAllDaycareWorkers(@RequestParam(required = false) String location) {
+    public ResponseEntity<List<DaycareWorker>> getAllDaycareWorkers(@RequestParam(required = false) String locationCode) {
         try {
             List<DaycareWorker> daycareWorkers = new ArrayList<DaycareWorker>();
 
-            if (location == null)
+            if (locationCode == null)
                 daycareWorkerService.findAll().forEach(daycareWorkers::add);
             else
-                daycareWorkerService.findByLocation(location).forEach(daycareWorkers::add);
+                daycareWorkerService.findByLocationCode(locationCode).forEach(daycareWorkers::add);
 
             if (daycareWorkers.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
             return new ResponseEntity<>(daycareWorkers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/daycareworkers/{id}")
+    public ResponseEntity<DaycareWorker> getDaycareWorkerByID(@PathVariable("id") String id) {
+        DaycareWorker dcw;
+        try {
+            Long idAsLong = Long.parseLong(id);
+            dcw = daycareWorkerService.findDaycareWorkerById(idAsLong);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(dcw, HttpStatus.OK);
+    }
+
+    @PostMapping("/adddaycareworker")
+    public ResponseEntity<DaycareWorker> addDaycareWorker(@RequestBody DaycareWorker daycareWorker) {
+        try {
+            daycareWorkerService.addDaycareWorker(daycareWorker);
+
+            if (daycareWorker == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(daycareWorker, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
