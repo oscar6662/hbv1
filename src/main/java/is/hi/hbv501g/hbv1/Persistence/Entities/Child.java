@@ -44,8 +44,8 @@ public class Child {
         return dayReports;
     }
 
-    public void setDayReports(List<DayReport> dayReports) {
-        this.dayReports = dayReports;
+    public void addDayReport(DayReport dayReport) {
+        this.dayReports.add(dayReport);
     }
 
     public String getSsn() {

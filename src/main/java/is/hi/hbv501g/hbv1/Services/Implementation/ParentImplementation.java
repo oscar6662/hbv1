@@ -18,14 +18,13 @@ public class ParentImplementation  implements ParentService {
         this.parentRepository = parentRepository;
     }
 
-
     @Override
-    public Boolean requestDaycareWorker(DaycareWorker daycareWorker, Parent parent) {
-        return null;
+    public Parent save(Parent parent) {
+        return parentRepository.save(parent);
     }
 
     @Override
-    public DayReport getChildReport(Child child) {
-        return null;
+    public void delete(Parent parent) {
+        parentRepository.delete(parent);
     }
 }

@@ -2,7 +2,6 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 
 import javax.persistence.*;
-import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
 

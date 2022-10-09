@@ -9,5 +9,5 @@ import java.util.List;
 public interface ParentRepository extends JpaRepository<Parent, Long> {
     Parent save(Parent parent);
     void delete(Parent parent);
-    List<Parent> findParentByChild(Child child);
+    List<Parent> findParentsByChildren(Child child);
 }

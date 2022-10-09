@@ -30,13 +30,23 @@ public class DayReport {
                      LocalDateTime sleepTo,
                      Appetite appetite,
                      String comment,
-                     DaycareWorker daycareWorker) {
+                     DaycareWorker daycareWorker,
+                     Child child) {
         this.date = LocalDate.now();
         this.sleepFrom = sleepFrom;
         this.sleepTo = sleepTo;
         this.appetite = appetite;
         this.comment = comment;
         this.daycareWorker = daycareWorker;
+        this.child = child;
+    }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
     }
 
     public Long getId() {
