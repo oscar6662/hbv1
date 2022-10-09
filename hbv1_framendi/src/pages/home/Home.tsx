@@ -1,33 +1,39 @@
 import { useState, useEffect } from 'react';
 
 interface DaycareWorker {
-  address: String;
+  address: string;
   children: [];
   experienceInYear: Number;
-  firstName: String;
-  fullName: String;
+  firstName: string;
+  fullName: string;
   id: Number;
-  lastName: String;
-  location: String;
+  lastName: string;
+  location: string;
   locationCode: Number;
-  mobile: String;
-  ssn: String;
+  mobile: string;
+  ssn: string;
 }
 
-const locations = [
-  'Hafnarfjörður',
-  'Garðabær',
-  'Reykjavík',
-  'Kópavogur',
-  'Mosfellsbær',
-  'Keflavík',
-];
+interface Location {
+  locationCode: string;
+  locationName: string;
+}
+
+// const locations = [
+//   'Hafnarfjörður',
+//   'Garðabær',
+//   'Reykjavík',
+//   'Kópavogur',
+//   'Mosfellsbær',
+//   'Keflavík',
+// ];
 
 const link = 'http://localhost:8080';
 
 const Home = () => {
   const [data, setData] = useState<DaycareWorker[] | []>([]);
-  const [location, setLocation] = useState<String | undefined>(undefined);
+  const [locations, setLocations] = useState<Location[] | []>([]);
+  const [location, setLocation] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<Boolean>(false);
   const [noContent, setNoContent] = useState<Boolean>(false);
 
@@ -35,24 +41,41 @@ const Home = () => {
     fetchDaycareWorkers();
   }, [location]);
 
+  useEffect(() => {
+    const fetchLoactions = async () => {
+      setLoading(true);
+      const result = await fetch(`${link}/api/locations`);
+
+      if (!result.ok) {
+        console.error('Villa!');
+      } else {
+        const json = await result.json();
+        setLocations(json);
+      }
+      setLoading(false);
+    };
+
+    fetchLoactions();
+  }, []);
+
   const fetchDaycareWorkers = async () => {
-    setLoading(true)
+    setLoading(true);
     const daycareWorkers = await fetch(
-      `${link}/api/daycareworkers${location ? `?location=${location}` : ''}`
+      `${link}/api/daycareworkers${location ? `?locationCode=${location}` : ''}`
     );
 
     if (!daycareWorkers.ok) {
-      console.error('Villa!');}
-    else {
+      console.error('Villa!');
+    } else {
       if (daycareWorkers.status === 204) {
-        setNoContent(true);}
-      else {
+        setNoContent(true);
+      } else {
         const json = await daycareWorkers.json();
         setData(json);
-        setNoContent(false)
+        setNoContent(false);
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   const handleSearchByLocation = async () => {
@@ -76,10 +99,10 @@ const Home = () => {
           name="location"
           id="location"
         >
-          {locations.map((town: String, i: Number) => {
+          {locations?.map((district: Location, i: Number) => {
             return (
-              <option key={`option-town-${i}`} value={town.toString()}>
-                {town}
+              <option key={`option-town-${i}`} value={district.locationCode}>
+                {`${district.locationCode} - ${district.locationName}`}
               </option>
             );
           })}
@@ -99,7 +122,10 @@ const Home = () => {
           ) : (
             data.map((dcw: DaycareWorker, i: Number) => {
               return (
-                <div key={`daycare-worker-item-${i}`}>
+                <div
+                  style={{ borderBottom: 'solid 1px black' }}
+                  key={`daycare-worker-item-${i}`}
+                >
                   <h2>Nafn: {dcw.fullName}</h2>
                   <h2>Staðsetning: {dcw.location}</h2>
                 </div>

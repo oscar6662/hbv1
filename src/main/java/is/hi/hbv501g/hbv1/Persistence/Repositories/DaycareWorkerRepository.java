@@ -9,7 +9,7 @@ public interface DaycareWorkerRepository extends JpaRepository <DaycareWorker, L
     DaycareWorker save(DaycareWorker daycareWorker);
     DaycareWorker findDaycareWorkerById(Long id);
     List<DaycareWorker> findByLocation(String location);
-    List<DaycareWorker> findByLocationCode(int locationCode);
+    List<DaycareWorker> findByLocationCode(String locationCode);
     List<DaycareWorker> findAll();
     void delete(DaycareWorker daycareWorker);
 }
