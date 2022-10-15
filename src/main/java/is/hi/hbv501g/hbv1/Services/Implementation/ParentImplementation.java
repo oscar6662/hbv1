@@ -10,6 +10,8 @@ import is.hi.hbv501g.hbv1.Services.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ParentImplementation  implements ParentService {
     private ParentRepository parentRepository;
@@ -18,6 +20,11 @@ public class ParentImplementation  implements ParentService {
     @Autowired
     public ParentImplementation(ParentRepository parentRepository) {
         this.parentRepository = parentRepository;
+    }
+
+    @Override
+    public List<Parent> findAll() {
+        return parentRepository.findAll();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package is.hi.hbv501g.hbv1.Controllers;
 
+import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,21 @@ public class HomeController {
             }
 
             return new ResponseEntity<>(daycareWorker, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/createdayreport")
+    public ResponseEntity<DayReport> createDayReport(@RequestBody DayReport dayReport) {
+        try {
+            daycareWorkerService.createDayReport(dayReport);
+
+            if (dayReport == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(dayReport, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

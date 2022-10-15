@@ -14,13 +14,7 @@ public interface DaycareWorkerService {
     DaycareWorker findDaycareWorkerById(Long id);
     List<DaycareWorker> findAll();
     DaycareWorker addDaycareWorker(DaycareWorker daycareWorker);
-    DayReport createDayReport(
-            DaycareWorker daycareWorker,
-            Child child,
-            LocalDateTime sleepFrom,
-            LocalDateTime sleepTo,
-            Appetite appetite,
-            String comment);
+    DayReport createDayReport(DayReport dayReport);
 
     void delete(DaycareWorker daycareWorker);
 }

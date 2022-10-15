@@ -52,21 +52,7 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
-    public DayReport createDayReport(
-            DaycareWorker daycareWorker,
-            Child child,
-            LocalDateTime sleepFrom,
-            LocalDateTime sleepTo,
-            Appetite appetite,
-            String comment) {
-        DayReport dayReport = new DayReport(
-                sleepFrom,
-                sleepTo,
-                appetite,
-                comment,
-                daycareWorker,
-                child
-        );
+    public DayReport createDayReport(DayReport dayReport) {
         return dayReportRepository.save(dayReport);
     }
 

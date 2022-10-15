@@ -16,7 +16,7 @@ public class Parent {
     private String firstName;
     private String lastName;
     private String mobile;
-    private Enum relation;
+    private Relation relation;
 
     @ManyToMany
     @JoinTable(
@@ -32,7 +32,7 @@ public class Parent {
             String firstName,
             String lastName,
             String mobile,
-            Enum relation) {
+            Relation relation) {
 
         this.ssn = ssn;
         this.fullName = fullName;
@@ -98,7 +98,7 @@ public class Parent {
         return relation;
     }
 
-    public void setRelation(Enum relation) {
+    public void setRelation(Relation relation) {
         this.relation = relation;
     }
 
