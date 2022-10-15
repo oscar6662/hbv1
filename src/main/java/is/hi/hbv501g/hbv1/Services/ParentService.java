@@ -10,4 +10,5 @@ import java.util.List;
 public interface ParentService {
     Parent save(Parent parent);
     void delete(Parent parent);
+    Child addChild(Child child);
 }
