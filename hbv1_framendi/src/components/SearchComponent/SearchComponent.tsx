@@ -1,41 +1,183 @@
-// import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import './searchcomponent.scss';
 
-// type Props = {};
-
-// interface Location {
-//     locationCode: String,
-//     locationName: String
-// }
-
-// export const SearchComponent = (props: Props) => {
-//     const [locations, setlocations] = useState<Location[] | []>([]);
-//     const [location, setLocation] = useState<String | undefined>(undefined);
-//     const [loading, setLoading] = useState<Boolean>(false);
-//     const [noContent, setNoContent] = useState<Boolean>(false);
-
-//   return (
-//     <>
-//       <select
-//         onChange={(e) => setLocation(e.target.value)}
-//         name="location"
-//         id="location"
-//       >
-//         {locations.map((town: String, i: Number) => {
-//           return (
-//             <option key={`option-town-${i}`} value={town.toString()}>
-//               {town}
-//             </option>
-//           );
-//         })}
-//       </select>
-//     </>
-//   );
-// };
-
-import React from 'react';
+import {
+  Form,
+  Input,
+  Button,
+  Radio,
+  Switch,
+  DatePicker,
+  InputNumber,
+  Select,
+  Upload,
+  Result,
+  Tooltip,
+  Typography,
+  List,
+} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import Avatar from 'antd/lib/avatar/avatar';
 
 type Props = {};
 
-const SearchComponent = (props: Props) => {
-  return <div>SearchComponent</div>;
+interface DaycareWorker {
+  address: string;
+  children: [];
+  experienceInYear: Number;
+  firstName: string;
+  fullName: string;
+  id: Number;
+  lastName: string;
+  location: string;
+  locationCode: Number;
+  mobile: string;
+  ssn: string;
+}
+
+interface Location {
+  locationCode: string;
+  locationName: string;
+}
+
+const link = 'http://localhost:8080';
+
+export const SearchComponent = (props: Props) => {
+  const [form] = Form.useForm();
+  const [data, setData] = useState<DaycareWorker[] | []>([]);
+  const [locations, setLocations] = useState<Location[] | []>([]);
+  const [location, setLocation] = useState<string | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchDaycareWorkers();
+  }, [location]);
+
+  useEffect(() => {
+    const fetchLoactions = async () => {
+      setLoading(true);
+      const result = await fetch(`${link}/api/locations`);
+
+      if (!result.ok) {
+        console.error('Villa!');
+      } else {
+        const json = await result.json();
+        setLocations(json);
+      }
+      setLoading(false);
+    };
+
+    fetchLoactions();
+  }, []);
+
+  const fetchDaycareWorkers = async () => {
+    setLoading(true);
+    const daycareWorkers = await fetch(
+      `${link}/api/daycareworkers${location ? `?locationCode=${location}` : ''}`
+    );
+
+    if (!daycareWorkers.ok) {
+      console.error('Villa!');
+    } else {
+      const json = await daycareWorkers.json();
+      setData(json);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div className="searchComponent">
+      <div className="searchContentContainer">
+        <div className="searchBox">
+          {/* <label htmlFor="fullName">Leita eftir staðsetningu: </label>
+        <select
+          onChange={(e) => setLocation(e.target.value)}
+          name="location"
+          id="location"
+        >
+          {locations?.map((district: Location, i: Number) => {
+            return (
+              <option key={`option-town-${i}`} value={district.locationCode}>
+                {`${district.locationCode} - ${district.locationName}`}
+              </option>
+            );
+          })}
+        </select> */}
+
+          <Form
+            method="POST"
+            onFinish={(e) => {
+              console.log(e);
+            }}
+            form={form}
+            layout="vertical"
+          >
+            <Form.Item className="" name="location">
+              <div className="searhBoxContent">
+                <p style={{ width: '50%', lineHeight: '40px' }}>
+                  Leita eftir staðsetningu:{' '}
+                </p>
+                <Select
+                  loading={loading}
+                  mode="multiple"
+                  showSearch
+                  optionFilterProp="children"
+                  size="large"
+                  style={{ width: '50%' }}
+                >
+                  {locations.map((district, i) => {
+                    return (
+                      <Select.Option
+                        key={`option-town-${i}`}
+                        value={district.locationCode}
+                      >
+                        {`${district.locationCode} - ${district.locationName}`}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+              </div>
+            </Form.Item>
+
+            <Form.Item className="btnContainer">
+              <Button
+                disabled={loading}
+                loading={loading}
+                className="submitBtn"
+                type="primary"
+                htmlType="submit"
+              >
+                Leita
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+
+        <div className="resultBox">
+          <div className="daycareWorkers">
+            <List
+              itemLayout="horizontal"
+              dataSource={data}
+              loading={loading}
+              renderItem={(item) => (
+                <List.Item className="dcwListItem">
+                  <List.Item.Meta
+                    avatar={<Avatar icon={<UserOutlined />} />}
+                    title={
+                      <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
+                    }
+                    style={{ paddingLeft: '12px' }}
+                    description="Ég elska að vera dagmamma!"
+                  />
+                  <div style={{ padding: '20px' }}>
+                    <Button type="dashed">Sækja um</Button>
+                  </div>
+                </List.Item>
+              )}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
