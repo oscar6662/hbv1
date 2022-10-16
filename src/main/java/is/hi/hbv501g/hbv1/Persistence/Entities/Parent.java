@@ -2,15 +2,18 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "parents")
-public class Parent {
+@IdClass(SsnId.class)
+public class Parent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Id
     private String ssn;
     private String fullName;
     private String firstName;
@@ -18,12 +21,7 @@ public class Parent {
     private String mobile;
     private Relation relation;
 
-    @ManyToMany
-    @JoinTable(
-            name = "parents_children",
-            joinColumns = @JoinColumn(name = "parent_id"),
-            inverseJoinColumns = @JoinColumn(name = "child_id")
-    )
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
     public Parent(
@@ -94,7 +92,7 @@ public class Parent {
         this.mobile = mobile;
     }
 
-    public Enum getRelation() {
+    public Relation getRelation() {
         return relation;
     }
 

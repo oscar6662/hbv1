@@ -1,17 +1,21 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "children")
-public class Child {
+@IdClass(SsnId.class)
+public class Child implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Id
     private String ssn;
+
     private String fullName;
     private String firstName;
     private String lastName;
@@ -19,8 +23,8 @@ public class Child {
     @ManyToOne(fetch=FetchType.LAZY)
     private DaycareWorker daycareWorker;
 
-    @ManyToMany(mappedBy = "children")
-    private List<Parent> parents = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Parent parent;
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayReport> dayReports = new ArrayList<>();
@@ -38,6 +42,18 @@ public class Child {
         this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDayReports(List<DayReport> dayReports) {
+        this.dayReports = dayReports;
     }
 
     public List<DayReport> getDayReports() {
@@ -88,12 +104,12 @@ public class Child {
         this.daycareWorker = dcw;
     }
 
-    public List<Parent> getParents() {
-        return parents;
+    public Parent getParent() {
+        return parent;
     }
 
-    public void setParents(List<Parent> children) {
-        this.parents = children;
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }
 

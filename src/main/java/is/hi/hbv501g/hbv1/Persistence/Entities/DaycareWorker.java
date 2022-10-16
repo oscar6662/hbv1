@@ -3,18 +3,21 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name= "daycareworkers")
-public class DaycareWorker {
+@IdClass(SsnId.class)
+public class DaycareWorker implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Id
     private String ssn;
+
     private String fullName;
     private String firstName;
     private String lastName;

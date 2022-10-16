@@ -1,41 +1,26 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "alerts")
-public class Alert {
-
+@Table(name= "announcements")
+public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime timestamp;
-    private Severity severity;
     private String title;
-    private String description;
+    private String announcement;
 
-    public Alert() {
+    public Announcement() {
     }
 
-    public Alert(
-            LocalDateTime timestamp,
-            Severity severity,
-            String title,
-            String description) {
+    public Announcement(LocalDateTime timestamp, String title, String announcement) {
         this.timestamp = timestamp;
-        this.severity = severity;
         this.title = title;
-        this.description = description;
-    }
-
-    public Severity getSeverity() {
-        return severity;
-    }
-
-    public void setSeverity(Severity severity) {
-        this.severity = severity;
+        this.announcement = announcement;
     }
 
     public Long getId() {
@@ -62,11 +47,11 @@ public class Alert {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAnnouncement() {
+        return announcement;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAnnouncement(String announcement) {
+        this.announcement = announcement;
     }
 }
