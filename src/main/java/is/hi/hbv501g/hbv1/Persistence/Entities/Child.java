@@ -34,14 +34,13 @@ public class Child implements Serializable {
 
     public Child(
             String ssn,
-            String fullName,
             String firstName,
             String lastName
     ) {
         this.ssn = ssn;
-        this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.fullName = firstName + " " + lastName;
     }
 
     public Long getId() {

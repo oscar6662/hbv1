@@ -18,6 +18,7 @@ public class Parent implements Serializable {
     private String fullName;
     private String firstName;
     private String lastName;
+    private String email;
     private String mobile;
     private Relation relation;
 
@@ -26,17 +27,18 @@ public class Parent implements Serializable {
 
     public Parent(
             String ssn,
-            String fullName,
             String firstName,
             String lastName,
             String mobile,
+            String email,
             Relation relation) {
 
         this.ssn = ssn;
-        this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.fullName = firstName + " " + lastName;
         this.mobile = mobile;
+        this.email = email;
         this.relation = relation;
     }
 
@@ -90,6 +92,14 @@ public class Parent implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Relation getRelation() {

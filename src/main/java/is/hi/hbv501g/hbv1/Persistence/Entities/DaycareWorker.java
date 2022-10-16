@@ -22,6 +22,7 @@ public class DaycareWorker implements Serializable {
     private String firstName;
     private String lastName;
     private String mobile;
+    private String email;
     private int experienceInYears;
     private String address;
     private String location;
@@ -33,7 +34,6 @@ public class DaycareWorker implements Serializable {
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> waitingList = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayReport> dayReports = new ArrayList<>();
 
@@ -42,20 +42,21 @@ public class DaycareWorker implements Serializable {
     }
     public DaycareWorker(
             String ssn,
-            String fullName,
             String firstName,
             String lastName,
             String mobile,
+            String email,
             int experienceInYears,
             String address,
             String location,
             String locationCode
     ) {
         this.ssn = ssn;
-        this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.fullName = firstName + " " + lastName;
         this.mobile = mobile;
+        this.email = email;
         this.experienceInYears = experienceInYears;
         this.address = address;
         this.location = location;
@@ -116,6 +117,14 @@ public class DaycareWorker implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Child> getChildren() {
