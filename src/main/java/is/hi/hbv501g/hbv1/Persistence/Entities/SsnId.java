@@ -27,4 +27,20 @@ public class SsnId implements Serializable {
     public int hashCode() {
         return Objects.hash(id, ssn);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
 }

@@ -28,6 +28,11 @@ public class ParentImplementation  implements ParentService {
     }
 
     @Override
+    public Parent findParentById(Long id) {
+        return parentRepository.findParentById(id);
+    }
+
+    @Override
     public Parent save(Parent parent) {
         return parentRepository.save(parent);
     }

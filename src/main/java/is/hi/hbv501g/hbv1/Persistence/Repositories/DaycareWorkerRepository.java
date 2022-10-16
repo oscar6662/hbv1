@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface DaycareWorkerRepository extends JpaRepository <DaycareWorker, SsnId> {
+public interface DaycareWorkerRepository extends JpaRepository <DaycareWorker, Long> {
     DaycareWorker save(DaycareWorker daycareWorker);
     DaycareWorker findDaycareWorkerById(Long id);
     List<DaycareWorker> findByLocation(String location);

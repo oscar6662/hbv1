@@ -71,12 +71,17 @@ public class ParentController {
 
             return new ResponseEntity<>(parent, HttpStatus.CREATED);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 //    @PostMapping("/createchild")
-//    public ResponseEntity<Child> createParent(@RequestBody Child child, Long parentid) {
+//    public ResponseEntity<Child> createChild(@RequestBody Child child) {
+//        Long id = Math.round(Math.ceil(Math.random() * 30));
+//        Parent parent = parentService.findParentById(id);
+//        child.setParent(parent);
+//
 //        try {
 //            childService.save(child);
 //
@@ -84,12 +89,8 @@ public class ParentController {
 //                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 //            }
 //
-//            if (parentid == null)
-//                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-//            else
-//                return new ResponseEntity<>(child, HttpStatus.CREATED);
+//            return new ResponseEntity<>(child, HttpStatus.CREATED);
 //        } catch (Exception e) {
-//            System.out.println(e);
 //            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }

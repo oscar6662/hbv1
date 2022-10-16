@@ -2,20 +2,17 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "parents")
-@IdClass(SsnId.class)
-public class Parent implements Serializable {
+public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Id
+    @Column(unique = true)
     private String ssn;
-    private String fullName;
     private String firstName;
     private String lastName;
     private String email;
@@ -36,7 +33,6 @@ public class Parent implements Serializable {
         this.ssn = ssn;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.fullName = firstName + " " + lastName;
         this.mobile = mobile;
         this.email = email;
         this.relation = relation;
@@ -60,14 +56,6 @@ public class Parent implements Serializable {
 
     public void setSsn(String ssn) {
         this.ssn = ssn;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getFirstName() {

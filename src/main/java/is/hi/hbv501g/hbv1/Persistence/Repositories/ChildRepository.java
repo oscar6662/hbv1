@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ChildRepository extends JpaRepository<Child, SsnId> {
+public interface ChildRepository extends JpaRepository<Child, Long> {
     Child save(Child child);
     void delete(Child child);
     List<Child> findByParent(Parent parent);
