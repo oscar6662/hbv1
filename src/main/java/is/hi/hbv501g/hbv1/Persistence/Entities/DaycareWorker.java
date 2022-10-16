@@ -71,6 +71,10 @@ public class DaycareWorker {
         return id;
     }
 
+    public String getPassword() {
+        return "maria";
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
