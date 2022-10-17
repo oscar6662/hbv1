@@ -21,6 +21,8 @@ import Avatar from 'antd/lib/avatar/avatar';
 
 type Props = {};
 
+const pseudo = [{},{},{},{},{},{},{}, {}, {}]
+
 interface DaycareWorker {
   address: string;
   children: [];
@@ -67,7 +69,8 @@ export const SearchComponent = (props: Props) => {
       setLoading(false);
     };
 
-    fetchLoactions();
+    // fetchLoactions();
+    setLoading(true);
   }, []);
 
   const fetchDaycareWorkers = async () => {
@@ -155,26 +158,46 @@ export const SearchComponent = (props: Props) => {
 
         <div className="resultBox">
           <div className="daycareWorkers">
-            <List
+            {loading ? <List
               itemLayout="horizontal"
-              dataSource={data}
-              loading={loading}
+              dataSource={pseudo}
+              // loading={loading}
               renderItem={(item) => (
                 <List.Item className="dcwListItem">
                   <List.Item.Meta
                     avatar={<Avatar icon={<UserOutlined />} />}
                     title={
-                      <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
+                      <div style={{ height: '8px', border: 'solid #e3e3e3 10px', borderRadius: '20px' }}></div>
                     }
-                    style={{ paddingLeft: '12px' }}
-                    description="Ég elska að vera dagmamma!"
+                    style={{ paddingLeft: '14px' }}
                   />
                   <div style={{ padding: '20px' }}>
-                    <Button type="dashed">Sækja um</Button>
+                    <Button disabled type="dashed">Sækja um</Button>
                   </div>
+                  
                 </List.Item>
               )}
-            />
+            /> : <List
+                  itemLayout="horizontal"
+                  dataSource={data}
+                  // loading={loading}
+                  renderItem={(item) => (
+                    <List.Item className="dcwListItem">
+                      <List.Item.Meta
+                        avatar={<Avatar icon={<UserOutlined />} />}
+                        title={
+                          <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
+                        }
+                        style={{ paddingLeft: '14px' }}
+                        description="Ég elska að vera dagmamma!"
+                      />
+                      <div style={{ padding: '20px' }}>
+                        <Button type="dashed">Sækja um</Button>
+                      </div>
+                    </List.Item>
+                  )}
+                />
+              }
           </div>
         </div>
       </div>
