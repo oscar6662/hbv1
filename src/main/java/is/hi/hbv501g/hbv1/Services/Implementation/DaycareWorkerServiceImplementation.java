@@ -35,6 +35,11 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
+    public DaycareWorker findDaycareWorkerByEmail(String email) {
+        return daycareWorkerRepository.findDaycareWorkerByEmail(email);
+    }
+
+    @Override
     public List<DaycareWorker> findAll() {
         return daycareWorkerRepository.findAll();
     }

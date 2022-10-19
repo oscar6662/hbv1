@@ -35,15 +35,19 @@ public class AuthenticationController {
     @PostMapping("/api/login")
     public String login(@RequestBody LoginForm loginform, HttpSession session) {
         try {
+            System.out.println("hola que ase");
             String type = "";
             String token = "";
             if (loginform.id != null) {
-                authenticationService.getTypeOfUser(loginform.id);
+                System.out.println("mariaaaa");
+                type = authenticationService.getTypeOfUser(loginform.id);
                 if (type == "DCW") {
+                    System.out.println("maricarmen");
                     DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(loginform.id);
+                    System.out.println("mariaaaa"+dcw.getFirstName());
                     token = authenticationService.getTokenForDCW(dcw, loginform.password);
                 } else if (type == "parent") {
-                    // parent otken
+                    // parent token
                 } else {
                     token = null;
                 }
@@ -53,7 +57,7 @@ public class AuthenticationController {
                     DaycareWorker dcw = daycareWorkerService.findDaycareWorkerByEmail(loginform.email);
                     token = authenticationService.getTokenForDCW(dcw, loginform.password);
                 } else if (type == "parent") {
-                    // parent otken
+                    // parent token
                 } else {
                     token = null;
                 }

@@ -15,6 +15,7 @@ public class DaycareWorker {
     private Long id;
 
     private String ssn;
+    private String email;
     private String fullName;
     private String firstName;
     private String lastName;
@@ -46,7 +47,8 @@ public class DaycareWorker {
             int experienceInYears,
             String address,
             String location,
-            String locationCode
+            String locationCode,
+            String email
     ) {
         this.ssn = ssn;
         this.fullName = fullName;
@@ -57,6 +59,7 @@ public class DaycareWorker {
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
+        this.email = email;
     }
 
     public List<DayReport> getDayReports() {
@@ -73,6 +76,10 @@ public class DaycareWorker {
 
     public String getPassword() {
         return "maria";
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setId(Long id) {
@@ -141,6 +148,10 @@ public class DaycareWorker {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLocation() {

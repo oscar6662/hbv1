@@ -20,7 +20,6 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     public String getTypeOfUser(String email) {
         return "DCW";
     }
-
     @Override
     public String getTokenForDCW(DaycareWorker dcw, String pwd) {
         if (dcw != null && dcw.getPassword().equals(pwd)) {
