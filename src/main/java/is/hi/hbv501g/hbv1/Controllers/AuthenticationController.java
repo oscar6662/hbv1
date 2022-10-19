@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,15 +35,28 @@ public class AuthenticationController {
     @PostMapping("/api/login")
     public String login(@RequestBody LoginForm loginform, HttpSession session) {
         try {
-            String type = authenticationService.getTypeOfUser(loginform.id);
+            String type = "";
             String token = "";
-            if (type == "DCW") {
-                DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(loginform.id);
-                token = authenticationService.getTokenForDCW(dcw, loginform.password);
-            } else if (type == "parent") {
-                // parent otken
-            } else {
-                token = null;
+            if (loginform.id != null) {
+                authenticationService.getTypeOfUser(loginform.id);
+                if (type == "DCW") {
+                    DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(loginform.id);
+                    token = authenticationService.getTokenForDCW(dcw, loginform.password);
+                } else if (type == "parent") {
+                    // parent otken
+                } else {
+                    token = null;
+                }
+            } else if (loginform.email != null){
+                authenticationService.getTypeOfUser(loginform.email);
+                if (type == "DCW") {
+                    DaycareWorker dcw = daycareWorkerService.findDaycareWorkerByEmail(loginform.email);
+                    token = authenticationService.getTokenForDCW(dcw, loginform.password);
+                } else if (type == "parent") {
+                    // parent otken
+                } else {
+                    token = null;
+                }
             }
             if (token != null) {
                 session.setAttribute(token, loginform.id);

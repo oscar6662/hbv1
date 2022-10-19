@@ -17,6 +17,9 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     public String getTypeOfUser(Long id) {
         return "DCW";
     }
+    public String getTypeOfUser(String email) {
+        return "DCW";
+    }
 
     @Override
     public String getTokenForDCW(DaycareWorker dcw, String pwd) {
