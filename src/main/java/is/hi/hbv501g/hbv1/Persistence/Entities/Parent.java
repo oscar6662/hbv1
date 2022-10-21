@@ -5,13 +5,22 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <pre>
+ * Parent entity. Table: "parents".
+ * Relations:
+ * * OneToMany with the childrens table.
+ * </pre>
+ */
 @Entity
 @Table(name = "parents")
 public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+
+    @Column(unique = true) // unique to prevent duplicates
     private String ssn;
     private String firstName;
     private String lastName;

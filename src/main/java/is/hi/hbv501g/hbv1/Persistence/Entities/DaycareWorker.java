@@ -6,6 +6,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <pre>
+ * DaycareWorker entity. Table: "daycareworkers"
+ * Relations:
+ * * OneToMany with childrens table.
+ * * OneToMany with dayreports table.
+ * </pre>
+ */
 @Entity
 @Table(name= "daycareworkers")
 public class DaycareWorker {
@@ -13,7 +21,8 @@ public class DaycareWorker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+
+    @Column(unique = true) // unique to prevent duplicates
     private String ssn;
 
     private String firstName;

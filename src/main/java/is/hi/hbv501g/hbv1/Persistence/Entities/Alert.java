@@ -3,6 +3,10 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+/**
+ * Alert entity.  An object used to send alerts from DaycareWorker to Parent.
+ */
 @Entity
 @Table(name = "alerts")
 public class Alert {

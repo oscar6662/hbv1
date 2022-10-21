@@ -4,6 +4,10 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
+/**
+ * Announcement entitie.  Used to give general information from Daycare Worker to all parents.
+ */
 @Entity
 @Table(name= "announcements")
 public class Announcement {

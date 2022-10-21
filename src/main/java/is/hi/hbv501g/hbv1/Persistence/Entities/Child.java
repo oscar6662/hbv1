@@ -4,6 +4,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <pre>
+ * Child entity. Table: "children"
+ * Relations:
+ * * ManyToOne with the daycareworkers table
+ * * ManyToOne with the parents table
+ * * OneToMany with the dayreports table
+ * </pre>
+ */
 @Entity
 @Table(name = "children")
 public class Child {
