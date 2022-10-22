@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react';
+import { Typography } from 'antd';
+import { NavBar } from '../../components/Navbar/NavBar';
+import './home.scss';
+
+import { SearchComponent } from '../../components/SearchComponent/SearchComponent';
 
 interface DaycareWorker {
   address: string;
@@ -31,68 +36,79 @@ interface Location {
 const link = 'http://localhost:8080';
 
 const Home = () => {
-  const [data, setData] = useState<DaycareWorker[] | []>([]);
-  const [locations, setLocations] = useState<Location[] | []>([]);
-  const [location, setLocation] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState<Boolean>(false);
-  const [noContent, setNoContent] = useState<Boolean>(false);
+  // const [data, setData] = useState<DaycareWorker[] | []>([]);
+  // const [locations, setLocations] = useState<Location[] | []>([]);
+  // const [location, setLocation] = useState<string | undefined>(undefined);
+  // const [loading, setLoading] = useState<Boolean>(false);
+  // const [noContent, setNoContent] = useState<Boolean>(false);
 
-  useEffect(() => {
-    fetchDaycareWorkers();
-  }, [location]);
+  // useEffect(() => {
+  //   fetchDaycareWorkers();
+  // }, [location]);
 
-  useEffect(() => {
-    const fetchLoactions = async () => {
-      setLoading(true);
-      const result = await fetch(`${link}/api/locations`);
+  // useEffect(() => {
+  //   const fetchLoactions = async () => {
+  //     setLoading(true);
+  //     const result = await fetch(`${link}/api/locations`);
 
-      if (!result.ok) {
-        console.error('Villa!');
-      } else {
-        const json = await result.json();
-        setLocations(json);
-      }
-      setLoading(false);
-    };
+  //     if (!result.ok) {
+  //       console.error('Villa!');
+  //     } else {
+  //       const json = await result.json();
+  //       setLocations(json);
+  //     }
+  //     setLoading(false);
+  //   };
 
-    fetchLoactions();
-  }, []);
+  //   fetchLoactions();
+  // }, []);
 
-  const fetchDaycareWorkers = async () => {
-    setLoading(true);
-    const daycareWorkers = await fetch(
-      `${link}/api/daycareworkers${location ? `?locationCode=${location}` : ''}`
-    );
+  // const fetchDaycareWorkers = async () => {
+  //   setLoading(true);
+  //   const daycareWorkers = await fetch(
+  //     `${link}/api/daycareworkers${location ? `?locationCode=${location}` : ''}`
+  //   );
 
-    if (!daycareWorkers.ok) {
-      console.error('Villa!');
-    } else {
-      if (daycareWorkers.status === 204) {
-        setNoContent(true);
-      } else {
-        const json = await daycareWorkers.json();
-        setData(json);
-        setNoContent(false);
-      }
-    }
-    setLoading(false);
-  };
+  //   if (!daycareWorkers.ok) {
+  //     console.error('Villa!');
+  //   } else {
+  //     if (daycareWorkers.status === 204) {
+  //       setNoContent(true);
+  //     } else {
+  //       const json = await daycareWorkers.json();
+  //       setData(json);
+  //       setNoContent(false);
+  //     }
+  //   }
+  //   setLoading(false);
+  // };
 
-  const handleSearchByLocation = async () => {
-    setLoading(true);
-    await fetchDaycareWorkers();
-    setLoading(false);
-  };
+  // const handleSearchByLocation = async () => {
+  //   setLoading(true);
+  //   await fetchDaycareWorkers();
+  //   setLoading(false);
+  // };
 
   return (
-    <>
-      <h1>PETRA</h1>
-      <p>
-        Velkomin á PETRU, hér er haldið utan um allt sem varðar skráningu og
-        utanumhald dagvistar hjá dagforeldri.
-      </p>
+    <div className="home">
+      <NavBar />
 
-      <div className="searchBox">
+      <div className="hero">
+        <div className="heroContent">
+          <p className="">
+            Velkomin á PETRU, hér er haldið utan um allt sem varðar skráningu og
+            utanumhald dagvistar hjá dagforeldri.
+          </p>
+          <p className="">
+            Hér að neðan er hægt að leita að dagforeldri eftir staðsetningu og
+            lausum plássum.
+          </p>
+        </div>
+      </div>
+
+      <SearchComponent />
+
+      {/* <div className="searchBox">
         <label htmlFor="fullName">Leita eftir staðsetningu: </label>
         <select
           onChange={(e) => setLocation(e.target.value)}
@@ -107,10 +123,6 @@ const Home = () => {
             );
           })}
         </select>
-
-        {/*<div>*/}
-        {/*  <input type="submit" onClick={handleSearchByLocation} />*/}
-        {/*</div>*/}
       </div>
 
       {loading ? (
@@ -133,8 +145,8 @@ const Home = () => {
             })
           )}
         </div>
-      )}
-    </>
+      )} */}
+    </div>
   );
 };
 

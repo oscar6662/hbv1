@@ -5,40 +5,45 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <pre>
+ * Parent entity. Table: "parents".
+ * Relations:
+ * * OneToMany with the childrens table.
+ * </pre>
+ */
 @Entity
 @Table(name = "parents")
 public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true) // unique to prevent duplicates
     private String ssn;
-    private String fullName;
     private String firstName;
     private String lastName;
+    private String email;
     private String mobile;
-    private Enum relation;
+    private Relation relation;
 
-    @ManyToMany
-    @JoinTable(
-            name = "parents_children",
-            joinColumns = @JoinColumn(name = "parent_id"),
-            inverseJoinColumns = @JoinColumn(name = "child_id")
-    )
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
     public Parent(
             String ssn,
-            String fullName,
             String firstName,
             String lastName,
             String mobile,
-            Enum relation) {
+            String email,
+            Relation relation) {
 
         this.ssn = ssn;
-        this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobile = mobile;
+        this.email = email;
         this.relation = relation;
     }
 
@@ -60,14 +65,6 @@ public class Parent {
 
     public void setSsn(String ssn) {
         this.ssn = ssn;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getFirstName() {
@@ -94,11 +91,19 @@ public class Parent {
         this.mobile = mobile;
     }
 
-    public Enum getRelation() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Relation getRelation() {
         return relation;
     }
 
-    public void setRelation(Enum relation) {
+    public void setRelation(Relation relation) {
         this.relation = relation;
     }
 

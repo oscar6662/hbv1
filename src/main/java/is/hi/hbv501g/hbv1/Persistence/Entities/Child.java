@@ -4,6 +4,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <pre>
+ * Child entity. Table: "children"
+ * Relations:
+ * * ManyToOne with the daycareworkers table
+ * * ManyToOne with the parents table
+ * * OneToMany with the dayreports table
+ * </pre>
+ */
 @Entity
 @Table(name = "children")
 public class Child {
@@ -11,16 +21,17 @@ public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String ssn;
-    private String fullName;
+
     private String firstName;
     private String lastName;
 
     @ManyToOne(fetch=FetchType.LAZY)
     private DaycareWorker daycareWorker;
 
-    @ManyToMany(mappedBy = "children")
-    private List<Parent> parents = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Parent parent;
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayReport> dayReports = new ArrayList<>();
@@ -30,14 +41,24 @@ public class Child {
 
     public Child(
             String ssn,
-            String fullName,
             String firstName,
             String lastName
     ) {
         this.ssn = ssn;
-        this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setDayReports(List<DayReport> dayReports) {
+        this.dayReports = dayReports;
     }
 
     public List<DayReport> getDayReports() {
@@ -54,14 +75,6 @@ public class Child {
 
     public void setSsn(String ssn) {
         this.ssn = ssn;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getFirstName() {
@@ -88,12 +101,12 @@ public class Child {
         this.daycareWorker = dcw;
     }
 
-    public List<Parent> getParents() {
-        return parents;
+    public Parent getParent() {
+        return parent;
     }
 
-    public void setParents(List<Parent> children) {
-        this.parents = children;
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }
 

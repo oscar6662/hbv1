@@ -1,5 +1,6 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-import './App.css';
+import 'antd/dist/antd.css';
+import './App.scss';
 
 import Home from './pages/home/Home';
 import Auth from './pages/auth/Auth';

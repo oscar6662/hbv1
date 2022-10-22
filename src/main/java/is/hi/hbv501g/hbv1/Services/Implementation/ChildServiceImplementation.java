@@ -1,7 +1,6 @@
 package is.hi.hbv501g.hbv1.Services.Implementation;
 
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.ChildRepository;
@@ -11,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * Service used by routes that handle Children.  It uses the ChildRepository.
+ */
 @Service
 public class ChildServiceImplementation implements ChildService {
     private ChildRepository childRepository;
@@ -32,7 +35,7 @@ public class ChildServiceImplementation implements ChildService {
 
     @Override
     public List<Child> findByParents(Parent parent) {
-        return childRepository.findByParents(parent);
+        return childRepository.findByParent(parent);
     }
 
     @Override

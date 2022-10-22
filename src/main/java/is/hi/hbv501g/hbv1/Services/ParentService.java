@@ -1,13 +1,16 @@
 package is.hi.hbv501g.hbv1.Services;
 
-import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
-import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
+import is.hi.hbv501g.hbv1.Persistence.Entities.*;
 
 import java.util.List;
 
+/**
+ * Interface definitions for the ParentService.
+ */
 public interface ParentService {
+    List<Parent> findAll();
+    Parent findParentById(Long id);
     Parent save(Parent parent);
     void delete(Parent parent);
+    Child addChild(Child child);
 }

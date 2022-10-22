@@ -1,0 +1,29 @@
+@import '../../config.scss';
+
+.navbar {
+  height: 100px;
+  width: 100%;
+  background-color: $backgroundColor;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: $boxShadow;
+}
+
+.navLogoContainer {
+  margin-left: 16px;
+}
+
+.logo {
+  font-family: 'Fredericka the Great', cursive;
+  font-size: 72px;
+}
+
+.navMenu {
+  margin-right: 16px;
+}
+
+.navMenuItem {
+  margin: 0 16px;
+}

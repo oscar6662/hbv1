@@ -6,6 +6,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <pre>
+ * DaycareWorker entity. Table: "daycareworkers"
+ * Relations:
+ * * OneToMany with childrens table.
+ * * OneToMany with dayreports table.
+ * </pre>
+ */
 @Entity
 @Table(name= "daycareworkers")
 public class DaycareWorker {
@@ -14,23 +22,26 @@ public class DaycareWorker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true) // unique to prevent duplicates
     private String ssn;
-    private String email;
     private String fullName;
     private String firstName;
     private String lastName;
     private String mobile;
+    private String email;
     private int experienceInYears;
     private String address;
     private String location;
     private String locationCode;
+
+    private final int MAXCHILDREN = 5;
+    private int childrenCount = 0;
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> waitingList = new ArrayList<>();
-
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayReport> dayReports = new ArrayList<>();
@@ -40,10 +51,10 @@ public class DaycareWorker {
     }
     public DaycareWorker(
             String ssn,
-            String fullName,
             String firstName,
             String lastName,
             String mobile,
+            String email,
             int experienceInYears,
             String address,
             String location,
@@ -51,15 +62,31 @@ public class DaycareWorker {
             String email
     ) {
         this.ssn = ssn;
-        this.fullName = fullName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobile = mobile;
+        this.email = email;
         this.experienceInYears = experienceInYears;
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
         this.email = email;
+    }
+
+    public int getFreeSpots() {
+        return MAXCHILDREN - childrenCount;
+    }
+
+    public int getMAXCHILDREN() {
+        return MAXCHILDREN;
+    }
+
+    public int getChildrenCount() {
+        return childrenCount;
+    }
+
+    public void setChildrenCount(int childrenCount) {
+        this.childrenCount = childrenCount;
     }
 
     public List<DayReport> getDayReports() {
@@ -94,14 +121,6 @@ public class DaycareWorker {
         this.ssn = ssn;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -124,6 +143,14 @@ public class DaycareWorker {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Child> getChildren() {
