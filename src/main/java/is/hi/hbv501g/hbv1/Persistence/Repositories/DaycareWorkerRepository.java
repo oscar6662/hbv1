@@ -12,6 +12,7 @@ import java.util.List;
 public interface DaycareWorkerRepository extends JpaRepository <DaycareWorker, Long> {
     DaycareWorker save(DaycareWorker daycareWorker);
     DaycareWorker findDaycareWorkerById(Long id);
+    DaycareWorker findDaycareWorkerByEmail(String email);
     List<DaycareWorker> findByLocation(String location);
     List<DaycareWorker> findByLocationCode(String locationCode);
     List<DaycareWorker> findAll();

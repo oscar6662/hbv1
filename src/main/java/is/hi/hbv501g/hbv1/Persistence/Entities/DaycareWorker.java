@@ -24,7 +24,7 @@ public class DaycareWorker {
 
     @Column(unique = true) // unique to prevent duplicates
     private String ssn;
-
+    private String fullName;
     private String firstName;
     private String lastName;
     private String mobile;
@@ -58,7 +58,8 @@ public class DaycareWorker {
             int experienceInYears,
             String address,
             String location,
-            String locationCode
+            String locationCode,
+            String email
     ) {
         this.ssn = ssn;
         this.firstName = firstName;
@@ -69,6 +70,7 @@ public class DaycareWorker {
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
+        this.email = email;
     }
 
     public int getFreeSpots() {
@@ -97,6 +99,14 @@ public class DaycareWorker {
 
     public Long getId() {
         return id;
+    }
+
+    public String getPassword() {
+        return "maria";
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setId(Long id) {
@@ -165,6 +175,10 @@ public class DaycareWorker {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLocation() {
