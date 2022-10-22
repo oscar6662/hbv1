@@ -34,6 +34,9 @@ public class DaycareWorker {
     private String location;
     private String locationCode;
 
+    private final int MAXCHILDREN = 5;
+    private int childrenCount = 0;
+
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children = new ArrayList<>();
 
@@ -66,6 +69,22 @@ public class DaycareWorker {
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
+    }
+
+    public int getFreeSpots() {
+        return MAXCHILDREN - childrenCount;
+    }
+
+    public int getMAXCHILDREN() {
+        return MAXCHILDREN;
+    }
+
+    public int getChildrenCount() {
+        return childrenCount;
+    }
+
+    public void setChildrenCount(int childrenCount) {
+        this.childrenCount = childrenCount;
     }
 
     public List<DayReport> getDayReports() {
