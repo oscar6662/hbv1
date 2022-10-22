@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ *  Repository of Daycare Workers
+ */
 public interface DaycareWorkerRepository extends JpaRepository <DaycareWorker, Long> {
     DaycareWorker save(DaycareWorker daycareWorker);
     DaycareWorker findDaycareWorkerById(Long id);

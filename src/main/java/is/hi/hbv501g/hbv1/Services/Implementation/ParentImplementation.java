@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * Service for routes that handle Parents.  It uses Parent and Child repository.
+ */
 @Service
 public class ParentImplementation  implements ParentService {
     private ParentRepository parentRepository;

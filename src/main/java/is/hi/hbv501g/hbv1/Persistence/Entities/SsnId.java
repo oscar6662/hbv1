@@ -3,6 +3,10 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+
+/**
+ * Composite ID class.  Combining keys in tables with id and ssn.
+ */
 public class SsnId implements Serializable {
     private Long id;
     private String ssn;

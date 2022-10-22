@@ -5,6 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+
+/**
+ *  Repository of Children
+ */
 public interface ChildRepository extends JpaRepository<Child, Long> {
     Child save(Child child);
     void delete(Child child);

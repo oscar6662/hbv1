@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * The main service used by routes that handle Daycare Workers.  It uses the
+ * DaycareWorker repository as well as the DayReport repository.
+ */
 @Service
 public class DaycareWorkerServiceImplementation implements DaycareWorkerService {
 //    private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();

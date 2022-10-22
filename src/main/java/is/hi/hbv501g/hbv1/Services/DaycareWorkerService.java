@@ -8,6 +8,9 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Interface definitions for the DaycareWorkerService.
+ */
 public interface DaycareWorkerService {
     List<DaycareWorker> findByLocation(String location);
     List<DaycareWorker> findByLocationCode(String locationCode);

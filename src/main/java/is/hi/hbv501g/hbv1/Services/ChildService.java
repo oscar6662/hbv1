@@ -6,6 +6,10 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 
 import java.util.List;
 
+
+/**
+ * Interface definitions for the ChildService.
+ */
 public interface ChildService {
     Child save(Child child);
     void delete(Child child);

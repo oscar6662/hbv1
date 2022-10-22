@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * Service used by routes that handle Children.  It uses the ChildRepository.
+ */
 @Service
 public class ChildServiceImplementation implements ChildService {
     private ChildRepository childRepository;

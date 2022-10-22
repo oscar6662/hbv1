@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+/**
+ * Service for routes that handle Locations.  Uses the Location Repository.
+ */
 @Service
 public class LocationServiceImplementation implements LocationService {
     private LocationRepository locationRepository;
