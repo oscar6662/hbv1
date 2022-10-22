@@ -42,7 +42,13 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
 
     @Override
     public DaycareWorker findDaycareWorkerById(Long id) {
+        System.out.println(id);
         return daycareWorkerRepository.findDaycareWorkerById(id);
+    }
+
+    @Override
+    public DaycareWorker findDaycareWorkerByEmail(String email) {
+        return daycareWorkerRepository.findDaycareWorkerByEmail(email);
     }
 
     @Override
