@@ -13,7 +13,12 @@ export const NavBar = (props: Props) => {
         </div>
 
         <div className="navMenu">
-          <Button className="navMenuItem" type="primary" size="large">
+          <Button
+            href="/register"
+            className="navMenuItem"
+            type="primary"
+            size="large"
+          >
             Nýskráning
           </Button>
           <Button className="navMenuItem" type="primary" size="large">

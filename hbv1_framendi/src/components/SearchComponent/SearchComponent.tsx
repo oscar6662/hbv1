@@ -21,7 +21,7 @@ import Avatar from 'antd/lib/avatar/avatar';
 
 type Props = {};
 
-const pseudo = [{},{},{},{},{},{},{}, {}, {}]
+const pseudo = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 interface DaycareWorker {
   address: string;
@@ -69,7 +69,7 @@ export const SearchComponent = (props: Props) => {
       setLoading(false);
     };
 
-    // fetchLoactions();
+    fetchLoactions();
     setLoading(true);
   }, []);
 
@@ -88,30 +88,17 @@ export const SearchComponent = (props: Props) => {
     setLoading(false);
   };
 
+  const handleOnFinish = async (values: string) => {
+    console.log('value :>> ', values);
+  };
+
   return (
     <div className="searchComponent">
       <div className="searchContentContainer">
         <div className="searchBox">
-          {/* <label htmlFor="fullName">Leita eftir staðsetningu: </label>
-        <select
-          onChange={(e) => setLocation(e.target.value)}
-          name="location"
-          id="location"
-        >
-          {locations?.map((district: Location, i: Number) => {
-            return (
-              <option key={`option-town-${i}`} value={district.locationCode}>
-                {`${district.locationCode} - ${district.locationName}`}
-              </option>
-            );
-          })}
-        </select> */}
-
           <Form
             method="POST"
-            onFinish={(e) => {
-              console.log(e);
-            }}
+            onFinish={handleOnFinish}
             form={form}
             layout="vertical"
           >
@@ -122,7 +109,6 @@ export const SearchComponent = (props: Props) => {
                 </p>
                 <Select
                   loading={loading}
-                  mode="multiple"
                   showSearch
                   optionFilterProp="children"
                   size="large"
@@ -158,46 +144,56 @@ export const SearchComponent = (props: Props) => {
 
         <div className="resultBox">
           <div className="daycareWorkers">
-            {loading ? <List
-              itemLayout="horizontal"
-              dataSource={pseudo}
-              // loading={loading}
-              renderItem={(item) => (
-                <List.Item className="dcwListItem">
-                  <List.Item.Meta
-                    avatar={<Avatar icon={<UserOutlined />} />}
-                    title={
-                      <div style={{ height: '8px', border: 'solid #e3e3e3 10px', borderRadius: '20px' }}></div>
-                    }
-                    style={{ paddingLeft: '14px' }}
-                  />
-                  <div style={{ padding: '20px' }}>
-                    <Button disabled type="dashed">Sækja um</Button>
-                  </div>
-                  
-                </List.Item>
-              )}
-            /> : <List
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  // loading={loading}
-                  renderItem={(item) => (
-                    <List.Item className="dcwListItem">
-                      <List.Item.Meta
-                        avatar={<Avatar icon={<UserOutlined />} />}
-                        title={
-                          <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
-                        }
-                        style={{ paddingLeft: '14px' }}
-                        description="Ég elska að vera dagmamma!"
-                      />
-                      <div style={{ padding: '20px' }}>
-                        <Button type="dashed">Sækja um</Button>
-                      </div>
-                    </List.Item>
-                  )}
-                />
-              }
+            {loading ? (
+              <List
+                itemLayout="horizontal"
+                dataSource={pseudo}
+                // loading={loading}
+                renderItem={(item) => (
+                  <List.Item className="dcwListItem">
+                    <List.Item.Meta
+                      avatar={<Avatar icon={<UserOutlined />} />}
+                      title={
+                        <div
+                          style={{
+                            height: '8px',
+                            border: 'solid #e3e3e3 10px',
+                            borderRadius: '20px',
+                          }}
+                        ></div>
+                      }
+                      style={{ paddingLeft: '14px' }}
+                    />
+                    <div style={{ padding: '20px' }}>
+                      <Button disabled type="dashed">
+                        Sækja um
+                      </Button>
+                    </div>
+                  </List.Item>
+                )}
+              />
+            ) : (
+              <List
+                itemLayout="horizontal"
+                dataSource={data}
+                // loading={loading}
+                renderItem={(item) => (
+                  <List.Item className="dcwListItem">
+                    <List.Item.Meta
+                      avatar={<Avatar icon={<UserOutlined />} />}
+                      title={
+                        <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
+                      }
+                      style={{ paddingLeft: '14px' }}
+                      description="Ég elska að vera dagmamma!"
+                    />
+                    <div style={{ padding: '20px' }}>
+                      <Button type="dashed">Sækja um</Button>
+                    </div>
+                  </List.Item>
+                )}
+              />
+            )}
           </div>
         </div>
       </div>

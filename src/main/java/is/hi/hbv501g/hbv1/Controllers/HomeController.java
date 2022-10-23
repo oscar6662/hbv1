@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class HomeController {
@@ -92,14 +93,31 @@ public class HomeController {
 
         HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
 
-        String result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com", entity, String.class);
+        String result = "";
+        try {
+            result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/dbconnections/signup", entity, String.class);
+        } catch(HttpClientErrorException err) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         JsonNode root = objectMapper.readTree(result);
 
         String email = root.path("email").asText();
         String id = root.path("_id").asText();
         System.out.println(id + " : " + email);
-        DaycareWorker daycareWorker = new DaycareWorker();
+
+        DaycareWorker daycareWorker = new DaycareWorker(
+                daycareWorkerDTO.getSsn(),
+                daycareWorkerDTO.getFirstName(),
+                daycareWorkerDTO.getLastName(),
+                daycareWorkerDTO.getMobile(),
+                daycareWorkerDTO.getEmail(),
+                id,
+                daycareWorkerDTO.getExperienceInYears(),
+                daycareWorkerDTO.getAddress(),
+                daycareWorkerDTO.getLocation(),
+                daycareWorkerDTO.getLocationCode()
+        );
 
         try {
             daycareWorkerService.addDaycareWorker(daycareWorker);

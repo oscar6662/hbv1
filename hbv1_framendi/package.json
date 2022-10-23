@@ -10,7 +10,9 @@
     "update-theme": "lessc ./src/theme.less ./src/theme.css --js"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^1.12.0",
     "antd": "^4.23.5",
+    "dotenv": "^16.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.1"
