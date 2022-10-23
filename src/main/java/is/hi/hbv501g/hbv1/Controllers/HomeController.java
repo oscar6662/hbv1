@@ -1,13 +1,21 @@
 package is.hi.hbv501g.hbv1.Controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import is.hi.hbv501g.hbv1.Persistence.DTOs.DaycareWorkerDTO;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +25,11 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private DaycareWorkerService daycareWorkerService;
+
+    @Value("${spring.security.oauth2.client.registration.auth0.client-id}")
+    private String clientId;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 //    public HomeController(DaycareWorkerService daycareWorkerService) {
 //        this.daycareWorkerService = daycareWorkerService;
@@ -65,7 +78,29 @@ public class HomeController {
     }
 
     @PostMapping("/adddaycareworker")
-    public ResponseEntity<DaycareWorker> addDaycareWorker(@RequestBody DaycareWorker daycareWorker) {
+    public ResponseEntity<DaycareWorker> addDaycareWorker(@RequestBody DaycareWorkerDTO daycareWorkerDTO) throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject json = new JSONObject();
+        json.put("email", daycareWorkerDTO.getEmail());
+        json.put("password", daycareWorkerDTO.getPassword());
+        json.put("client_id", clientId);
+        json.put("connection", "Username-Password-Authentication");
+
+        HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
+
+        String result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com", entity, String.class);
+
+        JsonNode root = objectMapper.readTree(result);
+
+        String email = root.path("email").asText();
+        String id = root.path("_id").asText();
+        System.out.println(id + " : " + email);
+        DaycareWorker daycareWorker = new DaycareWorker();
+
         try {
             daycareWorkerService.addDaycareWorker(daycareWorker);
 
@@ -78,6 +113,8 @@ public class HomeController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @PostMapping("/createdayreport")
     public ResponseEntity<DayReport> createDayReport(@RequestBody DayReport dayReport) {

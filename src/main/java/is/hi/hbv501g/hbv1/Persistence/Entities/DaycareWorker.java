@@ -29,6 +29,7 @@ public class DaycareWorker {
     private String lastName;
     private String mobile;
     private String email;
+    private String auth0Id;
     private int experienceInYears;
     private String address;
     private String location;
@@ -55,6 +56,7 @@ public class DaycareWorker {
             String lastName,
             String mobile,
             String email,
+            String auth0Id,
             int experienceInYears,
             String address,
             String location,
@@ -65,10 +67,19 @@ public class DaycareWorker {
         this.lastName = lastName;
         this.mobile = mobile;
         this.email = email;
+        this.auth0Id = auth0Id;
         this.experienceInYears = experienceInYears;
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
+    }
+
+    public String getAuth0Id() {
+        return auth0Id;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public int getFreeSpots() {
