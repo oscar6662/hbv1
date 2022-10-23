@@ -16,7 +16,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .mvcMatchers("/").permitAll() // allow all users to access the home pages and the static images directory
+                .mvcMatchers("/", "/api/daycareworkers", "/api/addlocation").permitAll() // allow all users to access the home pages and the static images directory
                 .anyRequest().authenticated() // all other requests must be authenticated
                 .and().oauth2Login()
                 .and().logout()

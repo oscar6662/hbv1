@@ -41,6 +41,7 @@ public class LocationController {
 
     @PostMapping("/addlocation")
     public ResponseEntity<Location> addLocation(@RequestBody Location location) {
+        System.out.println(location.getLocationName() + " " + location.getLocationCode());
         try {
             locationService.addLocation(location);
 
