@@ -12,18 +12,31 @@ interface Location {
 type Props = {};
 
 export const ParentSignUp = () => {
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-    setloading(true);
-    console.log(values);
+    const { confirmPassword, ...rest } = values;
 
-    setloading(false);
-    // if (!result.ok) {
-    //   message.error(result.error);
-    // } else {
-    //   history.push('/admin');
-    // }
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(rest),
+    };
+
+    const register = await fetch(`/api/createparent`, options);
+
+    console.log('refister -> ', register);
+
+    if (!register.ok) {
+      message.error('Failed');
+    } else {
+      const registeredDCW = await register.json();
+      console.log('YAY: ', registeredDCW);
+    }
+
+    // setLoading(false);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -139,7 +152,7 @@ export const ParentSignUp = () => {
           className="loginBtn"
           type="primary"
           htmlType="submit"
-          loading={loading}
+          //   loading={loading}
         >
           Skrá
         </Button>

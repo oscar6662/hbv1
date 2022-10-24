@@ -14,6 +14,31 @@ const Auth = () => {
     setLoading(true);
     console.log(values);
 
+    let res_type = 'token';
+    let client_id = 'ox325QZVYQitbySZYq0CZOW5vJLs9r4Q';
+    let redirect_uri = '/';
+
+    const data = {
+      response_type: res_type,
+      client_id: client_id,
+      redirect_uri: redirect_uri,
+    };
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const result = await fetch(
+      'https://dev-xzuj3qsd.eu.auth0.com/authorize?response_type=token&client_id=ox325QZVYQitbySZYq0CZOW5vJLs9r4Q&redirect_uri=http://localhost:5173/'
+    );
+
+    console.log('RESULT: ', result);
+    const test = await result.json();
+
+    console.log('JSON : ', test);
+
     setLoading(false);
     // if (!result.ok) {
     //   message.error(result.error);
