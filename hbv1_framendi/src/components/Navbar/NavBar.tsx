@@ -28,7 +28,7 @@ export const NavBar = (props: Props) => {
                 Nýskráning
               </Button>
               <Button
-                href="/api/login"
+                href="/oauth2/authorization/auth0"
                 className="navMenuItem"
                 type="primary"
                 size="large"
