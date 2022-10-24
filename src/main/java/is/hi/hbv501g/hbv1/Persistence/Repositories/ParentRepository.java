@@ -15,4 +15,5 @@ public interface ParentRepository extends JpaRepository<Parent, Long> {
     void delete(Parent parent);
     Parent findByChildren(Child child);
     Parent findParentById(Long id);
+    Parent findParentByAuth0Id(String id);
 }

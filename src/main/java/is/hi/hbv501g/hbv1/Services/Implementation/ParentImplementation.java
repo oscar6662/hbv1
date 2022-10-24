@@ -37,6 +37,11 @@ public class ParentImplementation  implements ParentService {
     }
 
     @Override
+    public Parent findParentByAuth0Id(String id) {
+        return parentRepository.findParentByAuth0Id(id);
+    }
+
+    @Override
     public Parent save(Parent parent) {
         return parentRepository.save(parent);
     }

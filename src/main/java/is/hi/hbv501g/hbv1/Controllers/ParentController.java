@@ -2,6 +2,7 @@ package is.hi.hbv501g.hbv1.Controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import is.hi.hbv501g.hbv1.Persistence.DTOs.ParentChildDTO;
 import is.hi.hbv501g.hbv1.Persistence.DTOs.ParentDTO;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
@@ -62,6 +63,17 @@ public class ParentController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/parent/{auth0id}")
+    public ResponseEntity<Parent> getParentByAuth0ID(@PathVariable("auth0id") String auth0Id) {
+        Parent parent;
+        try {
+            parent = parentService.findParentByAuth0Id(auth0Id);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(parent, HttpStatus.OK);
     }
 
 //    @GetMapping("/daycareworkers/{id}")
@@ -150,24 +162,28 @@ public class ParentController {
         }
     }
 
-//    @PostMapping("/createchild")
-//    public ResponseEntity<Child> createChild(@RequestBody Child child) {
-//        Long id = Math.round(Math.ceil(Math.random() * 30));
+    @PostMapping("/createchild")
+    public ResponseEntity<Child> createChild(@RequestBody ParentChildDTO parentChildDTO) {
 //        Parent parent = parentService.findParentById(id);
 //        child.setParent(parent);
-//
-//        try {
-//            childService.save(child);
-//
-//            if (child == null) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//
-//            return new ResponseEntity<>(child, HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
+        System.out.println(parentChildDTO.getParentAuth0Id());
+        Parent parent = parentService.findParentByAuth0Id(parentChildDTO.getParentAuth0Id());
+        Child child = new Child(parentChildDTO.getSsn(), parentChildDTO.getFirstName(), parentChildDTO.getLastName());
+
+        try {
+            child.setParent(parent);
+            childService.save(child);
+
+            if (child == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(child, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println("BLABLABLABLABLABLA "+ e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 

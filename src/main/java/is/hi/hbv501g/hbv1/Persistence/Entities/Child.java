@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Child {
     private DaycareWorker daycareWorker;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Parent parent;
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)

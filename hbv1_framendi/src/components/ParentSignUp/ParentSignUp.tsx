@@ -15,6 +15,7 @@ export const ParentSignUp = () => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
+    setLoading(true);
     const { confirmPassword, ...rest } = values;
 
     const options = {
@@ -36,7 +37,7 @@ export const ParentSignUp = () => {
       console.log('YAY: ', registeredDCW);
     }
 
-    // setLoading(false);
+    setLoading(false);
   };
 
   const onFinishFailed = (errorInfo: any) => {

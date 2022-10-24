@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "./mainStore";
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState } from './mainStore';
 export interface AuthError {
   message: string;
 }
@@ -10,6 +10,7 @@ export interface AuthState {
   isSuccess: boolean;
   currentUser?: CurrentUser;
   userName?: string;
+  sub?: string;
   error: AuthError;
 }
 
@@ -17,28 +18,29 @@ export interface CurrentUser {
   id: string;
   name: string;
   email: string;
+  sub: string;
   photo_url: string;
 }
 export const initialState: AuthState = {
   isLoggedIn: false,
   isFetching: true,
   isSuccess: false,
-  error: { message: "An Error occurred" },
+  error: { message: 'An Error occurred' },
 };
 
-export const fetchUser = createAsyncThunk("users/fetchUser", async () => {  
-  const response = await fetch("/api/isauthenticated", {
-    method: "GET",
+export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
+  const response = await fetch('/api/isauthenticated', {
+    method: 'GET',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
-  });  
+  });
   return (await response.json()) as CurrentUser;
 });
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     clearState: (state, { payload }: PayloadAction) => {
@@ -51,9 +53,10 @@ export const authSlice = createSlice({
     builder.addCase(fetchUser.pending, (state, action) => {
       state.isFetching = true;
     });
-    builder.addCase(fetchUser.fulfilled, (state, {payload}) => {
-      const {name}=payload;
+    builder.addCase(fetchUser.fulfilled, (state, { payload }) => {
+      const { name, sub } = payload;
       state.userName = name;
+      state.sub = sub;
       state.isFetching = false;
       state.isSuccess = true;
       state.isLoggedIn = true;

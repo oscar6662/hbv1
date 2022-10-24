@@ -5,6 +5,8 @@ import './home.scss';
 
 import { SearchComponent } from '../../components/SearchComponent/SearchComponent';
 
+import { authSlice } from '../../stores/auth.slice';
+
 interface DaycareWorker {
   address: string;
   children: [];
