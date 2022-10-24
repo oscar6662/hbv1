@@ -9,6 +9,7 @@ import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -29,6 +31,11 @@ public class HomeController {
 
     @Value("${spring.security.oauth2.client.registration.auth0.client-id}")
     private String clientId;
+    @Value("${spring.security.oauth2.client.registration.auth0.client-secret}")
+    private String clientSecret;
+
+    @Value("${TOKEN}")
+    private String token;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -84,7 +91,10 @@ public class HomeController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(token);
 
+
+        // Signup logic for auth0
         JSONObject json = new JSONObject();
         json.put("email", daycareWorkerDTO.getEmail());
         json.put("password", daycareWorkerDTO.getPassword());
@@ -106,6 +116,23 @@ public class HomeController {
         String id = root.path("_id").asText();
         System.out.println(id + " : " + email);
 
+        // Here we assign the role DCW to the new account on auth0.
+        // This has to be done after the user is created.
+        JSONObject roleJson = new JSONObject();
+        List<String> roleArray = new ArrayList<>();
+        roleArray.add(daycareWorkerDTO.getROLE());
+        roleJson.put("roles", roleArray);
+
+        HttpEntity<String> roleEntity = new HttpEntity<>(roleJson.toString(), headers);
+
+        String roleResult = "";
+        try {
+            restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|"+id+"/roles", roleEntity, String.class);
+        } catch(HttpClientErrorException err) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+        // After all the auth0 logic we finally construct the daycareworker and add it to out Database
         DaycareWorker daycareWorker = new DaycareWorker(
                 daycareWorkerDTO.getSsn(),
                 daycareWorkerDTO.getFirstName(),
@@ -169,5 +196,12 @@ public class HomeController {
 //        daycareWorkerService.delete(daycareWorker);
 //        return "redirect:/";
 //    }
+    public String create_token() {
+        String input = clientId + ":" + clientSecret;
+        String encoded = Base64.getEncoder().encodeToString(input.getBytes());
+        byte[] decodedBytes = Base64.getDecoder().decode(encoded);
+        String decodedString = new String(decodedBytes);
+        return decodedString;
+    }
 
 }

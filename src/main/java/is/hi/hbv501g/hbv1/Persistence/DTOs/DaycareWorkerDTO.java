@@ -13,6 +13,8 @@ public class DaycareWorkerDTO {
     private String locationCode;
     private String password;
 
+    private final String ROLE = "rol_idVtgstQXiZu1OLv";
+
     public DaycareWorkerDTO(String email, String ssn, String firstName, String lastName, String mobile, int experienceInYears, String address, String location, String locationCode, String password) {
         this.email = email;
         this.ssn = ssn;
@@ -24,6 +26,10 @@ public class DaycareWorkerDTO {
         this.location = location;
         this.locationCode = locationCode;
         this.password = password;
+    }
+
+    public String getROLE() {
+        return ROLE;
     }
 
     public String getEmail() {
