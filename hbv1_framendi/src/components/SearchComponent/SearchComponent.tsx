@@ -77,19 +77,20 @@ export const SearchComponent = (props: Props) => {
     setLoading(true);
     const daycareWorkers = await fetch(
       `${link}/api/daycareworkers${location ? `?locationCode=${location}` : ''}`
-    );
+    );    
 
-    if (!daycareWorkers.ok) {
-      console.error('Villa!');
-    } else {
+    if (daycareWorkers.ok && daycareWorkers.status !== 204) {
       const json = await daycareWorkers.json();
       setData(json);
+    } else {
+      setData([]);
     }
     setLoading(false);
   };
 
-  const handleOnFinish = async (values: string) => {
-    console.log('value :>> ', values);
+  const handleOnFinish = async (values:{location: string;}) => {
+    const {location} = values;
+    setLocation(location);
   };
 
   return (
@@ -100,19 +101,16 @@ export const SearchComponent = (props: Props) => {
             method="POST"
             onFinish={handleOnFinish}
             form={form}
-            layout="vertical"
+            layout="horizontal"
           >
-            <Form.Item className="" name="location">
-              <div className="searhBoxContent">
-                <p style={{ width: '50%', lineHeight: '40px' }}>
-                  Leita eftir staðsetningu:{' '}
-                </p>
+            <Form.Item name="location" label="Leita eftir staðsetningu: ">
                 <Select
                   loading={loading}
                   showSearch
                   optionFilterProp="children"
                   size="large"
-                  style={{ width: '50%' }}
+                  style={{  maxWidth: '200px' }}
+                  placeholder="Everywhere"
                 >
                   {locations.map((district, i) => {
                     return (
@@ -125,7 +123,6 @@ export const SearchComponent = (props: Props) => {
                     );
                   })}
                 </Select>
-              </div>
             </Form.Item>
 
             <Form.Item className="btnContainer">

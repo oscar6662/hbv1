@@ -1,6 +1,6 @@
-import { Button } from 'antd';
-import React from 'react';
-import './navbar.scss';
+import { Button } from "antd";
+import React from "react";
+import "./navbar.scss";
 
 type Props = {};
 
@@ -21,7 +21,12 @@ export const NavBar = (props: Props) => {
           >
             Nýskráning
           </Button>
-          <Button className="navMenuItem" type="primary" size="large">
+          <Button
+            href="http://localhost:8080/login"
+            className="navMenuItem"
+            type="primary"
+            size="large"
+          >
             Innskráning
           </Button>
         </div>

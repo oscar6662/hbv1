@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv1.Controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -16,13 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class AuthController {
 
-    @GetMapping("/")
-    public String home(Model model, @AuthenticationPrincipal OidcUser principal, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        System.out.println(httpServletResponse.getHeaders("token"));
+    @GetMapping("/api/isauthenticated")
+    public ResponseEntity<Object> home(Model model, @AuthenticationPrincipal OidcUser principal,
+            HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         if (principal != null) {
             model.addAttribute("profile", principal.getClaims());
+            return new ResponseEntity<>(model.getAttribute("profile"), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
         }
-        System.out.println(model.getAttribute("profile"));
-        return "index";
     }
+
 }
