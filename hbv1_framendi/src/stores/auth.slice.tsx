@@ -9,12 +9,13 @@ export interface AuthState {
   isFetching: boolean;
   isSuccess: boolean;
   currentUser?: CurrentUser;
+  userName?: string;
   error: AuthError;
 }
 
 export interface CurrentUser {
   id: string;
-  display_name: string;
+  name: string;
   email: string;
   photo_url: string;
 }
@@ -25,17 +26,14 @@ export const initialState: AuthState = {
   error: { message: "An Error occurred" },
 };
 
-export const fetchUser = createAsyncThunk("users/fetchUser", async () => {
+export const fetchUser = createAsyncThunk("users/fetchUser", async () => {  
   const response = await fetch("/api/isauthenticated", {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-  });
-  console.log('dont miss this shit!!!');
-  console.log(await response.json());
-  
+  });  
   return (await response.json()) as CurrentUser;
 });
 
@@ -53,7 +51,9 @@ export const authSlice = createSlice({
     builder.addCase(fetchUser.pending, (state, action) => {
       state.isFetching = true;
     });
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
+    builder.addCase(fetchUser.fulfilled, (state, {payload}) => {
+      const {name}=payload;
+      state.userName = name;
       state.isFetching = false;
       state.isSuccess = true;
       state.isLoggedIn = true;

@@ -1,8 +1,7 @@
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./App.scss";
-import { useSelector } from "react-redux";
-import { fetchUser, authSelector } from "./stores/auth.slice";
+import { fetchUser } from "./stores/auth.slice";
 
 import Home from "./pages/home/Home";
 import Auth from "./pages/auth/Auth";
@@ -16,10 +15,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
-/*
-  const { isLoggedIn } = useSelector(authSelector);
-  console.log();
-  */
+
   return (
     <div className="App">
       <Routes>
