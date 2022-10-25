@@ -14,4 +14,5 @@ public interface ChildRepository extends JpaRepository<Child, Long> {
     void delete(Child child);
     List<Child> findByParent(Parent parent);
     List<Child> findByDaycareWorker(DaycareWorker daycareWorker);
+    Child findChildById(Long id);
 }

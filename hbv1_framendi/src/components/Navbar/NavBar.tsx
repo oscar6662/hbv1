@@ -1,9 +1,9 @@
-import { Button } from "antd";
-import React from "react";
-import "./navbar.scss";
-import { useSelector } from "react-redux";
-import { authSelector } from "../../stores/auth.slice";
-import { CreateChildForm } from "../CreateChildForm/CreateChildForm";
+import { Button } from 'antd';
+import React from 'react';
+import './navbar.scss';
+import { useSelector } from 'react-redux';
+import { authSelector } from '../../stores/auth.slice';
+import { CreateChildForm } from '../CreateChildForm/CreateChildForm';
 
 type Props = {};
 
@@ -38,10 +38,22 @@ export const NavBar = (props: Props) => {
             </>
           ) : (
             <>
-              <p>Halló {userName}!</p>
-              {type === "parent" && <CreateChildForm />}
-              {type === "dcw" && < >Þú ert dcw</>}
-
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                }}
+              >
+                <h3 style={{ margin: '10px 0' }}>
+                  Halló{' '}
+                  <span style={{ textDecoration: 'underline' }}>
+                    {userName}
+                  </span>
+                  !
+                </h3>
+                {type === 'parent' && <CreateChildForm />}
+                {type === 'dcw' && <>Þú ert dcw</>}
+              </div>
             </>
           )}
         </div>

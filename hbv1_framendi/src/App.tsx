@@ -1,16 +1,16 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import "antd/dist/antd.css";
-import "./App.scss";
-import { fetchUser } from "./stores/auth.slice";
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import 'antd/dist/antd.css';
+import './App.scss';
+import { fetchUser } from './stores/auth.slice';
 
-import Home from "./pages/home/Home";
-import Auth from "./pages/auth/Auth";
-import Register from "./pages/register/Register";
-import { useEffect } from "react";
-import { useAppDispatch } from "./stores/mainStore";
+import Home from './pages/home/Home';
+import Auth from './pages/auth/Auth';
+import Register from './pages/register/Register';
+import Apply from './pages/apply/Apply';
+import { useEffect } from 'react';
+import { useAppDispatch } from './stores/mainStore';
 
 function App() {
-  
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchUser());
@@ -22,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Register />} />
+        {/* <Route path="/apply/:id" element={<Apply />} /> */}
       </Routes>
     </div>
   );

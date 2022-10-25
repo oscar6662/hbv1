@@ -1,5 +1,6 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class Child {
     private String lastName;
 
     @ManyToOne(fetch=FetchType.LAZY)
+    @JsonBackReference
     private DaycareWorker daycareWorker;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, message, Form, Input } from 'antd';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import { authSelector } from '../../stores/auth.slice';
-
 
 export const CreateChildForm = () => {
   const { userId } = useSelector(authSelector);
@@ -35,6 +34,8 @@ export const CreateChildForm = () => {
       const childCreated = await childResult.json();
       console.log('YAY: ', childCreated);
     }
+    setModal(false);
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo: any) => {

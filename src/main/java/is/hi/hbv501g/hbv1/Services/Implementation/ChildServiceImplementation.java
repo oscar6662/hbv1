@@ -42,4 +42,9 @@ public class ChildServiceImplementation implements ChildService {
     public List<Child> findByDaycareWorker(DaycareWorker daycareWorker) {
         return childRepository.findByDaycareWorker(daycareWorker);
     }
+
+    @Override
+    public Child findChildById(Long id) {
+        return childRepository.findChildById(id);
+    }
 }

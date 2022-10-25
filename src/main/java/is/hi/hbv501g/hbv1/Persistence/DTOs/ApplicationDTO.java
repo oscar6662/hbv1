@@ -1,24 +1,19 @@
-package is.hi.hbv501g.hbv1.Persistence.Entities;
+package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Entity
-@Table(name = "applications")
-public class Application {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ApplicationDTO {
     private Long id;
     private Long daycareWorkerId;
     private Long parentId;
-    private Long childId;
+    private Long[] childrenId;
 
-    public Application() {
-
-    }
-    public Application(Long daycareWorkerId, Long parentId, Long childId) {
+    public ApplicationDTO(Long daycareWorkerId, Long parentId, Long[] chilrenId) {
         this.daycareWorkerId = daycareWorkerId;
         this.parentId = parentId;
-        this.childId = childId;
+        this.childrenId = chilrenId;
     }
 
     public Long getDaycareWorkerId() {
@@ -34,11 +29,7 @@ public class Application {
         this.parentId = parentId;
     }
 
-    public Long getChildId() {
-        return childId;
-    }
-
-    public void setChildId(Long childId) {
-        this.childId = childId;
+    public Long[] getChildrenId() {
+        return childrenId;
     }
 }

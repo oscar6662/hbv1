@@ -54,22 +54,23 @@ public class HomeController {
 
     @GetMapping("/daycareworkers")
     public ResponseEntity<List<DaycareWorker>> getAllDaycareWorkers(@RequestParam(required = false) String locationCode) {
+        List<DaycareWorker> daycareWorkers = new ArrayList<>();
         try {
-            List<DaycareWorker> daycareWorkers = new ArrayList<DaycareWorker>();
 
             if (locationCode == null)
                 daycareWorkerService.findAll().forEach(daycareWorkers::add);
             else
                 daycareWorkerService.findByLocationCode(locationCode).forEach(daycareWorkers::add);
 
+
             if (daycareWorkers.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
-            return new ResponseEntity<>(daycareWorkers, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(daycareWorkers, HttpStatus.OK);
     }
 
     @GetMapping("/daycareworkers/{id}")
@@ -129,6 +130,7 @@ public class HomeController {
         try {
             restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|"+id+"/roles", roleEntity, String.class);
         } catch(HttpClientErrorException err) {
+            System.out.println(err);
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
