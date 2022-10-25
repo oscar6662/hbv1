@@ -93,6 +93,15 @@ export const SearchComponent = (props: Props) => {
     setLocation(location);
   };
 
+  const apply = async(daycareWorkerId: Number) =>{
+    const response = await fetch(`/api/apply/${daycareWorkerId}`);
+    if (await response.json()==="goodshit") {
+      console.log('success');
+      
+    }else console.log('ekki gott');
+    
+  }
+
   return (
     <div className="searchComponent">
       <div className="searchContentContainer">
@@ -185,7 +194,7 @@ export const SearchComponent = (props: Props) => {
                       description="Ég elska að vera dagmamma!"
                     />
                     <div style={{ padding: '20px' }}>
-                      <Button type="dashed">Sækja um</Button>
+                      <Button type="dashed" onClick={()=>apply(item.id)}>Sækja um</Button>
                     </div>
                   </List.Item>
                 )}
