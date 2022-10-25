@@ -10,15 +10,16 @@ export interface AuthState {
   isSuccess: boolean;
   currentUser?: CurrentUser;
   userName?: string;
-  sub?: string;
+  type?: string;
   error: AuthError;
+  userId?: number;
 }
 
 export interface CurrentUser {
-  id: string;
-  name: string;
+  id: number;
+  firstName: string;
   email: string;
-  sub: string;
+  type: string;
   photo_url: string;
 }
 export const initialState: AuthState = {
@@ -35,7 +36,7 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-  });
+  });      
   return (await response.json()) as CurrentUser;
 });
 
@@ -54,9 +55,10 @@ export const authSlice = createSlice({
       state.isFetching = true;
     });
     builder.addCase(fetchUser.fulfilled, (state, { payload }) => {
-      const { name, sub } = payload;
-      state.userName = name;
-      state.sub = sub;
+      const { firstName, type, id } = payload;
+      state.userName = firstName;
+      state.userId = id;
+      state.type = type;
       state.isFetching = false;
       state.isSuccess = true;
       state.isLoggedIn = true;

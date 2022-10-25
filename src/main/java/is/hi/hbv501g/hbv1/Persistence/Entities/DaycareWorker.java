@@ -110,8 +110,8 @@ public class DaycareWorker {
         return id;
     }
 
-    public String getPassword() {
-        return "maria";
+    public String getType() {
+        return "dcw";
     }
 
     public void setId(Long id) {

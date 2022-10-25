@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import { Button, Modal, message, Form, Input } from 'antd';
-type Props = {
-  sub: string | undefined;
-};
+import { useSelector } from "react-redux";
+import { authSelector } from '../../stores/auth.slice';
 
-export const CreateChildForm = ({ sub }: Props) => {
+
+export const CreateChildForm = () => {
+  const { userId } = useSelector(authSelector);
+
   const [form] = Form.useForm();
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleConfirm = async (values: any) => {
     setLoading(true);
-    // const parent = await fetch(`/api/parent/${sub}`);
-    // const parentJson = await parent.json();
-    // const { children, id, ...parentRest } = parentJson;
-
     const options = {
       method: 'POST',
       headers: {
@@ -22,7 +20,7 @@ export const CreateChildForm = ({ sub }: Props) => {
       },
       body: JSON.stringify({
         ...values,
-        parentAuth0Id: sub,
+        parentId: userId,
       }),
     };
 

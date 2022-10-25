@@ -35,6 +35,11 @@ public class ParentImplementation  implements ParentService {
     public Parent findParentById(Long id) {
         return parentRepository.findParentById(id);
     }
+    
+    @Override
+    public Parent findParentByEmail(String email) {
+        return parentRepository.findParentByEmail(email);
+    }
 
     @Override
     public Parent findParentByAuth0Id(String id) {

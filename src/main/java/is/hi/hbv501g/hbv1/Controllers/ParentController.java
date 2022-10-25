@@ -76,18 +76,19 @@ public class ParentController {
         return new ResponseEntity<>(parent, HttpStatus.OK);
     }
 
-//    @GetMapping("/daycareworkers/{id}")
-//    public ResponseEntity<DaycareWorker> getDaycareWorkerByID(@PathVariable("id") String id) {
-//        DaycareWorker dcw;
-//        try {
-//            Long idAsLong = Long.parseLong(id);
-//            dcw = daycareWorkerService.findDaycareWorkerById(idAsLong);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//        return new ResponseEntity<>(dcw, HttpStatus.OK);
-//    }
+    // @GetMapping("/daycareworkers/{id}")
+    // public ResponseEntity<DaycareWorker> getDaycareWorkerByID(@PathVariable("id")
+    // String id) {
+    // DaycareWorker dcw;
+    // try {
+    // Long idAsLong = Long.parseLong(id);
+    // dcw = daycareWorkerService.findDaycareWorkerById(idAsLong);
+    // } catch (Exception e) {
+    // return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
+    //
+    // return new ResponseEntity<>(dcw, HttpStatus.OK);
+    // }
 
     @PostMapping("/createparent")
     public ResponseEntity<Parent> createParent(@RequestBody ParentDTO parentDTO) throws IOException {
@@ -96,7 +97,6 @@ public class ParentController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
-
 
         // Signup logic for auth0
         JSONObject json = new JSONObject();
@@ -109,8 +109,9 @@ public class ParentController {
 
         String result = "";
         try {
-            result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/dbconnections/signup", entity, String.class);
-        } catch(HttpClientErrorException err) {
+            result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/dbconnections/signup", entity,
+                    String.class);
+        } catch (HttpClientErrorException err) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -132,12 +133,14 @@ public class ParentController {
 
         String roleResult = "";
         try {
-            restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|"+id+"/roles", roleEntity, String.class);
-        } catch(HttpClientErrorException err) {
+            restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|" + id + "/roles",
+                    roleEntity, String.class);
+        } catch (HttpClientErrorException err) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        // After all the auth0 logic we finally construct the parent and add it to out Database
+        // After all the auth0 logic we finally construct the parent and add it to out
+        // Database
         Parent parent = new Parent(
                 parentDTO.getSsn(),
                 parentDTO.getFirstName(),
@@ -145,8 +148,7 @@ public class ParentController {
                 parentDTO.getMobile(),
                 parentDTO.getEmail(),
                 id,
-                null
-        );
+                null);
 
         try {
             parentService.save(parent);
@@ -164,26 +166,18 @@ public class ParentController {
 
     @PostMapping("/createchild")
     public ResponseEntity<Child> createChild(@RequestBody ParentChildDTO parentChildDTO) {
-//        Parent parent = parentService.findParentById(id);
-//        child.setParent(parent);
+        // Parent parent = parentService.findParentById(id);
+        // child.setParent(parent);
 
-        System.out.println(parentChildDTO.getParentAuth0Id());
-        Parent parent = parentService.findParentByAuth0Id(parentChildDTO.getParentAuth0Id());
-        Child child = new Child(parentChildDTO.getSsn(), parentChildDTO.getFirstName(), parentChildDTO.getLastName());
-
+        Parent parent = parentService.findParentById(parentChildDTO.getParentId());
+        Child child = new Child(parentChildDTO.getSsn(), parentChildDTO.getFirstName(),
+                parentChildDTO.getLastName());
         try {
             child.setParent(parent);
             childService.save(child);
-
-            if (child == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
             return new ResponseEntity<>(child, HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println("BLABLABLABLABLABLA "+ e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
-

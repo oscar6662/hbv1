@@ -93,6 +93,10 @@ public class Parent {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+    
+    public String getType() {
+        return "parent";
+    }
 
     public String getEmail() {
         return email;

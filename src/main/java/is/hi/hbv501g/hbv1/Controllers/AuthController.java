@@ -1,5 +1,6 @@
 package is.hi.hbv501g.hbv1.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
+import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
+import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
+import is.hi.hbv501g.hbv1.Services.ParentService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,13 +23,23 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class AuthController {
+    @Autowired
+    private DaycareWorkerService daycareWorkerService;
+    @Autowired
+    private ParentService parentService;
 
     @GetMapping("/api/isauthenticated")
     public ResponseEntity<Object> home(Model model, @AuthenticationPrincipal OidcUser principal,
             HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         if (principal != null) {
-            model.addAttribute("profile", principal.getClaims());
-            return new ResponseEntity<>(model.getAttribute("profile"), HttpStatus.OK);
+            String email = principal.getEmail();
+            DaycareWorker dcw = daycareWorkerService.findDaycareWorkerByEmail(email);
+            if (dcw == null) {
+                Parent parent = parentService.findParentByEmail(email);
+                return new ResponseEntity<>(parent, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(dcw, HttpStatus.OK);
+            }
         } else {
             return new ResponseEntity<>(HttpStatus.NETWORK_AUTHENTICATION_REQUIRED);
         }

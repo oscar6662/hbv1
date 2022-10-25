@@ -4,13 +4,13 @@ public class ParentChildDTO {
     private String ssn;
     private String firstName;
     private String lastName;
-    private String parentAuth0Id;
+    private Long parentId;
 
-    public ParentChildDTO(String ssn, String firstName, String lastName, String parentAuth0Id) {
+    public ParentChildDTO(String ssn, String firstName, String lastName, Long parentId) {
         this.ssn = ssn;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.parentAuth0Id = parentAuth0Id;
+        this.parentId = parentId;
     }
 
     public String getSsn() {
@@ -37,7 +37,7 @@ public class ParentChildDTO {
         this.lastName = lastName;
     }
 
-    public String getParentAuth0Id() {
-        return parentAuth0Id;
+    public Long getParentId() {
+        return parentId;
     }
 }
