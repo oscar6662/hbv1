@@ -126,7 +126,6 @@ public class HomeController {
 
         HttpEntity<String> roleEntity = new HttpEntity<>(roleJson.toString(), headers);
 
-        String roleResult = "";
         try {
             restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|"+id+"/roles", roleEntity, String.class);
         } catch(HttpClientErrorException err) {
