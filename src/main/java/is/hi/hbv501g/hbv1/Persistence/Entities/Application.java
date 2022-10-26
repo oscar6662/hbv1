@@ -2,6 +2,11 @@ package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 import javax.persistence.*;
 
+/**
+ * Application entitie. Table: "applications".
+ * Used to apply for a spot with a daycareworker
+ */
+
 @Entity
 @Table(name = "applications")
 public class Application {

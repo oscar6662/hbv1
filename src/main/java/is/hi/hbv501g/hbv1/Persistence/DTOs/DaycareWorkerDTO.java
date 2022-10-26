@@ -1,5 +1,8 @@
 package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
+/**
+ * Helper Object for working with request bodies for daycareworker insertions
+ */
 
 public class DaycareWorkerDTO {
     private String email;

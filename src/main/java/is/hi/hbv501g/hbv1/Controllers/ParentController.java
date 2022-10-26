@@ -29,6 +29,10 @@ import java.util.List;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controller for Parent logic.
+ */
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
@@ -48,6 +52,10 @@ public class ParentController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * GET on /parents
+     * @return List of all parents
+     */
     @GetMapping("/parents")
     public ResponseEntity<List<Parent>> getAllParents() {
         try {
@@ -65,6 +73,11 @@ public class ParentController {
         }
     }
 
+    /**
+     * GET on /parent/{auth0ID}
+     * @param auth0Id the parents auth0ID
+     * @return the parent
+     */
     @GetMapping("/parent/{auth0id}")
     public ResponseEntity<Parent> getParentByAuth0ID(@PathVariable("auth0id") String auth0Id) {
         Parent parent;
@@ -90,6 +103,12 @@ public class ParentController {
     // return new ResponseEntity<>(dcw, HttpStatus.OK);
     // }
 
+    /**
+     * POST on /createparent
+     * @param parentDTO data transfer object parentDTO from the request body
+     * @return parent created
+     * @throws IOException
+     */
     @PostMapping("/createparent")
     public ResponseEntity<Parent> createParent(@RequestBody ParentDTO parentDTO) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
@@ -163,6 +182,11 @@ public class ParentController {
         }
     }
 
+    /**
+     * POST on /createchild
+     * @param parentChildDTO data transfer object parentChildDTO from the request body
+     * @return the child created
+     */
     @PostMapping("/createchild")
     public ResponseEntity<Child> createChild(@RequestBody ParentChildDTO parentChildDTO) {
         // Parent parent = parentService.findParentById(id);

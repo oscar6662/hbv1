@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for Location logic.
+ */
+
 @CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api")
@@ -19,6 +23,11 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
+    /**
+     * GET on /locations
+     * @param locationCode the locations
+     * @return List af all locations
+     */
     @GetMapping("/locations")
     public ResponseEntity<List<Location>> getAllLocations(@RequestParam(required = false) String locationCode) {
         try {
@@ -39,6 +48,11 @@ public class LocationController {
         }
     }
 
+    /**
+     * POST on /addlocation
+     * @param location the location to add
+     * @return location added
+     */
     @PostMapping("/addlocation")
     public ResponseEntity<Location> addLocation(@RequestBody Location location) {
         System.out.println(location.getLocationName() + " " + location.getLocationCode());

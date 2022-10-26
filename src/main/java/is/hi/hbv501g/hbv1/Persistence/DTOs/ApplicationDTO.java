@@ -4,6 +4,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Helper Object for working with request bodies for daycareworkcer Applications
+ */
+
 public class ApplicationDTO {
     private Long id;
     private Long daycareWorkerId;

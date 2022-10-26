@@ -1,5 +1,9 @@
 package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
+/**
+ * Helper Object for working with request bodies for child insertions
+ */
+
 public class ParentChildDTO {
     private String ssn;
     private String firstName;
