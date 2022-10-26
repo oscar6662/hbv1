@@ -1,5 +1,8 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 /**
@@ -16,25 +19,27 @@ public class Application {
     private Long daycareWorkerId;
     private Long parentId;
     private Long childId;
+    private LocalDateTime ldt;
 
-    public Application() {
-
-    }
-    public Application(Long daycareWorkerId, Long parentId, Long childId) {
+    public Application(Long daycareWorkerId, Long parentId, Long childId, LocalDateTime ldt) {
         this.daycareWorkerId = daycareWorkerId;
         this.parentId = parentId;
         this.childId = childId;
+        this.ldt = ldt;
     }
 
     public Long getDaycareWorkerId() {
         return daycareWorkerId;
     }
+
     public void setDaycareWorkerId(Long daycareWorkerId) {
         this.daycareWorkerId = daycareWorkerId;
     }
+
     public Long getParentId() {
         return parentId;
     }
+
     public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
@@ -45,5 +50,13 @@ public class Application {
 
     public void setChildId(Long childId) {
         this.childId = childId;
+    }
+
+    public LocalDateTime gDateTime() {
+        return ldt;
+    }
+
+    public void setDateTime(LocalDateTime ldt) {
+        this.ldt = ldt;
     }
 }
