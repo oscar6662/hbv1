@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 
 
 /**
- * Alert entity.  An object used to send alerts from DaycareWorker to Parent.
+ * Alert entity. Table: "alerts"
+ * An object used to send alerts from DaycareWorker to Parent.
  */
 @Entity
 @Table(name = "alerts")

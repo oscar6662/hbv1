@@ -28,6 +28,14 @@ public class AuthController {
     @Autowired
     private ParentService parentService;
 
+    /**
+     * GET on /api/isauthenticated
+     * @param model
+     * @param principal currently logged-in user
+     * @param httpServletRequest the request
+     * @param httpServletResponse the response
+     * @return parent or daycareworker
+     */
     @GetMapping("/api/isauthenticated")
     public ResponseEntity<Object> home(Model model, @AuthenticationPrincipal OidcUser principal,
             HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {

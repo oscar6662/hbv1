@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Helper Object for working with request bodies for parent insterstions
+ */
+
 public class ParentDTO {
     private String ssn;
     private String firstName;

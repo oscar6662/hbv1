@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import is.hi.hbv501g.hbv1.Services.ParentService;
 
+/**
+ * Controller for Daycareworker logic.
+ */
 @RestController
 @RequestMapping("/api")
 public class DaycareWorkerController {
+
     @Autowired
     private ParentService parentService;
     @Autowired
@@ -43,6 +47,13 @@ public class DaycareWorkerController {
 //        }
 //    }
 
+    /**
+     * POST on /daycareworker/apply
+     * @param applicationDTO data transfer object applicationDTO from the request body
+     * @param principal currently logged-in user
+     * @return an array of application information
+     * @throws IOException
+     */
     @PostMapping("/daycareworker/apply")
     public ResponseEntity<ArrayList<Application>> applyForDaycareWorker(@RequestBody ApplicationDTO applicationDTO,
                                         @AuthenticationPrincipal OidcUser principal) throws IOException {

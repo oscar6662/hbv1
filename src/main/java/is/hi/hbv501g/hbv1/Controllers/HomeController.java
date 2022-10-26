@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+/**
+ * Controller for Homecontroller logic.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
@@ -58,6 +61,11 @@ public class HomeController {
 //        return "home";
 //    }
 
+    /**
+     * GET on/daycareworkers
+     * @param locationCode the chosen location
+     * @return List of daycareworkers for the chosen location
+     */
     @GetMapping("/daycareworkers")
     public ResponseEntity<List<DaycareWorker>> getAllDaycareWorkers(@RequestParam(required = false) String locationCode) {
         List<DaycareWorker> daycareWorkers = new ArrayList<>();
@@ -79,6 +87,11 @@ public class HomeController {
         return new ResponseEntity<>(daycareWorkers, HttpStatus.OK);
     }
 
+    /**
+     * GET on /daycareworkers/{id}
+     * @param id daycareworker id
+     * @return daycareworker
+     */
     @GetMapping("/daycareworkers/{id}")
     public ResponseEntity<DaycareWorker> getDaycareWorkerByID(@PathVariable("id") String id) {
         DaycareWorker dcw;
@@ -92,6 +105,12 @@ public class HomeController {
         return new ResponseEntity<>(dcw, HttpStatus.OK);
     }
 
+    /**
+     * POST on /adddaycareworker
+     * @param daycareWorkerDTO data transfer object daycareWorkerDTO from the request body
+     * @return daycareworker added to database
+     * @throws IOException
+     */
     @PostMapping("/adddaycareworker")
     public ResponseEntity<DaycareWorker> addDaycareWorker(@RequestBody DaycareWorkerDTO daycareWorkerDTO) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
@@ -167,7 +186,11 @@ public class HomeController {
     }
 
 
-
+    /**
+     * POST on /createdayreport
+     * @param dayReport the dayreport being created
+     * @return the dayreport
+     */
     @PostMapping("/createdayreport")
     public ResponseEntity<DayReport> createDayReport(@RequestBody DayReportDTO dayReportDTO) {
         try {
@@ -208,6 +231,7 @@ public class HomeController {
 //        daycareWorkerService.delete(daycareWorker);
 //        return "redirect:/";
 //    }
+
     public String create_token() {
         String input = clientId + ":" + clientSecret;
         String encoded = Base64.getEncoder().encodeToString(input.getBytes());

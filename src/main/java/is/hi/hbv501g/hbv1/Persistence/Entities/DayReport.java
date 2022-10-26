@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 /**
  * <pre>
- * DayReport entity. Table "dayreports"
+ * DayReport entity. Table: "dayreports"
  * Information about how the day went for each child after each day.
  * Relations:
  * * ManyToOne with the daycareworkers table.
