@@ -34,6 +34,7 @@ export const CreateChildForm = () => {
       const childCreated = await childResult.json();
       console.log('YAY: ', childCreated);
     }
+    message.success('Nýtt barn búið til, gleðilegt barn!');
     setModal(false);
     form.resetFields();
   };

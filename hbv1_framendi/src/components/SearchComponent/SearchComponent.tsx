@@ -39,6 +39,7 @@ interface DaycareWorker {
   locationCode: Number;
   mobile: string;
   ssn: string;
+  freeSpots: Number;
 }
 
 interface Location {
@@ -129,6 +130,10 @@ export const SearchComponent = (props: Props) => {
     }
   };
 
+  const addChildToWaitingList = async (daycareWorkerId: Number) => {
+    console.log(daycareWorkerId);
+  };
+
   const apply = async (daycareWorkerId: Number) => {
     console.log(children);
     setLoading(true);
@@ -209,54 +214,6 @@ export const SearchComponent = (props: Props) => {
         console.info('Hætt við');
       },
     });
-
-    // let hasMoreThanOne = false;
-    // if (children && children.length > 1) {
-    //   hasMoreThanOne = true;
-    //   Modal.confirm({
-    //     title: 'Veldu barn/börn',
-    //     content: (
-    //       <>
-    //         <Select
-    //           style={{ width: '200px' }}
-    //           optionFilterProp="children"
-    //           mode="multiple"
-    //           size="large"
-    //           onSelect={(e: any) => {
-    //             let temp = selectedChildren;
-    //             selectedChildren.push(e);
-    //             setSelectedChildren(temp);
-    //           }}
-    //           onDeselect={(e: any) => {
-    //             let temp = selectedChildren;
-    //             let index = temp.indexOf(e);
-    //             temp.splice(index, 1);
-    //             setSelectedChildren(temp);
-    //           }}
-    //         >
-    //           {children?.map<any>((child): any => {
-    //             return (
-    //               <Select.Option
-    //                 value={child['id']}
-    //               >{`${child['firstName']} ${child['lastName']}`}</Select.Option>
-    //             );
-    //           })}
-    //         </Select>
-    //       </>
-    //     ),
-    //     onOk() {
-    //       applyForDCW(`/api`)
-    //       console.log(selectedChildren);
-    //     },
-    //     onCancel() {
-    //       setLoading(false);
-    //       console.info('Hætt við');
-    //     },
-    //   });
-    //   return;
-    // }
-
-    // await applyForDCW(url, daycareWorkerId);
   };
 
   return (
@@ -277,6 +234,7 @@ export const SearchComponent = (props: Props) => {
                 size="large"
                 style={{ maxWidth: '200px' }}
                 placeholder="Everywhere"
+                allowClear
               >
                 {locations.map((district, i) => {
                   return (
@@ -352,12 +310,28 @@ export const SearchComponent = (props: Props) => {
                         <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
                       }
                       style={{ paddingLeft: '14px' }}
-                      description="Ég elska að vera dagmamma!"
+                      description={
+                        <>
+                          <p>{`${
+                            item.address || 'Ekkert heimilisfang skráð'
+                          } - ${item.locationCode || ''} | Laus pláss: ${
+                            item.freeSpots
+                          }`}</p>
+                        </>
+                      }
                     />
                     <div style={{ padding: '20px' }}>
                       <Button type="dashed" onClick={() => apply(item.id)}>
                         Sækja um
                       </Button>
+                      {item.freeSpots <= 0 && (
+                        <Button
+                          type="dashed"
+                          onClick={() => addChildToWaitingList(item.id)}
+                        >
+                          Skrá á biðlista
+                        </Button>
+                      )}
                     </div>
                   </List.Item>
                 )}

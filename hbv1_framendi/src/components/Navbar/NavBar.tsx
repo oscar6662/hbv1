@@ -8,12 +8,16 @@ import { CreateChildForm } from '../CreateChildForm/CreateChildForm';
 type Props = {};
 
 export const NavBar = (props: Props) => {
-  const { isLoggedIn, userName, type } = useSelector(authSelector);
+  const { isLoggedIn, userName, type, userId } = useSelector(authSelector);
   return (
     <>
       <div className="navbar">
         <div className="navLogoContainer">
-          <h1 className="logo">PETRA</h1>
+          <h1 className="logo">
+            <a style={{ color: 'black' }} href="/">
+              PETRA
+            </a>
+          </h1>
         </div>
 
         <div className="navMenu">
@@ -52,7 +56,11 @@ export const NavBar = (props: Props) => {
                   !
                 </h3>
                 {type === 'parent' && <CreateChildForm />}
-                {type === 'dcw' && <>Þú ert dcw</>}
+                {type === 'dcw' && (
+                  <Button href={`/daycareworker/${userId}`}>
+                    Fara á mína síðu
+                  </Button>
+                )}
               </div>
             </>
           )}

@@ -2,9 +2,12 @@ package is.hi.hbv501g.hbv1.Controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import is.hi.hbv501g.hbv1.Persistence.DTOs.DayReportDTO;
 import is.hi.hbv501g.hbv1.Persistence.DTOs.DaycareWorkerDTO;
+import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
+import is.hi.hbv501g.hbv1.Services.ChildService;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private DaycareWorkerService daycareWorkerService;
+
+    @Autowired
+    private ChildService childService;
 
     @Value("${spring.security.oauth2.client.registration.auth0.client-id}")
     private String clientId;
@@ -163,8 +169,13 @@ public class HomeController {
 
 
     @PostMapping("/createdayreport")
-    public ResponseEntity<DayReport> createDayReport(@RequestBody DayReport dayReport) {
+    public ResponseEntity<DayReport> createDayReport(@RequestBody DayReportDTO dayReportDTO) {
         try {
+            DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(dayReportDTO.getDcwId());
+            Child c = childService.findChildById(dayReportDTO.getChildId());
+
+            DayReport dayReport = new DayReport(dayReportDTO.getSleepFrom(), dayReportDTO.getSleepTo(), dayReportDTO.getAppetite(), dayReportDTO.getComment(), dcw, c);
+
             daycareWorkerService.createDayReport(dayReport);
 
             if (dayReport == null) {

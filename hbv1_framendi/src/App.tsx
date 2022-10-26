@@ -7,6 +7,7 @@ import Home from './pages/home/Home';
 import Auth from './pages/auth/Auth';
 import Register from './pages/register/Register';
 import Apply from './pages/apply/Apply';
+import DayCareWorkerPage from './pages/daycareworkerpage/DayCareWorkerPage';
 import { useEffect } from 'react';
 import { useAppDispatch } from './stores/mainStore';
 
@@ -22,7 +23,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Register />} />
-        {/* <Route path="/apply/:id" element={<Apply />} /> */}
+        <Route path="/daycareworker/:id" element={<DayCareWorkerPage />} />
       </Routes>
     </div>
   );

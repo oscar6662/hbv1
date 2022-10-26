@@ -44,7 +44,7 @@ export const DayCareWorkerSignup = ({ locations, loading }: Props) => {
       message.error('Failed');
     } else {
       const registeredDCW = await register.json();
-      console.log(registeredDCW);
+      window.location.replace('/');
     }
 
     setFormLoading(false);

@@ -33,8 +33,9 @@ export const ParentSignUp = () => {
     if (!register.ok) {
       message.error('Failed');
     } else {
-      const registeredDCW = await register.json();
-      console.log('YAY: ', registeredDCW);
+      const registeredParent = await register.json();
+      message.success('Nýr foreldraaðgangur búinn til');
+      window.location.replace('/');
     }
 
     setLoading(false);
