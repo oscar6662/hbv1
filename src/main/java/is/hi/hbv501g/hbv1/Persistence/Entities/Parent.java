@@ -1,6 +1,8 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class Parent {
     private Relation relation;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Child> children = new ArrayList<>();
 
     public Parent(

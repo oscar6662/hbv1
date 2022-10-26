@@ -12,7 +12,7 @@ export const CreateChildForm = () => {
   const [loading, setLoading] = useState(false);
 
   const handleConfirm = async (values: any) => {
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     setLoading(true);
     const options = {
@@ -38,7 +38,7 @@ export const CreateChildForm = () => {
       console.log('YAY: ', childCreated);
     }
     message.success('Nýtt barn búið til, gleðilegt barn!');
-    dispatch(fetchUser());
+    // dispatch(fetchUser());
     setModal(false);
     form.resetFields();
   };

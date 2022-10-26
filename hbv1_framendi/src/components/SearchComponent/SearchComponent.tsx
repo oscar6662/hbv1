@@ -51,12 +51,13 @@ const link = 'http://localhost:8080';
 
 export const SearchComponent = (props: Props) => {
   const [form] = Form.useForm();
+  const [applicationForm] = Form.useForm();
   const [data, setData] = useState<DaycareWorker[] | []>([]);
   const [locations, setLocations] = useState<Location[] | []>([]);
   const [location, setLocation] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
-  const [selectedChildren, setSelectedChildren] = useState<any | undefined>([]);
+  const [selectedChild, setSelectedChild] = useState<Number | undefined>();
 
   const { isLoggedIn, children, userId, type } = useSelector(authSelector);
 
@@ -97,16 +98,24 @@ export const SearchComponent = (props: Props) => {
     setLoading(false);
   };
 
+  const handleSelectChild = (e: Number) => {
+    setSelectedChild(e);
+  };
+
   const handleOnFinish = async (values: { location: string }) => {
     const { location } = values;
     setLocation(location);
   };
 
-  const applyForDCW = async (url: any, daycareWorkerId: Number) => {
+  const addChildToWaitingList = async (daycareWorkerId: Number) => {
+    console.log(daycareWorkerId);
+  };
+
+  const onFinish = async (values: any) => {
     const body = {
-      daycareWorkerId: daycareWorkerId,
+      daycareWorkerId: values.daycareWorkerId,
       parentId: userId,
-      applicationDateTime: Date.now(),
+      childId: values.childId,
     };
 
     const options = {
@@ -117,8 +126,7 @@ export const SearchComponent = (props: Props) => {
       body: JSON.stringify(body),
     };
 
-    const result = await fetch(url, options);
-    console.log('RES -> ', result);
+    const result = await fetch(`/api/daycareworker/apply`, options);
 
     if (!result.ok) {
       message.error('Eitthvað fór úrskeiðis í umsókninni!');
@@ -126,16 +134,13 @@ export const SearchComponent = (props: Props) => {
       const json = await result.json();
       console.log(json);
       message.success('Umsókn móttekin, jibbí!');
-      setLoading(true);
+      setSelectedChild(undefined);
     }
-  };
-
-  const addChildToWaitingList = async (daycareWorkerId: Number) => {
-    console.log(daycareWorkerId);
+    setLoading(false);
   };
 
   const apply = async (daycareWorkerId: Number) => {
-    console.log(children);
+    setSelectedChild(daycareWorkerId);
     setLoading(true);
     if (!isLoggedIn) {
       message.error('Notandi ekki skráður inn');
@@ -153,61 +158,36 @@ export const SearchComponent = (props: Props) => {
       title: 'Veldu barn/börn',
       content: (
         <>
-          <Select
-            style={{ width: '200px' }}
-            optionFilterProp="children"
-            mode="multiple"
-            size="large"
-            onSelect={(e: any) => {
-              let temp = selectedChildren;
-              selectedChildren.push(e);
-              setSelectedChildren(temp);
-            }}
-            onDeselect={(e: any) => {
-              let temp = selectedChildren;
-              let index = temp.indexOf(e);
-              temp.splice(index, 1);
-              setSelectedChildren(temp);
-            }}
+          <Form
+            form={applicationForm}
+            layout="vertical"
+            name="application"
+            onFinish={onFinish}
           >
-            {children?.map<any>((child): any => {
-              return (
-                <Select.Option
-                  value={child['id']}
-                >{`${child['firstName']} ${child['lastName']}`}</Select.Option>
-              );
-            })}
-          </Select>
+            <Form.Item name="childId">
+              <Select
+                style={{ width: '200px' }}
+                optionFilterProp="children"
+                size="large"
+              >
+                {children?.map<any>((child): any => {
+                  return (
+                    <Select.Option
+                      value={child['id']}
+                    >{`${child['firstName']} ${child['lastName']}`}</Select.Option>
+                  );
+                })}
+              </Select>
+            </Form.Item>
+            <Form.Item name="daycareWorkerId" hidden>
+              <Input style={{ display: 'none' }} />
+            </Form.Item>
+          </Form>
         </>
       ),
-      async onOk() {
-        if (selectedChildren) {
-          const body = {
-            daycareWorkerId: daycareWorkerId,
-            parentId: userId,
-            childrenId: selectedChildren,
-          };
-
-          const options = {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-          };
-
-          const result = await fetch(`/api/daycareworker/apply`, options);
-
-          if (!result.ok) {
-            message.error('Eitthvað fór úrskeiðis í umsókninni!');
-          } else {
-            const json = await result.json();
-            console.log(json);
-            message.success('Umsókn móttekin, jibbí!');
-            setLoading(false);
-            setSelectedChildren([]);
-          }
-        }
+      onOk() {
+        applicationForm.setFieldValue('daycareWorkerId', daycareWorkerId);
+        applicationForm.submit();
       },
       onCancel() {
         setLoading(false);

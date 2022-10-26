@@ -8,12 +8,12 @@ public class ApplicationDTO {
     private Long id;
     private Long daycareWorkerId;
     private Long parentId;
-    private Long[] childrenId;
+    private Long childId;
 
-    public ApplicationDTO(Long daycareWorkerId, Long parentId, Long[] chilrenId) {
+    public ApplicationDTO(Long daycareWorkerId, Long parentId, Long childId) {
         this.daycareWorkerId = daycareWorkerId;
         this.parentId = parentId;
-        this.childrenId = chilrenId;
+        this.childId = childId;
     }
 
     public Long getDaycareWorkerId() {
@@ -29,7 +29,7 @@ public class ApplicationDTO {
         this.parentId = parentId;
     }
 
-    public Long[] getChildrenId() {
-        return childrenId;
+    public Long getChildId() {
+        return childId;
     }
 }

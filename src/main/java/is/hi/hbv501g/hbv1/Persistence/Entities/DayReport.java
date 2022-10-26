@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,9 +30,11 @@ public class DayReport {
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private DaycareWorker daycareWorker;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Child child;
 
     public DayReport() {

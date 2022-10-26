@@ -44,41 +44,37 @@ public class DaycareWorkerController {
 //    }
 
     @PostMapping("/daycareworker/apply")
-    public ResponseEntity<ArrayList<Application>> applyForDaycareWorker(@RequestBody ApplicationDTO applicationDTO,
+    public ResponseEntity<Application> applyForDaycareWorker(@RequestBody ApplicationDTO applicationDTO,
                                         @AuthenticationPrincipal OidcUser principal) throws IOException {
         DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(applicationDTO.getDaycareWorkerId());
 
         ArrayList<Application> arr = new ArrayList<>();
-        int j = 0;
         try {
-            for (Long i: applicationDTO.getChildrenId()) {
-                Child c = childService.findChildById(i);
 
-                if (c.getDaycareWorker() != null) {
-                    continue;
-                }
+            Child c = childService.findChildById(applicationDTO.getChildId());
 
-                if (dcw.getChildrenCount() >= dcw.getMAXCHILDREN()) {
-                    return new ResponseEntity<>(HttpStatus.CONFLICT);
-                }
-
-                j++;
-
-                Application appl = new Application(applicationDTO.getDaycareWorkerId(), applicationDTO.getParentId(), i);
-                daycareWorkerService.applyForDaycareWorker(appl);
-
-                c.setDaycareWorker(dcw);
-
-                arr.add(appl);
+            if (c.getDaycareWorker() != null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            dcw.setChildrenCount(dcw.getChildrenCount() + j);
+            if (dcw.getChildrenCount() >= dcw.getMAXCHILDREN()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
 
-            if (arr.isEmpty()) {
+            Application appl = new Application(applicationDTO.getDaycareWorkerId(), applicationDTO.getParentId(), applicationDTO.getChildId());
+            daycareWorkerService.applyForDaycareWorker(appl);
+
+            dcw.addChildToList(c);
+            daycareWorkerService.addDaycareWorker(dcw);
+
+            c.setDaycareWorker(dcw);
+            childService.save(c);
+
+            if (appl == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(arr, HttpStatus.CREATED);
+            return new ResponseEntity<>(appl, HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

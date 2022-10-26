@@ -1,5 +1,6 @@
 import { Button, Form, Input, message, Modal, Radio, TimePicker } from 'antd';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 type Props = {
   child: any;
@@ -12,12 +13,43 @@ export const DayReportForm = ({ child }: Props) => {
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleConfirm = async (values: any) => {
-    //   setLoading(true);
+  const { id } = useParams();
 
-    console.log(values);
-    //   setModal(false);
-    //   form.resetFields();
+  const handleConfirm = async (values: any) => {
+    setLoading(true);
+
+    const sleepFrom = values.sleepFrom._d;
+    const sleepTo = values.sleepTo._d;
+
+    const body = {
+      sleepFrom: sleepFrom,
+      sleepTo: sleepTo,
+      comment: values.comment,
+      appetite: values.appetite,
+      childId: child.id,
+      dcwId: id,
+    };
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    };
+
+    const result = await fetch(`/api/createdayreport`, options);
+
+    if (!result.ok) {
+      message.error('Eitthvað fór úrskeiðis í meðöndlun gagna!');
+    } else {
+      const json = await result.json();
+      console.log(json);
+      message.success('Dayreport skráð, jibbí!');
+    }
+
+    setModal(false);
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo: any) => {

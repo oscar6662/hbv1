@@ -15,7 +15,7 @@ const childrenX = [
 ];
 
 const DayCareWorkerPage = (props: Props) => {
-  const { userName, type, userId, children } = useSelector(authSelector);
+  const { userName, type, userId, children }: any = useSelector(authSelector);
 
   return (
     <>
@@ -23,7 +23,7 @@ const DayCareWorkerPage = (props: Props) => {
 
       <div className="searchComponent">
         <div className="searchContentContainer">
-          {childrenX?.map((child) => {
+          {children?.map((child: any) => {
             return (
               <div
                 key={`child-${child.id}`}

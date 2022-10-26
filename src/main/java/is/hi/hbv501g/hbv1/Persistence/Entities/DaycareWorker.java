@@ -47,6 +47,7 @@ public class DaycareWorker {
     private List<Child> waitingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<DayReport> dayReports = new ArrayList<>();
 
     public DaycareWorker() {
@@ -206,5 +207,10 @@ public class DaycareWorker {
 
     public void setWaitingList(List<Child> waitingList) {
         this.waitingList = waitingList;
+    }
+
+    public void addChildToList(Child child) {
+        this.childrenCount++;
+        this.children.add(child);
     }
 }
