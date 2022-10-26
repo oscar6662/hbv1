@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, message, Form, Input } from 'antd';
 import { useSelector } from 'react-redux';
-import { authSelector } from '../../stores/auth.slice';
+import { authSelector, fetchUser } from '../../stores/auth.slice';
+import { useAppDispatch } from '../../stores/mainStore';
 
 export const CreateChildForm = () => {
   const { userId } = useSelector(authSelector);
@@ -11,6 +12,8 @@ export const CreateChildForm = () => {
   const [loading, setLoading] = useState(false);
 
   const handleConfirm = async (values: any) => {
+    const dispatch = useAppDispatch();
+
     setLoading(true);
     const options = {
       method: 'POST',
@@ -35,6 +38,7 @@ export const CreateChildForm = () => {
       console.log('YAY: ', childCreated);
     }
     message.success('Nýtt barn búið til, gleðilegt barn!');
+    dispatch(fetchUser());
     setModal(false);
     form.resetFields();
   };
