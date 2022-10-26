@@ -44,7 +44,7 @@ public class DaycareWorker {
     private List<Child> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Child> waitingList = new ArrayList<>();
+    private List<Application> waitingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DayReport> dayReports = new ArrayList<>();
@@ -200,11 +200,11 @@ public class DaycareWorker {
         this.locationCode = locationCode;
     }
 
-    public List<Child> getWaitingList() {
+    public List<Application> getWaitingList() {
         return waitingList;
     }
 
-    public void setWaitingList(List<Child> waitingList) {
+    public void setWaitingList(List<Application> waitingList) {
         this.waitingList = waitingList;
     }
 }
