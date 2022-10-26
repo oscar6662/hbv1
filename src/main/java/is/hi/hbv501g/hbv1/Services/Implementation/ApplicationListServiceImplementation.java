@@ -13,6 +13,7 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 public class ApplicationListServiceImplementation implements ApplicationListService {
     public List<Child> getApplicationList(DaycareWorker dcw) {
         List<Child> list = new ArrayList<Child>();
+        //put something
         return list;
     }
     
