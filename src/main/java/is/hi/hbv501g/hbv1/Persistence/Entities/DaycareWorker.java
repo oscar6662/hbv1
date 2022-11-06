@@ -43,7 +43,7 @@ public class DaycareWorker {
     @JsonManagedReference
     private List<Child> children = new ArrayList<>();
 
-    @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "daycareWorkerId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Application> waitingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
