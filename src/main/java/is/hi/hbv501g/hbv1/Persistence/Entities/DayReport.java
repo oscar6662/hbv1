@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,7 +9,7 @@ import java.time.LocalDateTime;
 
 /**
  * <pre>
- * DayReport entity. Table "dayreports"
+ * DayReport entity. Table: "dayreports"
  * Information about how the day went for each child after each day.
  * Relations:
  * * ManyToOne with the daycareworkers table.
@@ -28,9 +30,11 @@ public class DayReport {
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private DaycareWorker daycareWorker;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Child child;
 
     public DayReport() {

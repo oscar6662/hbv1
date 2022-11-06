@@ -1,6 +1,8 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,11 @@ public class Parent {
     private String lastName;
     private String email;
     private String mobile;
+    private String auth0Id;
     private Relation relation;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Child> children = new ArrayList<>();
 
     public Parent(
@@ -37,6 +41,7 @@ public class Parent {
             String lastName,
             String mobile,
             String email,
+            String auth0Id,
             Relation relation) {
 
         this.ssn = ssn;
@@ -44,6 +49,7 @@ public class Parent {
         this.lastName = lastName;
         this.mobile = mobile;
         this.email = email;
+        this.auth0Id = auth0Id;
         this.relation = relation;
     }
 
@@ -90,6 +96,10 @@ public class Parent {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+    
+    public String getType() {
+        return "parent";
+    }
 
     public String getEmail() {
         return email;
@@ -98,6 +108,8 @@ public class Parent {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getAuth0Id() {return auth0Id;}
 
     public Relation getRelation() {
         return relation;

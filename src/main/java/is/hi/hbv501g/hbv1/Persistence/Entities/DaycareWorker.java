@@ -1,5 +1,6 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class DaycareWorker {
     private String lastName;
     private String mobile;
     private String email;
+    private String auth0Id;
     private int experienceInYears;
     private String address;
     private String location;
@@ -38,12 +40,14 @@ public class DaycareWorker {
     private int childrenCount = 0;
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Child> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Child> waitingList = new ArrayList<>();
+    private List<Application> waitingList = new ArrayList<>();
 
     @OneToMany(mappedBy = "daycareWorker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<DayReport> dayReports = new ArrayList<>();
 
     public DaycareWorker() {
@@ -55,22 +59,31 @@ public class DaycareWorker {
             String lastName,
             String mobile,
             String email,
+            String auth0Id,
             int experienceInYears,
             String address,
             String location,
-            String locationCode,
-            String email
+            String locationCode
     ) {
         this.ssn = ssn;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobile = mobile;
         this.email = email;
+        this.auth0Id = auth0Id;
         this.experienceInYears = experienceInYears;
         this.address = address;
         this.location = location;
         this.locationCode = locationCode;
         this.email = email;
+    }
+
+    public String getAuth0Id() {
+        return auth0Id;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public int getFreeSpots() {
@@ -101,12 +114,8 @@ public class DaycareWorker {
         return id;
     }
 
-    public String getPassword() {
-        return "maria";
-    }
-
-    public String getEmail() {
-        return email;
+    public String getType() {
+        return "dcw";
     }
 
     public void setId(Long id) {
@@ -147,10 +156,6 @@ public class DaycareWorker {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<Child> getChildren() {
@@ -197,11 +202,16 @@ public class DaycareWorker {
         this.locationCode = locationCode;
     }
 
-    public List<Child> getWaitingList() {
+    public List<Application> getWaitingList() {
         return waitingList;
     }
 
-    public void setWaitingList(List<Child> waitingList) {
+    public void setWaitingList(List<Application> waitingList) {
         this.waitingList = waitingList;
+    }
+
+    public void addChildToList(Child child) {
+        this.childrenCount++;
+        this.children.add(child);
     }
 }

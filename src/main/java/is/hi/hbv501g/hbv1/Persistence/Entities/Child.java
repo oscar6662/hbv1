@@ -1,5 +1,9 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +32,15 @@ public class Child {
     private String lastName;
 
     @ManyToOne(fetch=FetchType.LAZY)
+    @JsonBackReference
     private DaycareWorker daycareWorker;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Parent parent;
 
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<DayReport> dayReports = new ArrayList<>();
 
     public Child() {

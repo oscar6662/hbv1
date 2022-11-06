@@ -1,0 +1,35 @@
+.loginSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // height: 100vh;
+}
+
+.loginContainer {
+  margin: 50px 0;
+  box-shadow: 1px 1px 15px -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  // height: 400px;
+  background-color: #d1d1d1;
+  border-radius: 15px;
+}
+
+// .loginForm {
+//   width: 100%;
+// }
+
+.loginItem {
+  //   display: flex;
+  // margin: 16px;
+  padding: 10px;
+  width: 80%;
+}
+
+.loginBtn {
+  width: 100%;
+  margin-top: 8px;
+}

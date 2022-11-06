@@ -15,4 +15,5 @@ public interface ChildService {
     void delete(Child child);
     List<Child> findByParents(Parent parent);
     List<Child> findByDaycareWorker(DaycareWorker daycareWorker);
+    Child findChildById(Long id);
 }

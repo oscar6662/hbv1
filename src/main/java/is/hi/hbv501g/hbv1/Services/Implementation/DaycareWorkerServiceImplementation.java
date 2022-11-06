@@ -1,33 +1,34 @@
 package is.hi.hbv501g.hbv1.Services.Implementation;
 
-import is.hi.hbv501g.hbv1.Persistence.Entities.Appetite;
-import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
+import is.hi.hbv501g.hbv1.Persistence.Entities.Application;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DayReportRepository;
+import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerApplicationRepository;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerRepository;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-
 /**
- * The main service used by routes that handle Daycare Workers.  It uses the
+ * The main service used by routes that handle Daycare Workers. It uses the
  * DaycareWorker repository as well as the DayReport repository.
  */
 @Service
 public class DaycareWorkerServiceImplementation implements DaycareWorkerService {
-//    private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();
+    // private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();
     private DaycareWorkerRepository daycareWorkerRepository;
+    private DaycareWorkerApplicationRepository daycareWorkerApplicationRepository;
     private DayReportRepository dayReportRepository;
 
     @Autowired
-    public DaycareWorkerServiceImplementation(DaycareWorkerRepository daycareWorkerRepository) {
+    public DaycareWorkerServiceImplementation(DaycareWorkerRepository daycareWorkerRepository,
+                                              DaycareWorkerApplicationRepository daycareWorkerApplicationRepository, DayReportRepository dayReportRepository) {
         this.daycareWorkerRepository = daycareWorkerRepository;
+        this.daycareWorkerApplicationRepository = daycareWorkerApplicationRepository;
+        this.dayReportRepository = dayReportRepository;
     }
 
     @Override
@@ -52,6 +53,11 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
+    public Application applyForDaycareWorker(Application application) {
+        return daycareWorkerApplicationRepository.save(application);
+    }
+
+    @Override
     public List<DaycareWorker> findAll() {
         return daycareWorkerRepository.findAll();
     }
@@ -71,5 +77,4 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     public void delete(DaycareWorker daycareWorker) {
         daycareWorkerRepository.delete(daycareWorker);
     }
-
 }
