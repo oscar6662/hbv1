@@ -5,6 +5,10 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.Severity;
 
 import java.time.LocalDateTime;
 
+/**
+ * Helper Object for working with request bodies for alerts
+ */
+
 public class AlertDTO {
     private LocalDateTime timestamp;
     private Severity severity;
