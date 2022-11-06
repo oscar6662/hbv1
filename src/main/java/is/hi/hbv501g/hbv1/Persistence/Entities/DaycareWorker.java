@@ -85,6 +85,10 @@ public class DaycareWorker {
         this.fullName = fullName;
     }
 
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
+
     public int getFreeSpots() {
         return MAXCHILDREN - childrenCount;
     }

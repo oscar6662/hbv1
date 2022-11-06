@@ -91,6 +91,7 @@ export const SearchComponent = (props: Props) => {
 
     if (daycareWorkers.ok && daycareWorkers.status !== 204) {
       const json = await daycareWorkers.json();
+      console.log('json', json);
       setData(json);
     } else {
       setData([]);
@@ -287,16 +288,16 @@ export const SearchComponent = (props: Props) => {
                     <List.Item.Meta
                       avatar={<Avatar icon={<UserOutlined />} />}
                       title={
-                        <a href="https://ant.design">{`${item.firstName} ${item.lastName}`}</a>
+                        <a href="https://ant.design">{`${item.fullName}`}</a>
                       }
                       style={{ paddingLeft: '14px' }}
                       description={
                         <>
                           <p>{`${
                             item.address || 'Ekkert heimilisfang skráð'
-                          } - ${item.locationCode || ''} | Laus pláss: ${
-                            item.freeSpots
-                          }`}</p>
+                          } | ${
+                            item.locationCode + ' ' + item.location || ''
+                          } | Laus pláss: ${item.freeSpots}`}</p>
                         </>
                       }
                     />

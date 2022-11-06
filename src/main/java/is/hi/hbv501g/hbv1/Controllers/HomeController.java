@@ -7,6 +7,7 @@ import is.hi.hbv501g.hbv1.Persistence.DTOs.DaycareWorkerDTO;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
+import is.hi.hbv501g.hbv1.Persistence.Simpletons.SimpleDCW;
 import is.hi.hbv501g.hbv1.Services.ChildService;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import net.minidev.json.JSONObject;
@@ -64,27 +65,33 @@ public class HomeController {
     /**
      * GET on/daycareworkers
      * @param locationCode the chosen location
-     * @return List of daycareworkers for the chosen location
+     * @return List of Daycare Workers for the chosen location if location is provided, otherwise all Daycare Workers
      */
     @GetMapping("/daycareworkers")
-    public ResponseEntity<List<DaycareWorker>> getAllDaycareWorkers(@RequestParam(required = false) String locationCode) {
-        List<DaycareWorker> daycareWorkers = new ArrayList<>();
+    public ResponseEntity<List<SimpleDCW>> getAllDaycareWorkers(@RequestParam(required = false) String locationCode) {
+        List<SimpleDCW> dcws = new ArrayList<>();
         try {
 
             if (locationCode == null)
-                daycareWorkerService.findAll().forEach(daycareWorkers::add);
+                daycareWorkerService.findAll().forEach(dcw -> {
+                    SimpleDCW simple = SimpleDCW.createSimpleDCW(dcw);
+                    dcws.add(simple);
+                });
             else
-                daycareWorkerService.findByLocationCode(locationCode).forEach(daycareWorkers::add);
+                daycareWorkerService.findByLocationCode(locationCode).forEach(dcw -> {
+                    SimpleDCW simple = SimpleDCW.createSimpleDCW(dcw);
+                    dcws.add(simple);
+                });
 
 
-            if (daycareWorkers.isEmpty()) {
+            if (dcws.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(daycareWorkers, HttpStatus.OK);
+        return new ResponseEntity<>(dcws, HttpStatus.OK);
     }
 
     /**
