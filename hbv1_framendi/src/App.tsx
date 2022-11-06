@@ -10,6 +10,7 @@ import Apply from './pages/apply/Apply';
 import DayCareWorkerPage from './pages/daycareworkerpage/DayCareWorkerPage';
 import { useEffect } from 'react';
 import { useAppDispatch } from './stores/mainStore';
+import ParentPage from './pages/parentpage/ParentPage';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Register />} />
         <Route path="/daycareworker/:id" element={<DayCareWorkerPage />} />
+        <Route path="/parent/:id" element={<ParentPage />} />
       </Routes>
     </div>
   );

@@ -5,10 +5,13 @@ import { useSelector } from 'react-redux';
 import { authSelector } from '../../stores/auth.slice';
 import { CreateChildForm } from '../CreateChildForm/CreateChildForm';
 
-type Props = {};
+type Props = {
+  isOnMyPage?: boolean;
+};
 
-export const NavBar = (props: Props) => {
+export const NavBar = ({ isOnMyPage }: Props) => {
   const { isLoggedIn, userName, type, userId } = useSelector(authSelector);
+
   return (
     <>
       <div className="navbar">
@@ -55,9 +58,27 @@ export const NavBar = (props: Props) => {
                   </span>
                   !
                 </h3>
-                {type === 'parent' && <CreateChildForm />}
+                {type === 'parent' && (
+                  <>
+                    <CreateChildForm />
+                    <Button
+                      className="navMenuItem"
+                      type="primary"
+                      size="large"
+                      href={`/parent/${userId}`}
+                      disabled={isOnMyPage}
+                    >
+                      Fara á mína síðu
+                    </Button>
+                  </>
+                )}
                 {type === 'dcw' && (
-                  <Button href={`/daycareworker/${userId}`}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    className="navMenuItem"
+                    href={`/daycareworker/${userId}`}
+                  >
                     Fara á mína síðu
                   </Button>
                 )}

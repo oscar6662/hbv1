@@ -1,28 +1,19 @@
 import { Button } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { DayReportForm } from '../../components/DayReportForm/DayReportForm';
 import { NavBar } from '../../components/Navbar/NavBar';
-import useOnLoadFetch from '../../hooks/useOnLoadFetch';
 import { authSelector } from '../../stores/auth.slice';
 
 type Props = {};
 
-const childrenX = [
-  { firstName: 'Einsi', id: 8 },
-  { firstName: 'Einsi5000', id: 9 },
-];
-
-const DayCareWorkerPage = (props: Props) => {
+const ParentPage = (props: Props) => {
   const { userName, type, userId, children }: any = useSelector(authSelector);
-
   return (
     <>
       <NavBar isOnMyPage />
 
       <div style={{ textAlign: 'center', margin: '50px' }}>
-        <h1>Heimasvæði dagforeldris!</h1>
+        <h1>Heimasvæði foreldris!</h1>
       </div>
 
       <div className="searchComponent">
@@ -41,7 +32,8 @@ const DayCareWorkerPage = (props: Props) => {
                 }}
               >
                 <h2>{child.firstName}</h2>
-                <DayReportForm child={child} />
+
+                <Button type="dashed">Tilkynna veikindi</Button>
               </div>
             );
           })}
@@ -51,4 +43,4 @@ const DayCareWorkerPage = (props: Props) => {
   );
 };
 
-export default DayCareWorkerPage;
+export default ParentPage;
