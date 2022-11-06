@@ -4,6 +4,7 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.Appetite;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Application;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
+import is.hi.hbv501g.hbv1.Persistence.Entities.Alert;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public interface DaycareWorkerService {
     DayReport createDayReport(DayReport dayReport);
     Application applyForDaycareWorker(Application application);
     void delete(DaycareWorker daycareWorker);
+    Alert createAlert(Alert alert);
 }
 
 

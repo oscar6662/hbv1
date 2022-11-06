@@ -2,11 +2,10 @@ package is.hi.hbv501g.hbv1.Controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import is.hi.hbv501g.hbv1.Persistence.DTOs.AlertDTO;
 import is.hi.hbv501g.hbv1.Persistence.DTOs.DayReportDTO;
 import is.hi.hbv501g.hbv1.Persistence.DTOs.DaycareWorkerDTO;
-import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
+import is.hi.hbv501g.hbv1.Persistence.Entities.*;
 import is.hi.hbv501g.hbv1.Persistence.Simpletons.SimpleDCW;
 import is.hi.hbv501g.hbv1.Services.ChildService;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
@@ -22,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -195,7 +195,7 @@ public class HomeController {
 
     /**
      * POST on /createdayreport
-     * @param dayReport the dayreport being created
+     * @param dayReportDTO the dayreport being created
      * @return the dayreport
      */
     @PostMapping("/createdayreport")
@@ -218,6 +218,33 @@ public class HomeController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * POST on /createAlert
+     * @param alertDTO the alert being created
+     * @return the alert
+     */
+    @PostMapping("/createAlert")
+    public ResponseEntity<Alert> createAlert(@RequestBody AlertDTO alertDTO) {
+        try {
+            DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(alertDTO.getDcwId());
+            Child c = childService.findChildById(alertDTO.getChildId());
+
+            Alert alert = new Alert(alertDTO.getTimestamp(), alertDTO.getSeverity(), alertDTO.getTitle(), alertDTO.getDescription(), dcw, c);
+
+            daycareWorkerService.createAlert(alert);
+
+            if (alert == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(alert, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 //    @RequestMapping(value = "/addDaycareworker", method = RequestMethod.GET)
 //    public String addDaycareWorkerForm(DaycareWorker daycareWorker){

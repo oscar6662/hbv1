@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -21,6 +23,14 @@ public class Alert {
     private String title;
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private DaycareWorker daycareWorker;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Child child;
+
     public Alert() {
     }
 
@@ -28,11 +38,15 @@ public class Alert {
             LocalDateTime timestamp,
             Severity severity,
             String title,
-            String description) {
+            String description,
+            DaycareWorker daycareWorker,
+            Child child) {
         this.timestamp = timestamp;
         this.severity = severity;
         this.title = title;
         this.description = description;
+        this.daycareWorker = daycareWorker;
+        this.child = child;
     }
 
     public Severity getSeverity() {
@@ -73,5 +87,21 @@ public class Alert {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
+    }
+
+    public DaycareWorker getDaycareWorker() {
+        return daycareWorker;
+    }
+
+    public void setDaycareWorker(DaycareWorker daycareWorker) {
+        this.daycareWorker = daycareWorker;
     }
 }

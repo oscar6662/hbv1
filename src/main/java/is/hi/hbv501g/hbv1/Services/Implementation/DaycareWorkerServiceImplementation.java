@@ -1,8 +1,10 @@
 package is.hi.hbv501g.hbv1.Services.Implementation;
 
+import is.hi.hbv501g.hbv1.Persistence.Entities.Alert;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Application;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
+import is.hi.hbv501g.hbv1.Persistence.Repositories.AlertRepository;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DayReportRepository;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerApplicationRepository;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerRepository;
@@ -22,13 +24,15 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     private DaycareWorkerRepository daycareWorkerRepository;
     private DaycareWorkerApplicationRepository daycareWorkerApplicationRepository;
     private DayReportRepository dayReportRepository;
+    private AlertRepository alertRepository;
 
     @Autowired
     public DaycareWorkerServiceImplementation(DaycareWorkerRepository daycareWorkerRepository,
-                                              DaycareWorkerApplicationRepository daycareWorkerApplicationRepository, DayReportRepository dayReportRepository) {
+                                              DaycareWorkerApplicationRepository daycareWorkerApplicationRepository, DayReportRepository dayReportRepository, AlertRepository alertRepository) {
         this.daycareWorkerRepository = daycareWorkerRepository;
         this.daycareWorkerApplicationRepository = daycareWorkerApplicationRepository;
         this.dayReportRepository = dayReportRepository;
+        this.alertRepository = alertRepository;
     }
 
     @Override
@@ -70,6 +74,11 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     @Override
     public DayReport createDayReport(DayReport dayReport) {
         return dayReportRepository.save(dayReport);
+    }
+
+    @Override
+    public Alert createAlert(Alert alert) {
+        return alertRepository.save(alert);
     }
 
     @Override
