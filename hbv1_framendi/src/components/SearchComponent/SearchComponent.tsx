@@ -119,6 +119,8 @@ export const SearchComponent = (props: Props) => {
       childId: values.childId,
     };
 
+    console.log(values);
+
     const options = {
       method: 'POST',
       headers: {

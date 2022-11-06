@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class Child {
 
     private String firstName;
     private String lastName;
+    private LocalDate sicknessDay;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JsonBackReference
@@ -114,6 +116,14 @@ public class Child {
 
     public void setParent(Parent parent) {
         this.parent = parent;
+    }
+
+    public LocalDate getSicknessDay() {
+        return sicknessDay;
+    }
+
+    public void setSicknessDay(LocalDate sicknessDay) {
+        this.sicknessDay = sicknessDay;
     }
 }
 

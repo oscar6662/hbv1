@@ -6,6 +6,7 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
  * Simplyfied Daycare Worker Object to be used for client side.
  */
 public class SimpleDCW {
+    private Long id;
     private String fullName;
     private String email;
     private String address;
@@ -14,7 +15,8 @@ public class SimpleDCW {
     private int freeSpots;
     private int experienceInYears;
 
-    public SimpleDCW(String fullName, String email, String address, String location, String locationCode, int freeSpots, int experienceInYears) {
+    public SimpleDCW(Long id, String fullName, String email, String address, String location, String locationCode, int freeSpots, int experienceInYears) {
+        this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.address = address;
@@ -22,6 +24,14 @@ public class SimpleDCW {
         this.locationCode = locationCode;
         this.freeSpots = freeSpots;
         this.experienceInYears = experienceInYears;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -88,6 +98,7 @@ public class SimpleDCW {
      */
     public static SimpleDCW createSimpleDCW(DaycareWorker dcw) {
         SimpleDCW simple = new SimpleDCW(
+                dcw.getId(),
                 dcw.getFullName(),
                 dcw.getEmail(),
                 dcw.getAddress(),

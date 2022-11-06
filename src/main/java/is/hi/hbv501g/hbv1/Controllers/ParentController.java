@@ -23,6 +23,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,6 +200,23 @@ public class ParentController {
             child.setParent(parent);
             childService.save(child);
             return new ResponseEntity<>(child, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/notifysickleave")
+    public ResponseEntity<String> notifySickLeave(@RequestBody Long childId) {
+        LocalDate today = LocalDate.now();
+
+        System.out.println(childId);
+        System.out.println(childId.getClass());
+
+        try {
+            Child c = childService.findChildById(childId);
+            c.setSicknessDay(today);
+            childService.save(c);
+            return new ResponseEntity<>("Success", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

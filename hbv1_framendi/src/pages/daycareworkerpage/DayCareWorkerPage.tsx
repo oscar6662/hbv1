@@ -9,6 +9,8 @@ import { authSelector } from '../../stores/auth.slice';
 
 type Props = {};
 
+const today = new Date().getUTCDate();
+
 const childrenX = [
   { firstName: 'Einsi', id: 8 },
   { firstName: 'Einsi5000', id: 9 },
@@ -42,6 +44,10 @@ const DayCareWorkerPage = (props: Props) => {
               >
                 <h2>{child.firstName}</h2>
                 <DayReportForm child={child} />
+
+                {new Date(child.sicknessDay).getUTCDate() === today && (
+                  <h3 style={{ color: 'red' }}>Veikindi</h3>
+                )}
               </div>
             );
           })}
