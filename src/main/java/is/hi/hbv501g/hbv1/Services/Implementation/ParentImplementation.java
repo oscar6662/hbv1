@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 /**
- * Service for routes that handle Parents.  It uses Parent and Child repository.
+ * Service for routes that handle Parents. It uses Parent and Child repository.
  */
 @Service
-public class ParentImplementation  implements ParentService {
+public class ParentImplementation implements ParentService {
     private ParentRepository parentRepository;
     private ChildRepository childRepository;
 
@@ -35,7 +35,12 @@ public class ParentImplementation  implements ParentService {
     public Parent findParentById(Long id) {
         return parentRepository.findParentById(id);
     }
-    
+
+    @Override
+    public boolean findBySsn(Long ssn) {
+        return parentRepository.findBySsn(ssn).isPresent();
+    }
+
     @Override
     public Parent findParentByEmail(String email) {
         return parentRepository.findParentByEmail(email);

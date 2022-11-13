@@ -55,6 +55,7 @@ public class ParentController {
 
     /**
      * GET on /parents
+     * 
      * @return List of all parents
      */
     @GetMapping("/parents")
@@ -76,6 +77,7 @@ public class ParentController {
 
     /**
      * GET on /parent/{auth0ID}
+     * 
      * @param auth0Id the parents auth0ID
      * @return the parent
      */
@@ -88,6 +90,30 @@ public class ParentController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(parent, HttpStatus.OK);
+    }
+
+    /**
+     * GET on /daycareworkerexists/{id}
+     * 
+     * @param id daycareworker id
+     * @return boolean
+     */
+    @GetMapping("/parentexists/{id}")
+    public boolean parentexists(@PathVariable("id") String id) {
+        boolean parent;
+        try {
+            Long idAsLong = Long.parseLong(id);
+            System.out.println("askdj");
+            parent = parentService.findBySsn(idAsLong);
+            System.out.println(parent);
+            if (parent) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     // @GetMapping("/daycareworkers/{id}")
@@ -106,6 +132,7 @@ public class ParentController {
 
     /**
      * POST on /createparent
+     * 
      * @param parentDTO data transfer object parentDTO from the request body
      * @return parent created
      * @throws IOException
@@ -185,7 +212,9 @@ public class ParentController {
 
     /**
      * POST on /createchild
-     * @param parentChildDTO data transfer object parentChildDTO from the request body
+     * 
+     * @param parentChildDTO data transfer object parentChildDTO from the request
+     *                       body
      * @return the child created
      */
     @PostMapping("/createchild")

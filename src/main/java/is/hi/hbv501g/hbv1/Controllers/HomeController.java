@@ -49,23 +49,25 @@ public class HomeController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-//    public HomeController(DaycareWorkerService daycareWorkerService) {
-//        this.daycareWorkerService = daycareWorkerService;
-//    }
-//
-//    public HomeController() {
-//    }
-//    public String homePage(Model model){
-//
-//        List<DaycareWorker> daycareWorkers = daycareWorkerService.findAll();
-//        model.addAttribute("daycareworkers", daycareWorkers);
-//        return "home";
-//    }
+    // public HomeController(DaycareWorkerService daycareWorkerService) {
+    // this.daycareWorkerService = daycareWorkerService;
+    // }
+    //
+    // public HomeController() {
+    // }
+    // public String homePage(Model model){
+    //
+    // List<DaycareWorker> daycareWorkers = daycareWorkerService.findAll();
+    // model.addAttribute("daycareworkers", daycareWorkers);
+    // return "home";
+    // }
 
     /**
      * GET on/daycareworkers
+     * 
      * @param locationCode the chosen location
-     * @return List of Daycare Workers for the chosen location if location is provided, otherwise all Daycare Workers
+     * @return List of Daycare Workers for the chosen location if location is
+     *         provided, otherwise all Daycare Workers
      */
     @GetMapping("/daycareworkers")
     public ResponseEntity<List<SimpleDCW>> getAllDaycareWorkers(@RequestParam(required = false) String locationCode) {
@@ -83,7 +85,6 @@ public class HomeController {
                     dcws.add(simple);
                 });
 
-
             if (dcws.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -96,6 +97,7 @@ public class HomeController {
 
     /**
      * GET on /daycareworkers/{id}
+     * 
      * @param id daycareworker id
      * @return daycareworker
      */
@@ -113,19 +115,43 @@ public class HomeController {
     }
 
     /**
+     * GET on /daycareworkerexists/{id}
+     * 
+     * @param id daycareworker id
+     * @return boolean
+     */
+    @GetMapping("/daycareworkerexists/{id}")
+    public boolean daycareworkerexists(@PathVariable("id") String id) {
+        DaycareWorker dcw;
+        try {
+            Long idAsLong = Long.parseLong(id);
+            dcw = daycareWorkerService.findDaycareWorkerBySsn(idAsLong);
+            if (dcw == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
+    /**
      * POST on /adddaycareworker
-     * @param daycareWorkerDTO data transfer object daycareWorkerDTO from the request body
+     * 
+     * @param daycareWorkerDTO data transfer object daycareWorkerDTO from the
+     *                         request body
      * @return daycareworker added to database
      * @throws IOException
      */
     @PostMapping("/adddaycareworker")
-    public ResponseEntity<DaycareWorker> addDaycareWorker(@RequestBody DaycareWorkerDTO daycareWorkerDTO) throws IOException {
+    public ResponseEntity<DaycareWorker> addDaycareWorker(@RequestBody DaycareWorkerDTO daycareWorkerDTO)
+            throws IOException {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
-
 
         // Signup logic for auth0
         JSONObject json = new JSONObject();
@@ -138,8 +164,9 @@ public class HomeController {
 
         String result = "";
         try {
-            result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/dbconnections/signup", entity, String.class);
-        } catch(HttpClientErrorException err) {
+            result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/dbconnections/signup", entity,
+                    String.class);
+        } catch (HttpClientErrorException err) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -159,13 +186,15 @@ public class HomeController {
         HttpEntity<String> roleEntity = new HttpEntity<>(roleJson.toString(), headers);
 
         try {
-            restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|"+id+"/roles", roleEntity, String.class);
-        } catch(HttpClientErrorException err) {
+            restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/api/v2/users/auth0|" + id + "/roles",
+                    roleEntity, String.class);
+        } catch (HttpClientErrorException err) {
             System.out.println(err);
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        // After all the auth0 logic we finally construct the daycareworker and add it to out Database
+        // After all the auth0 logic we finally construct the daycareworker and add it
+        // to out Database
         DaycareWorker daycareWorker = new DaycareWorker(
                 daycareWorkerDTO.getSsn(),
                 daycareWorkerDTO.getFirstName(),
@@ -176,8 +205,7 @@ public class HomeController {
                 daycareWorkerDTO.getExperienceInYears(),
                 daycareWorkerDTO.getAddress(),
                 daycareWorkerDTO.getLocation(),
-                daycareWorkerDTO.getLocationCode()
-        );
+                daycareWorkerDTO.getLocationCode());
 
         try {
             daycareWorkerService.addDaycareWorker(daycareWorker);
@@ -192,9 +220,9 @@ public class HomeController {
         }
     }
 
-
     /**
      * POST on /createdayreport
+     * 
      * @param dayReportDTO the dayreport being created
      * @return the dayreport
      */
@@ -204,7 +232,8 @@ public class HomeController {
             DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(dayReportDTO.getDcwId());
             Child c = childService.findChildById(dayReportDTO.getChildId());
 
-            DayReport dayReport = new DayReport(dayReportDTO.getSleepFrom(), dayReportDTO.getSleepTo(), dayReportDTO.getAppetite(), dayReportDTO.getComment(), dcw, c);
+            DayReport dayReport = new DayReport(dayReportDTO.getSleepFrom(), dayReportDTO.getSleepTo(),
+                    dayReportDTO.getAppetite(), dayReportDTO.getComment(), dcw, c);
 
             daycareWorkerService.createDayReport(dayReport);
 
@@ -221,6 +250,7 @@ public class HomeController {
 
     /**
      * POST on /createAlert
+     * 
      * @param alertDTO the alert being created
      * @return the alert
      */
@@ -230,7 +260,8 @@ public class HomeController {
             DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(alertDTO.getDcwId());
             Child c = childService.findChildById(alertDTO.getChildId());
 
-            Alert alert = new Alert(alertDTO.getTimestamp(), alertDTO.getSeverity(), alertDTO.getTitle(), alertDTO.getDescription(), dcw, c);
+            Alert alert = new Alert(alertDTO.getTimestamp(), alertDTO.getSeverity(), alertDTO.getTitle(),
+                    alertDTO.getDescription(), dcw, c);
 
             daycareWorkerService.createAlert(alert);
 
@@ -245,27 +276,27 @@ public class HomeController {
         }
     }
 
-
-//    @RequestMapping(value = "/addDaycareworker", method = RequestMethod.GET)
-//    public String addDaycareWorkerForm(DaycareWorker daycareWorker){
-//        return "newdaycareworker";
-//    }
-//
-//    @RequestMapping(value = "/addDaycareworker", method = RequestMethod.POST)
-//    public String addDaycareWorker(DaycareWorker daycareWorker, BindingResult result, Model model){
-//        if(result.hasErrors()) {
-//            return "newdaycareworker";
-//        }
-//        daycareWorkerService.addDaycareWorker(daycareWorker);
-//        return "redirect:/";
-//    }
-//
-//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-//    public String deleteDaycareWorker(@PathVariable("id") Long id, Model model) {
-//        DaycareWorker daycareWorker = daycareWorkerService.findDaycareWorkerById(id);
-//        daycareWorkerService.delete(daycareWorker);
-//        return "redirect:/";
-//    }
+    // @RequestMapping(value = "/addDaycareworker", method = RequestMethod.GET)
+    // public String addDaycareWorkerForm(DaycareWorker daycareWorker){
+    // return "newdaycareworker";
+    // }
+    //
+    // @RequestMapping(value = "/addDaycareworker", method = RequestMethod.POST)
+    // public String addDaycareWorker(DaycareWorker daycareWorker, BindingResult
+    // result, Model model){
+    // if(result.hasErrors()) {
+    // return "newdaycareworker";
+    // }
+    // daycareWorkerService.addDaycareWorker(daycareWorker);
+    // return "redirect:/";
+    // }
+    //
+    // @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    // public String deleteDaycareWorker(@PathVariable("id") Long id, Model model) {
+    // DaycareWorker daycareWorker = daycareWorkerService.findDaycareWorkerById(id);
+    // daycareWorkerService.delete(daycareWorker);
+    // return "redirect:/";
+    // }
 
     public String create_token() {
         String input = clientId + ":" + clientSecret;
