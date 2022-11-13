@@ -20,7 +20,6 @@ public class Alert {
 
     private LocalDateTime timestamp;
     private Severity severity;
-    private String title;
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,13 +36,11 @@ public class Alert {
     public Alert(
             LocalDateTime timestamp,
             Severity severity,
-            String title,
             String description,
             DaycareWorker daycareWorker,
             Child child) {
         this.timestamp = timestamp;
         this.severity = severity;
-        this.title = title;
         this.description = description;
         this.daycareWorker = daycareWorker;
         this.child = child;
@@ -71,14 +68,6 @@ public class Alert {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {

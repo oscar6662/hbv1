@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Alert } from '../../components/Alert/Alert';
 import { DayReportForm } from '../../components/DayReportForm/DayReportForm';
 import { NavBar } from '../../components/Navbar/NavBar';
 import useOnLoadFetch from '../../hooks/useOnLoadFetch';
@@ -44,6 +45,7 @@ const DayCareWorkerPage = (props: Props) => {
               >
                 <h2>{child.firstName}</h2>
                 <DayReportForm child={child} />
+                <Alert child={child} />
 
                 {new Date(child.sicknessDay).getUTCDate() === today && (
                   <h3 style={{ color: 'red' }}>Veikindi</h3>
