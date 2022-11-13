@@ -226,12 +226,13 @@ public class HomeController {
      */
     @PostMapping("/createAlert")
     public ResponseEntity<Alert> createAlert(@RequestBody AlertDTO alertDTO) {
+        System.out.println("HALLÓ!!");
         try {
             DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(alertDTO.getDcwId());
             Child c = childService.findChildById(alertDTO.getChildId());
 
-            Alert alert = new Alert(alertDTO.getTimestamp(), alertDTO.getSeverity(), alertDTO.getTitle(), alertDTO.getDescription(), dcw, c);
-
+            Alert alert = new Alert(alertDTO.getTimestamp(), alertDTO.getSeverity(), alertDTO.getDescription(), dcw, c);
+            System.out.println("HALLóHalló");
             daycareWorkerService.createAlert(alert);
 
             if (alert == null) {
