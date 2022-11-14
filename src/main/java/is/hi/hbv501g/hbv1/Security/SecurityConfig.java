@@ -17,7 +17,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .mvcMatchers("/", "/api/daycareworkers", "/api/addlocation", "/api/locations", "/api/adddaycareworker", "/api/isauthenticated", "/api/createparent").permitAll() // allow all users to access the home pages and the static images directory
+                .mvcMatchers("/", "/api/daycareworkers", "/api/addlocation", "/api/locations", "/api/adddaycareworker", "/api/isauthenticated", "/api/createparent", "/api/daycareworkerexists/{ssn}", "/api/parentexists/{ssn}").permitAll() // allow all users to access the home pages and the static images directory
                 .anyRequest().authenticated() // all other requests must be authenticated
                 .and().oauth2Login().defaultSuccessUrl("http://localhost:5173/")
                 .and().logout()

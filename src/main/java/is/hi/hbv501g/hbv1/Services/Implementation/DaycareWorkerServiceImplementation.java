@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The main service used by routes that handle Daycare Workers. It uses the
@@ -51,8 +52,8 @@ public class DaycareWorkerServiceImplementation implements DaycareWorkerService 
     }
 
     @Override
-    public DaycareWorker findDaycareWorkerBySsn(Long ssn) {
-        return daycareWorkerRepository.findDaycareWorkerBySsn(ssn);
+    public boolean findDaycareWorkerBySsn(String ssn) {
+        return daycareWorkerRepository.findDaycareWorkerBySsn(ssn).isPresent();
     }
 
     @Override

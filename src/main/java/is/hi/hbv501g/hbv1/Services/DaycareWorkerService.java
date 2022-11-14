@@ -14,7 +14,7 @@ public interface DaycareWorkerService {
     List<DaycareWorker> findByLocation(String location);
     List<DaycareWorker> findByLocationCode(String locationCode);
     DaycareWorker findDaycareWorkerById(Long id);
-    DaycareWorker findDaycareWorkerBySsn(Long ssn);
+    boolean findDaycareWorkerBySsn(String ssn);
     DaycareWorker findDaycareWorkerByEmail(String email);
     List<DaycareWorker> findAll();
     DaycareWorker addDaycareWorker(DaycareWorker daycareWorker);

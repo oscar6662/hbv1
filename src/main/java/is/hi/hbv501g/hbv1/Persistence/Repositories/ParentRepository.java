@@ -18,5 +18,5 @@ public interface ParentRepository extends JpaRepository<Parent, Long> {
     Parent findParentById(Long id);
     Parent findParentByEmail(String email);
     Parent findParentByAuth0Id(String id);
-    Optional <Parent> findBySsn(Long ssn);
+    Optional <Parent> findBySsn(String ssn);
 }

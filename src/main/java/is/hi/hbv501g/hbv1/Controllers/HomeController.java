@@ -12,16 +12,11 @@ import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -120,16 +115,15 @@ public class HomeController {
      * @param id daycareworker id
      * @return boolean
      */
-    @GetMapping("/daycareworkerexists/{id}")
-    public boolean daycareworkerexists(@PathVariable("id") String id) {
-        DaycareWorker dcw;
+    @GetMapping("/daycareworkerexists/{ssn}")
+    public boolean daycareworkerexists(@PathVariable("ssn") String ssn) {
+        boolean dcw;
         try {
-            Long idAsLong = Long.parseLong(id);
-            dcw = daycareWorkerService.findDaycareWorkerBySsn(idAsLong);
-            if (dcw == null) {
-                return false;
-            } else {
+            dcw = daycareWorkerService.findDaycareWorkerBySsn(ssn);
+            if (dcw) {
                 return true;
+            } else {
+                return false;
             }
         } catch (Exception e) {
             return true;

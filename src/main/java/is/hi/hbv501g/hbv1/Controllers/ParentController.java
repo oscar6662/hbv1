@@ -98,18 +98,17 @@ public class ParentController {
      * @param id daycareworker id
      * @return boolean
      */
-    @GetMapping("/parentexists/{id}")
-    public boolean parentexists(@PathVariable("id") String id) {
+    @GetMapping("/parentexists/{ssn}")
+    public boolean parentexists(@PathVariable("ssn") String ssn) {
         boolean parent;
         try {
-            Long idAsLong = Long.parseLong(id);
             System.out.println("askdj");
-            parent = parentService.findBySsn(idAsLong);
-            System.out.println(parent);
+            parent = parentService.findBySsn(ssn);
+            System.out.println(parentService.findBySsn(ssn));
             if (parent) {
-                return false;
-            } else {
                 return true;
+            } else {
+                return false;
             }
         } catch (Exception e) {
             return true;

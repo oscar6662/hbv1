@@ -16,5 +16,5 @@ public interface ParentService {
     void delete(Parent parent);
     Child addChild(Child child);
     Parent findParentByAuth0Id(String id);
-    boolean findBySsn(Long ssn);
+    boolean findBySsn(String ssn);
 }

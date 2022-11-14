@@ -18,6 +18,13 @@ export const ParentSignUp = () => {
     setLoading(true);
     const { confirmPassword, ...rest } = values;
 
+    const userFetch = await fetch(`${link}/api/parentexists/${values.ssn}`);
+    const userExists = await userFetch.json();
+    
+    if (userExists) {
+      message.error('User already exists');
+      return;
+    }
     const options = {
       method: 'POST',
       headers: {

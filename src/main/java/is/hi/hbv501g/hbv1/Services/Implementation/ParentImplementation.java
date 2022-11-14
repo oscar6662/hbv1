@@ -37,7 +37,7 @@ public class ParentImplementation implements ParentService {
     }
 
     @Override
-    public boolean findBySsn(Long ssn) {
+    public boolean findBySsn(String ssn) {
         return parentRepository.findBySsn(ssn).isPresent();
     }
 

@@ -30,6 +30,13 @@ export const DayCareWorkerSignup = ({ locations, loading }: Props) => {
       ...rest,
     };
 
+    const userFetch = await fetch(`${link}/api/daycareworkerexists/${data.ssn}`);
+    const userExists = await userFetch.json();
+
+    if (userExists) {
+      message.error('User already exists');
+      return;
+    }
     const options = {
       method: 'POST',
       headers: {
