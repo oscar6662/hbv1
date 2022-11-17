@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavBar } from "../../components/Navbar/NavBar";
 import { authSelector } from "../../stores/auth.slice";
+import {FlexDiv} from "../../components/ds/Containers/containers";
+import { Heading3 } from "../../components/ds/Texts/headings";
 
 type Props = {};
 
@@ -118,26 +120,18 @@ const ParentPage = (props: Props) => {
             );
           })}
         </div>
-      </div>
-      <div className="searchComponent">
-        <div className="searchContentContainer">
-          {dayReport != null && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: "20px",
-              }}
-            >
-              <h2>
+        <FlexDiv>
+        {dayReport != null && (
+            <FlexDiv column>
+              <Heading3>
                 Day Report fyrir:{" "}
                 <b>{children.find((x: any) => x.id === childId).firstName}</b>
-              </h2>
+              </Heading3>
 
               <p>{dayReport.comment}</p>
-            </div>
+              </FlexDiv>
           )}
-        </div>
+        </FlexDiv>
       </div>
     </>
   );
