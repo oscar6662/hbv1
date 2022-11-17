@@ -102,9 +102,7 @@ public class ParentController {
     public boolean parentexists(@PathVariable("ssn") String ssn) {
         boolean parent;
         try {
-            System.out.println("askdj");
             parent = parentService.findBySsn(ssn);
-            System.out.println(parentService.findBySsn(ssn));
             if (parent) {
                 return true;
             } else {
@@ -112,6 +110,26 @@ public class ParentController {
             }
         } catch (Exception e) {
             return true;
+        }
+    }
+    /**
+     * GET on /getdayreport/{id}
+     * 
+     * @param id child id
+     * @return DayReport for current day
+     */
+    @GetMapping("/getdayreport/{id}")
+    public ResponseEntity<DayReport> getDayReport(@PathVariable("id") String id) {
+        Long idAsLong = Long.parseLong(id);
+        try {
+            Child child = childService.findChildById(idAsLong);
+            DayReport dayReport = childService.findByChild(child);
+            if (dayReport != null)
+                return new ResponseEntity<>(dayReport, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

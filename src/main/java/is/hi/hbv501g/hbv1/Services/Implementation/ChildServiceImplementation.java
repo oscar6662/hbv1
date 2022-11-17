@@ -1,13 +1,18 @@
 package is.hi.hbv501g.hbv1.Services.Implementation;
 
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
+import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.ChildRepository;
+import is.hi.hbv501g.hbv1.Persistence.Repositories.DayReportRepository;
 import is.hi.hbv501g.hbv1.Services.ChildService;
+import net.bytebuddy.asm.Advice.Local;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -17,10 +22,13 @@ import java.util.List;
 @Service
 public class ChildServiceImplementation implements ChildService {
     private ChildRepository childRepository;
+    private DayReportRepository dayReportRepository;
+
 
     @Autowired
-    public ChildServiceImplementation(ChildRepository childRepository) {
+    public ChildServiceImplementation(ChildRepository childRepository, DayReportRepository dayReportRepository) {
         this.childRepository = childRepository;
+        this.dayReportRepository = dayReportRepository;
     }
 
     @Override
@@ -36,6 +44,19 @@ public class ChildServiceImplementation implements ChildService {
     @Override
     public List<Child> findByParents(Parent parent) {
         return childRepository.findByParent(parent);
+    }
+
+    @Override
+    public DayReport findByChild(Child child) {
+        List<DayReport> dayReports =  dayReportRepository.findByChild(child);
+        for (DayReport dayReport : dayReports) {
+            System.out.println(LocalDate.now()+ " "+ dayReport.getDate());
+            if (LocalDate.now().equals(dayReport.getDate())){
+                System.out.println("ajshdg");
+                return dayReport;
+            } 
+        }
+        return null;
     }
 
     @Override
