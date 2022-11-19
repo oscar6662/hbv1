@@ -1,21 +1,24 @@
-import { Button, message, Modal, Switch } from "antd";
+import { Button, message, Modal } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavBar } from "../../components/Navbar/NavBar";
 import { authSelector } from "../../stores/auth.slice";
-import {FlexDiv} from "../../components/ds/Containers/containers";
+import { FlexDiv, SpaceBetweenDiv } from "../../components/ds/Containers/containers";
+import { colors } from "../../components/ds/Colors/colors";
 import { Heading3 } from "../../components/ds/Texts/headings";
 
-type Props = {};
+type ParentPageProps = {
+  column: boolean;
+};
 
 const today = new Date().getUTCDate();
 
-const ParentPage = (props: Props) => {
+const ParentPage = (props: ParentPageProps) => {
   const [loading, setLoading] = useState(false);
   const [childId, setChildId] = useState(null);
   const [dayReport, setDayReport]: any = useState(null);
 
-  const { userName, type, userId, children }: any = useSelector(authSelector);
+  const { children }: any = useSelector(authSelector);
 
   const getDayReport = async (childId: any) => {
     try {
@@ -46,6 +49,7 @@ const ParentPage = (props: Props) => {
         };
 
         try {
+          setLoading(true);
           result = await fetch(`/api/notifysickleave`, options);
 
           if (!result.ok) {
@@ -75,27 +79,28 @@ const ParentPage = (props: Props) => {
     <>
       <NavBar isOnMyPage />
 
-      <div style={{ textAlign: "center", margin: "50px" }}>
+      <FlexDiv fullWidth justifyCenter padding={36}>
         <h1>Heimasvæði foreldris!</h1>
-      </div>
-
-      <div className="searchComponent">
-        <div className="searchContentContainer">
+      </FlexDiv>
+      <FlexDiv justifyCenter>
+        <FlexDiv
+          backgroundColor={colors.heavyMetalLight}
+          minWidth={1000}
+          border={colors.heavyMetalSlightlyLight}
+          borderRadius={5}
+          dropShadowBelow
+          padding={16}
+          gap={16}
+        >
           {children?.map((child: any) => {
             return (
-              <div
-                key={`child-${child.id}`}
-                style={{
-                  height: "300px",
-                  width: "200px",
-                  padding: "20px",
-                  border: "dotted 1px black",
-                  borderRadius: "20px",
-                  margin: "10px",
-                }}
+              <SpaceBetweenDiv column minHeight={250}
+              border={colors.heavyMetal}
+              borderRadius={5}
+              padding = {16}
               >
                 <h2>{child.firstName}</h2>
-
+                <FlexDiv column gap={4}>
                 <Button
                   className="navMenuItem"
                   type="primary"
@@ -116,23 +121,23 @@ const ParentPage = (props: Props) => {
                 {new Date(child.sicknessDay).getUTCDate() === today && (
                   <h3 style={{ color: "red" }}>Veikindi</h3>
                 )}
-              </div>
+                </FlexDiv>
+              </SpaceBetweenDiv>
             );
           })}
-        </div>
+        </FlexDiv>
         <FlexDiv>
-        {dayReport != null && (
+          {dayReport != null && (
             <FlexDiv column>
               <Heading3>
                 Day Report fyrir:{" "}
                 <b>{children.find((x: any) => x.id === childId).firstName}</b>
               </Heading3>
-
               <p>{dayReport.comment}</p>
-              </FlexDiv>
+            </FlexDiv>
           )}
         </FlexDiv>
-      </div>
+      </FlexDiv>
     </>
   );
 };
