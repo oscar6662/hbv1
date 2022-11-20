@@ -5,10 +5,10 @@ type FlexDivProps = {
   column?: boolean;
   backgroundColor?: string;
   dropShadowBelow?: boolean;
+  gap?:number;
   padding?: number;
   py?: number;
   px?:number;
-  gap?:number;
   pt?:number;
   pr?:number;
   pb?:number;
