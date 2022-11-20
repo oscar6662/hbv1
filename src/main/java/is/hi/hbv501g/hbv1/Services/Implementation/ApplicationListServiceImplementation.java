@@ -3,9 +3,7 @@ import is.hi.hbv501g.hbv1.Services.ApplicationListService;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 
@@ -13,7 +11,6 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 public class ApplicationListServiceImplementation implements ApplicationListService {
     public List<Child> getApplicationList(DaycareWorker dcw) {
         List<Child> list = new ArrayList<Child>();
-        //put something
         return list;
     }
     

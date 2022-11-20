@@ -44,19 +44,6 @@ public class HomeController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // public HomeController(DaycareWorkerService daycareWorkerService) {
-    // this.daycareWorkerService = daycareWorkerService;
-    // }
-    //
-    // public HomeController() {
-    // }
-    // public String homePage(Model model){
-    //
-    // List<DaycareWorker> daycareWorkers = daycareWorkerService.findAll();
-    // model.addAttribute("daycareworkers", daycareWorkers);
-    // return "home";
-    // }
-
     /**
      * GET on/daycareworkers
      * 
@@ -112,7 +99,7 @@ public class HomeController {
     /**
      * GET on /daycareworkerexists/{id}
      * 
-     * @param id daycareworker id
+     * @param ssn daycareworker ssn
      * @return boolean
      */
     @GetMapping("/daycareworkerexists/{ssn}")
@@ -268,28 +255,6 @@ public class HomeController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    // @RequestMapping(value = "/addDaycareworker", method = RequestMethod.GET)
-    // public String addDaycareWorkerForm(DaycareWorker daycareWorker){
-    // return "newdaycareworker";
-    // }
-    //
-    // @RequestMapping(value = "/addDaycareworker", method = RequestMethod.POST)
-    // public String addDaycareWorker(DaycareWorker daycareWorker, BindingResult
-    // result, Model model){
-    // if(result.hasErrors()) {
-    // return "newdaycareworker";
-    // }
-    // daycareWorkerService.addDaycareWorker(daycareWorker);
-    // return "redirect:/";
-    // }
-    //
-    // @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    // public String deleteDaycareWorker(@PathVariable("id") Long id, Model model) {
-    // DaycareWorker daycareWorker = daycareWorkerService.findDaycareWorkerById(id);
-    // daycareWorkerService.delete(daycareWorker);
-    // return "redirect:/";
-    // }
 
     public String create_token() {
         String input = clientId + ":" + clientSecret;

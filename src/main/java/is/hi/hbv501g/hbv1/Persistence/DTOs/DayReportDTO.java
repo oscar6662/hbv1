@@ -2,7 +2,6 @@ package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
 import is.hi.hbv501g.hbv1.Persistence.Entities.Appetite;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**

@@ -1,14 +1,11 @@
 package is.hi.hbv501g.hbv1.Controllers;
 
-import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Location;
-import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import is.hi.hbv501g.hbv1.Services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

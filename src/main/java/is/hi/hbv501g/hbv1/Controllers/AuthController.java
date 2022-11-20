@@ -8,13 +8,10 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import is.hi.hbv501g.hbv1.Services.ParentService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

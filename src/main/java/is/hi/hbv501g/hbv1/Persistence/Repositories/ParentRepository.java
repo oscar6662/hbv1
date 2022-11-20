@@ -2,10 +2,7 @@ package is.hi.hbv501g.hbv1.Persistence.Repositories;
 
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
-import is.hi.hbv501g.hbv1.Persistence.Entities.SsnId;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 import java.util.Optional;
 
 /**
