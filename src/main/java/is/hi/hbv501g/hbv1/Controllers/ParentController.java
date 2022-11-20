@@ -170,7 +170,6 @@ public class ParentController {
         json.put("connection", "Username-Password-Authentication");
 
         HttpEntity<String> entity = new HttpEntity<>(json.toString(), headers);
-
         String result = "";
         try {
             result = restTemplate.postForObject("https://dev-xzuj3qsd.eu.auth0.com/dbconnections/signup", entity,
@@ -210,8 +209,7 @@ public class ParentController {
                 parentDTO.getLastName(),
                 parentDTO.getMobile(),
                 parentDTO.getEmail(),
-                id,
-                null);
+                id);
 
         try {
             parentService.save(parent);
