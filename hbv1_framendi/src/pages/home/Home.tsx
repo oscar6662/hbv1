@@ -109,45 +109,6 @@ const Home = () => {
       </div>
 
       <SearchComponent />
-
-      {/* <div className="searchBox">
-        <label htmlFor="fullName">Leita eftir staðsetningu: </label>
-        <select
-          onChange={(e) => setLocation(e.target.value)}
-          name="location"
-          id="location"
-        >
-          {locations?.map((district: Location, i: Number) => {
-            return (
-              <option key={`option-town-${i}`} value={district.locationCode}>
-                {`${district.locationCode} - ${district.locationName}`}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-
-      {loading ? (
-        <h2>Loading...</h2>
-      ) : (
-        <div className="daycareWorkers">
-          {noContent ? (
-            <h2>Ekkert dagforeldri fannst á þessari staðsetningu</h2>
-          ) : (
-            data.map((dcw: DaycareWorker, i: Number) => {
-              return (
-                <div
-                  style={{ borderBottom: 'solid 1px black' }}
-                  key={`daycare-worker-item-${i}`}
-                >
-                  <h2>Nafn: {dcw.fullName}</h2>
-                  <h2>Staðsetning: {dcw.location}</h2>
-                </div>
-              );
-            })
-          )}
-        </div>
-      )} */}
     </div>
   );
 };

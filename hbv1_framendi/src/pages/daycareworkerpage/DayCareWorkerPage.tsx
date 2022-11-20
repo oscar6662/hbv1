@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Card, List } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -8,54 +8,160 @@ import { NavBar } from '../../components/Navbar/NavBar';
 import useOnLoadFetch from '../../hooks/useOnLoadFetch';
 import { authSelector } from '../../stores/auth.slice';
 
+import { UserDeleteOutlined } from '@ant-design/icons';
+
 type Props = {};
 
-const today = new Date().getUTCDate();
+const today = new Date().getUTCDay();
 
 const childrenX = [
   { firstName: 'Einsi', id: 8 },
   { firstName: 'Einsi5000', id: 9 },
 ];
 
+const createTimeString = (dateStr: string) => {
+  let date = new Date(dateStr);
+
+  let hour: string | number = date.getHours();
+  if (hour < 10) hour = `0${hour}`;
+
+  let minutes: string | number = date.getMinutes();
+  if (minutes === 0) {
+    minutes = `00`;
+  }
+
+  if (minutes > 0 && minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${hour}:${minutes}`;
+};
+
+const isSickToday = (dateStr: string) => {
+  const date = new Date(dateStr).toDateString();
+  const today = new Date().toDateString();
+  if (date === today) return true;
+  return false;
+};
+
 const DayCareWorkerPage = (props: Props) => {
   const { userName, type, userId, children }: any = useSelector(authSelector);
 
   return (
-    <>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        width: '100%',
+        backgroundColor: '#d1d1d1',
+      }}
+    >
       <NavBar isOnMyPage />
+      <div
+        style={{
+          backgroundColor: '#d1d1d1',
+          height: 'calc(100vh - 100px)',
+          width: '90%',
+        }}
+      >
+        <h1 style={{ margin: '30px 0' }}>Heimasvæði dagforeldris!</h1>
 
-      <div style={{ textAlign: 'center', margin: '50px' }}>
-        <h1>Heimasvæði dagforeldris!</h1>
-      </div>
-
-      <div className="searchComponent">
-        <div className="searchContentContainer">
-          {children?.map((child: any) => {
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(5, 1fr)',
+            gap: '15px',
+          }}
+        >
+          {children?.map((child: any, i: number) => {
             return (
-              <div
-                key={`child-${child.id}`}
+              <Card
+                key={`child-${i}`}
                 style={{
-                  height: '300px',
-                  width: '200px',
-                  padding: '20px',
-                  border: 'dotted 1px black',
-                  borderRadius: '20px',
-                  margin: '10px',
+                  width: '100%',
+                  border: isSickToday(child.sicknessDay)
+                    ? 'solid red 1px'
+                    : 'solid black 1px',
                 }}
+                title={`${child.firstName} ${child.lastName}`}
+                extra={
+                  isSickToday(child.sicknessDay) ? (
+                    <p style={{ color: 'red' }}>Veikindi</p>
+                  ) : (
+                    <></>
+                  )
+                }
               >
-                <h2>{child.firstName}</h2>
-                <DayReportForm child={child} />
-                <Alert child={child} />
+                <h3>Skýrslur</h3>
+                {child.dayReports.length > 0 ? (
+                  <List
+                    itemLayout="horizontal"
+                    dataSource={child.dayReports}
+                    renderItem={(item: any) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          style={{ marginLeft: '10px' }}
+                          title={`Skýrsla: ${item.date}`}
+                          description={
+                            <div style={{ marginLeft: '5px' }}>
+                              <p>
+                                Svaf frá:{' '}
+                                <span style={{ fontWeight: 700 }}>
+                                  {createTimeString(item.sleepFrom)}
+                                </span>{' '}
+                                til:{' '}
+                                <span style={{ fontWeight: 700 }}>
+                                  {createTimeString(item.sleepTo)}
+                                </span>
+                              </p>
 
-                {new Date(child.sicknessDay).getUTCDate() === today && (
-                  <h3 style={{ color: 'red' }}>Veikindi</h3>
+                              <p>
+                                Matarlyst:{' '}
+                                <span style={{ fontWeight: 700 }}>
+                                  {item.appetite}
+                                </span>
+                              </p>
+
+                              <p>
+                                Athugasemd:{' '}
+                                <span style={{ fontWeight: 500 }}>
+                                  {item.comment}
+                                </span>
+                              </p>
+                            </div>
+                          }
+                        />
+                      </List.Item>
+                    )}
+                  />
+                ) : (
+                  <p style={{ marginLeft: '10px', padding: '12px 0' }}>
+                    Engar skráðar skýrslur
+                  </p>
                 )}
-              </div>
+
+                <h3>Aðgerðir</h3>
+                <div
+                  style={{
+                    padding: '12px 0',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    marginLeft: '10px',
+                  }}
+                >
+                  <DayReportForm child={child} />
+                  <Alert child={child} />
+                  <Button danger icon={<UserDeleteOutlined />}></Button>
+                </div>
+              </Card>
             );
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -71,9 +71,9 @@ export const Alert = ({ child }: Props) => {
   return (
     <>
       <Button
+        style={{ margin: 0 }}
         className="navMenuItem"
         type="primary"
-        size="large"
         onClick={showModal}
       >
         Viðvörun
