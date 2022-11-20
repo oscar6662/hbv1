@@ -91,4 +91,42 @@ public class DaycareWorkerController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/daycareworker/removechild")
+    public ResponseEntity<Application> removeChildFromDaycareWorker(@RequestBody ApplicationDTO applicationDTO,
+                                                             @AuthenticationPrincipal OidcUser principal) throws IOException {
+        DaycareWorker dcw = daycareWorkerService.findDaycareWorkerById(applicationDTO.getDaycareWorkerId());
+
+        ArrayList<Application> arr = new ArrayList<>();
+        try {
+
+            Child c = childService.findChildById(applicationDTO.getChildId());
+
+            if (c.getDaycareWorker() != null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            if (dcw.getChildrenCount() >= dcw.getMAXCHILDREN()) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+
+            Application appl = new Application(applicationDTO.getDaycareWorkerId(), applicationDTO.getParentId(), applicationDTO.getChildId());
+            daycareWorkerService.applyForDaycareWorker(appl);
+
+            dcw.addChildToList(c);
+            daycareWorkerService.addDaycareWorker(dcw);
+
+            c.setDaycareWorker(dcw);
+            childService.save(c);
+
+            if (appl == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(appl, HttpStatus.CREATED);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
