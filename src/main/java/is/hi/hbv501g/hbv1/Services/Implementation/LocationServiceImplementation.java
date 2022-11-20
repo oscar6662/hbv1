@@ -5,7 +5,6 @@ import is.hi.hbv501g.hbv1.Persistence.Repositories.LocationRepository;
 import is.hi.hbv501g.hbv1.Services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 

@@ -1,9 +1,5 @@
 package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
  * Helper Object for working with request bodies for daycareworkcer Applications
  */

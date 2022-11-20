@@ -1,6 +1,5 @@
 package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
-import is.hi.hbv501g.hbv1.Persistence.Entities.Appetite;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Severity;
 
 import java.time.LocalDateTime;

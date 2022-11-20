@@ -4,7 +4,6 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.Application;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Alert;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
-
 import java.util.List;
 
 /**

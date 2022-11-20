@@ -1,7 +1,6 @@
 package is.hi.hbv501g.hbv1.Persistence.Entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.*;
 import java.util.ArrayList;
