@@ -58,6 +58,14 @@ export const NavBar = ({ isOnMyPage }: Props) => {
                   </span>
                   !
                 </h3>
+                <Button
+                  className="navMenuItem"
+                  type="primary"
+                  size="large"
+                  href="http://localhost:8080/logout"
+                >
+                  Útskráning
+                </Button>
                 {type === 'parent' && (
                   <>
                     <CreateChildForm />
