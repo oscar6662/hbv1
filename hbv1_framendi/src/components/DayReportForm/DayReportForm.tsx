@@ -68,12 +68,12 @@ export const DayReportForm = ({ child }: Props) => {
   return (
     <>
       <Button
+        style={{ margin: 0 }}
         className="navMenuItem"
         type="primary"
-        size="large"
         onClick={showModal}
       >
-        Búa til DayReport
+        Skrifa skýrslu
       </Button>
       <Modal
         title={`Búa til DayReport um ${child.firstName}`}

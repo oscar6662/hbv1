@@ -1,14 +1,17 @@
-import { Button, message, Modal } from "antd";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { NavBar } from "../../components/Navbar/NavBar";
-import { authSelector } from "../../stores/auth.slice";
-import { FlexDiv, SpaceBetweenDiv } from "../../components/ds/Containers/containers";
-import { colors } from "../../components/ds/Colors/colors";
-import { Heading3 } from "../../components/ds/Texts/headings";
+import { Button, message, Modal } from 'antd';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { NavBar } from '../../components/Navbar/NavBar';
+import { authSelector } from '../../stores/auth.slice';
+import {
+  FlexDiv,
+  SpaceBetweenDiv,
+} from '../../components/ds/Containers/containers';
+import { colors } from '../../components/ds/Colors/colors';
+import { Heading3 } from '../../components/ds/Texts/headings';
 
 type ParentPageProps = {
-  column: boolean;
+  column?: boolean;
 };
 
 const today = new Date().getUTCDate();
@@ -36,14 +39,14 @@ const ParentPage = (props: ParentPageProps) => {
 
   const handleNotify = (childId: any) => {
     Modal.confirm({
-      title: "Ertu viss?",
+      title: 'Ertu viss?',
       async onOk() {
         let result;
 
         const options = {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(childId),
         };
@@ -54,23 +57,23 @@ const ParentPage = (props: ParentPageProps) => {
 
           if (!result.ok) {
             message.error(
-              "Eitthvað gekk ekki upp, hafðu samband við dagforeldri"
+              'Eitthvað gekk ekki upp, hafðu samband við dagforeldri'
             );
             setLoading(false);
           } else {
-            message.success("Tókst, batakveðjur!");
+            message.success('Tókst, batakveðjur!');
             setTimeout(() => {
               window.location.reload();
             }, 1000);
           }
         } catch (err) {
-          message.error("Óþekkt villa");
+          message.error('Óþekkt villa');
           setLoading(false);
         }
       },
       onCancel() {
         setLoading(false);
-        console.info("Hætt við");
+        console.info('Hætt við');
       },
     });
   };
@@ -94,33 +97,37 @@ const ParentPage = (props: ParentPageProps) => {
         >
           {children?.map((child: any) => {
             return (
-              <SpaceBetweenDiv column minHeight={250}
-              border={colors.heavyMetal}
-              borderRadius={5}
-              padding = {16}
+              <SpaceBetweenDiv
+                column
+                minHeight={250}
+                border={colors.heavyMetal}
+                borderRadius={5}
+                padding={16}
               >
                 <h2>{child.firstName}</h2>
                 <FlexDiv column gap={4}>
-                <Button
-                  className="navMenuItem"
-                  type="primary"
-                  size="large"
-                  onClick={() => handleNotify(child.id)}
-                  disabled={today === new Date(child.sicknessDay).getUTCDate()}
-                >
-                  Tilkynna veikindi
-                </Button>
-                <Button
-                  className="navMenuItem"
-                  type="primary"
-                  size="large"
-                  onClick={() => getDayReport(child.id)}
-                >
-                  Ná dayreport
-                </Button>
-                {new Date(child.sicknessDay).getUTCDate() === today && (
-                  <h3 style={{ color: "red" }}>Veikindi</h3>
-                )}
+                  <Button
+                    className="navMenuItem"
+                    type="primary"
+                    size="large"
+                    onClick={() => handleNotify(child.id)}
+                    disabled={
+                      today === new Date(child.sicknessDay).getUTCDate()
+                    }
+                  >
+                    Tilkynna veikindi
+                  </Button>
+                  <Button
+                    className="navMenuItem"
+                    type="primary"
+                    size="large"
+                    onClick={() => getDayReport(child.id)}
+                  >
+                    Ná dayreport
+                  </Button>
+                  {new Date(child.sicknessDay).getUTCDate() === today && (
+                    <h3 style={{ color: 'red' }}>Veikindi</h3>
+                  )}
                 </FlexDiv>
               </SpaceBetweenDiv>
             );
@@ -130,7 +137,7 @@ const ParentPage = (props: ParentPageProps) => {
           {dayReport != null && (
             <FlexDiv column>
               <Heading3>
-                Day Report fyrir:{" "}
+                Day Report fyrir:{' '}
                 <b>{children.find((x: any) => x.id === childId).firstName}</b>
               </Heading3>
               <p>{dayReport.comment}</p>
