@@ -75,11 +75,16 @@ public class DaycareWorkerController {
     }
 
     @PostMapping("/daycareworker/removechild")
-    public ResponseEntity<Application> removeChildFromDaycareWorker(@RequestBody Long childId,
+    public ResponseEntity removeChildFromDaycareWorker(@RequestBody String childId,
                                                              @AuthenticationPrincipal OidcUser principal) throws IOException {
-        Child child = childService.findChildById(childId);
+        Child child = childService.findChildById(Long.parseLong(childId));
+        DaycareWorker dcw = child.getDaycareWorker();
+        dcw.removeChildFromList(child);
 
-        System.out.println(child);
+        child.setDaycareWorker(null);
+
+        daycareWorkerService.addDaycareWorker(dcw);
+        childService.save(child);
         return null;
     }
 }

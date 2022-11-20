@@ -51,16 +51,12 @@ const DayCareWorkerPage = (props: Props) => {
   const handleRemoveChild = async (childId: number) => {
     setLoading(true);
 
-    const body = {
-      childId,
-    };
-
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(childId),
     };
 
     const result = await fetch(`/api/daycareworker/removechild`, options);
