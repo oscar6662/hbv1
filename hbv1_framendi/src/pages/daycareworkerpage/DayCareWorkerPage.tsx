@@ -1,5 +1,5 @@
-import { Button, Card, List } from 'antd';
-import React from 'react';
+import { Button, Card, List, message } from 'antd';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Alert } from '../../components/Alert/Alert';
@@ -46,6 +46,35 @@ const isSickToday = (dateStr: string) => {
 
 const DayCareWorkerPage = (props: Props) => {
   const { userName, type, userId, children }: any = useSelector(authSelector);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleRemoveChild = async (childId: number) => {
+    setLoading(true);
+
+    const body = {
+      childId,
+    };
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    };
+
+    const result = await fetch(`/api/daycareworker/removechild`, options);
+
+    if (!result.ok) {
+      message.error('Eitthvað fór úrskeiðis!');
+    } else {
+      const json = await result.json();
+      console.log(json);
+      message.success('Barn afskráð úr gæslu, jibbí!');
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div
@@ -78,6 +107,7 @@ const DayCareWorkerPage = (props: Props) => {
           {children?.map((child: any, i: number) => {
             return (
               <Card
+                loading={loading}
                 key={`child-${i}`}
                 style={{
                   width: '100%',
@@ -154,7 +184,11 @@ const DayCareWorkerPage = (props: Props) => {
                 >
                   <DayReportForm child={child} />
                   <Alert child={child} />
-                  <Button danger icon={<UserDeleteOutlined />}></Button>
+                  <Button
+                    danger
+                    icon={<UserDeleteOutlined />}
+                    onClick={() => handleRemoveChild(child.id)}
+                  ></Button>
                 </div>
               </Card>
             );
