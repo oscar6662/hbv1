@@ -289,9 +289,7 @@ export const SearchComponent = (props: Props) => {
                   <List.Item className="dcwListItem">
                     <List.Item.Meta
                       avatar={<Avatar icon={<UserOutlined />} />}
-                      title={
-                        <a href="https://ant.design">{`${item.fullName}`}</a>
-                      }
+                      title={`${item.fullName}`}
                       style={{ paddingLeft: '14px' }}
                       description={
                         <>
