@@ -85,7 +85,7 @@ const ParentPage = (props: ParentPageProps) => {
       <FlexDiv fullWidth justifyCenter padding={36}>
         <h1>Heimasvæði foreldris!</h1>
       </FlexDiv>
-      <FlexDiv justifyCenter>
+      <FlexDiv justifyCenter column>
         <FlexDiv
           backgroundColor={colors.heavyMetalLight}
           minWidth={1000}
