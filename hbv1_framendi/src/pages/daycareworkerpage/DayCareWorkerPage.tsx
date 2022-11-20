@@ -183,7 +183,10 @@ const DayCareWorkerPage = (props: Props) => {
                   <Button
                     danger
                     icon={<UserDeleteOutlined />}
-                    onClick={() => handleRemoveChild(child.id)}
+                    onClick={() => {
+                      handleRemoveChild(child.id);
+                      window.location.reload();
+                    }}
                   ></Button>
                 </div>
               </Card>

@@ -17,4 +17,5 @@ public interface ChildService {
     List<Child> findByDaycareWorker(DaycareWorker daycareWorker);
     Child findChildById(Long id);
     DayReport findByChild(Child child);
+    List<DayReport> getAllDayReportsByChild(Child child);
 }

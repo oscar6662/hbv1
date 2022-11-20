@@ -56,6 +56,12 @@ public class ChildServiceImplementation implements ChildService {
     }
 
     @Override
+    public List<DayReport> getAllDayReportsByChild(Child child) {
+        List<DayReport> dayReports = dayReportRepository.findByChild(child);
+        return dayReports;
+    }
+
+    @Override
     public List<Child> findByDaycareWorker(DaycareWorker daycareWorker) {
         return childRepository.findByDaycareWorker(daycareWorker);
     }

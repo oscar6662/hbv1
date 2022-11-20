@@ -2,9 +2,13 @@ package is.hi.hbv501g.hbv1.Controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import ch.qos.logback.core.encoder.EchoEncoder;
 import is.hi.hbv501g.hbv1.Persistence.DTOs.ApplicationDTO;
 import is.hi.hbv501g.hbv1.Persistence.Entities.*;
 import is.hi.hbv501g.hbv1.Services.ChildService;
+import is.hi.hbv501g.hbv1.Services.DayReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +29,8 @@ public class DaycareWorkerController {
     private ParentService parentService;
     @Autowired
     private DaycareWorkerService daycareWorkerService;
+    @Autowired
+    private DayReportService dayReportService;
 
     @Autowired
     private ChildService childService;
@@ -77,14 +83,25 @@ public class DaycareWorkerController {
     @PostMapping("/daycareworker/removechild")
     public ResponseEntity removeChildFromDaycareWorker(@RequestBody String childId,
                                                              @AuthenticationPrincipal OidcUser principal) throws IOException {
-        Child child = childService.findChildById(Long.parseLong(childId));
-        DaycareWorker dcw = child.getDaycareWorker();
-        dcw.removeChildFromList(child);
+        try {
+            Child child = childService.findChildById(Long.parseLong(childId));
+            DaycareWorker dcw = child.getDaycareWorker();
+            List<DayReport> dayReportList = childService.getAllDayReportsByChild(child);
 
-        child.setDaycareWorker(null);
+            for (DayReport d: dayReportList) {
+                dayReportService.delete(d);
+            }
 
-        daycareWorkerService.addDaycareWorker(dcw);
-        childService.save(child);
-        return null;
+            dcw.removeChildFromList(child);
+
+            child.setDaycareWorker(null);
+
+            daycareWorkerService.addDaycareWorker(dcw);
+            childService.save(child);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 }

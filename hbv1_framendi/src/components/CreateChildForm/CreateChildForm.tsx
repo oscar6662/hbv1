@@ -69,7 +69,7 @@ export const CreateChildForm = () => {
       <Modal
         title="Búa til barn"
         open={modal}
-        okText="Leita"
+        okText="OK"
         cancelText="Hætta við"
         okButtonProps={{ htmlType: 'submit' }}
         onOk={form.submit}
