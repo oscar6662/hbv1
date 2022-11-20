@@ -217,4 +217,9 @@ public class DaycareWorker {
         this.childrenCount++;
         this.children.add(child);
     }
+
+    public void removeChildFromList(Child child) {
+        this.childrenCount--;
+        this.children.remove(child);
+    }
 }

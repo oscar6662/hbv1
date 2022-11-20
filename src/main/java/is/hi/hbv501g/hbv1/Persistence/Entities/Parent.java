@@ -29,7 +29,6 @@ public class Parent {
     private String email;
     private String mobile;
     private String auth0Id;
-    private Relation relation;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -41,8 +40,7 @@ public class Parent {
             String lastName,
             String mobile,
             String email,
-            String auth0Id,
-            Relation relation) {
+            String auth0Id) {
 
         this.ssn = ssn;
         this.firstName = firstName;
@@ -50,7 +48,6 @@ public class Parent {
         this.mobile = mobile;
         this.email = email;
         this.auth0Id = auth0Id;
-        this.relation = relation;
     }
 
     public Parent() {
@@ -110,14 +107,6 @@ public class Parent {
     }
 
     public String getAuth0Id() {return auth0Id;}
-
-    public Relation getRelation() {
-        return relation;
-    }
-
-    public void setRelation(Relation relation) {
-        this.relation = relation;
-    }
 
     public List<Child> getChildren() {
         return children;

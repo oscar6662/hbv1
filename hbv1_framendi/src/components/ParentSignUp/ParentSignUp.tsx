@@ -20,7 +20,7 @@ export const ParentSignUp = () => {
 
     const userFetch = await fetch(`${link}/api/parentexists/${values.ssn}`);
     const userExists = await userFetch.json();
-    
+
     if (userExists) {
       message.error('User already exists');
       return;

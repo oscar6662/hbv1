@@ -1,12 +1,5 @@
 package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
-import is.hi.hbv501g.hbv1.Persistence.Entities.Relation;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
  * Helper Object for working with request bodies for parent insterstions
  */
@@ -17,17 +10,15 @@ public class ParentDTO {
     private String lastName;
     private String email;
     private String mobile;
-    private Relation relation;
     private String password;
     private final String ROLE = "rol_dkEGajViV24c6fD2";
 
-    public ParentDTO(String ssn, String firstName, String lastName, String email, String mobile, Relation relation, String password) {
+    public ParentDTO(String ssn, String firstName, String lastName, String email, String mobile, String password) {
         this.ssn = ssn;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.mobile = mobile;
-        this.relation = relation;
         this.password = password;
     }
 
@@ -73,14 +64,6 @@ public class ParentDTO {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public Relation getRelation() {
-        return relation;
-    }
-
-    public void setRelation(Relation relation) {
-        this.relation = relation;
     }
 
     public String getPassword() {
