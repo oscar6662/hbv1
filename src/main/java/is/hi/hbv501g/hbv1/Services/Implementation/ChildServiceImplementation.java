@@ -7,11 +7,8 @@ import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.ChildRepository;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.DayReportRepository;
 import is.hi.hbv501g.hbv1.Services.ChildService;
-import net.bytebuddy.asm.Advice.Local;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -52,7 +49,6 @@ public class ChildServiceImplementation implements ChildService {
         for (DayReport dayReport : dayReports) {
             System.out.println(LocalDate.now()+ " "+ dayReport.getDate());
             if (LocalDate.now().equals(dayReport.getDate())){
-                System.out.println("ajshdg");
                 return dayReport;
             } 
         }

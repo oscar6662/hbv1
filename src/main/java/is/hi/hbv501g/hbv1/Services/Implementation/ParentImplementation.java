@@ -1,17 +1,13 @@
 package is.hi.hbv501g.hbv1.Services.Implementation;
 
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.ChildRepository;
 import is.hi.hbv501g.hbv1.Persistence.Repositories.ParentRepository;
 import is.hi.hbv501g.hbv1.Services.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Service for routes that handle Parents. It uses Parent and Child repository.

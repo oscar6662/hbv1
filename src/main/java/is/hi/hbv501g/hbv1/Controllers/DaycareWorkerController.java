@@ -1,10 +1,7 @@
 package is.hi.hbv501g.hbv1.Controllers;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import is.hi.hbv501g.hbv1.Persistence.DTOs.ApplicationDTO;
 import is.hi.hbv501g.hbv1.Persistence.Entities.*;
 import is.hi.hbv501g.hbv1.Services.ChildService;
@@ -14,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
-
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import is.hi.hbv501g.hbv1.Services.ParentService;
 
@@ -32,20 +28,6 @@ public class DaycareWorkerController {
 
     @Autowired
     private ChildService childService;
-//    @GetMapping("/apply/{DaycareWorkerID}")
-//    public String applyForDaycareWorker(@PathVariable("DaycareWorkerID") Long daycareWorkerId,
-//            @AuthenticationPrincipal OidcUser principal) throws IOException {
-//        Parent parent = parentService.findParentByEmail(principal.getEmail());
-//        LocalDateTime ldt = LocalDateTime.now();
-//        try {
-//            Application application = new Application(daycareWorkerId, parent.getId(), ldt);
-//            daycareWorkerService.applyForDaycareWorker(application);
-//            return "goodshit";
-//        } catch (Exception e) {
-//            System.out.println(e);
-//            return "horseshit";
-//        }
-//    }
 
     /**
      * POST on /daycareworker/apply

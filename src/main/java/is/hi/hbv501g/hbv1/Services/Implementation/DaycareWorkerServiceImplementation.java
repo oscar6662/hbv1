@@ -11,9 +11,7 @@ import is.hi.hbv501g.hbv1.Persistence.Repositories.DaycareWorkerRepository;
 import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The main service used by routes that handle Daycare Workers. It uses the
@@ -21,7 +19,6 @@ import java.util.Optional;
  */
 @Service
 public class DaycareWorkerServiceImplementation implements DaycareWorkerService {
-    // private List<DaycareWorker> daycareWorkerRepository = new ArrayList<>();
     private DaycareWorkerRepository daycareWorkerRepository;
     private DaycareWorkerApplicationRepository daycareWorkerApplicationRepository;
     private DayReportRepository dayReportRepository;

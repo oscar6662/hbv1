@@ -6,29 +6,21 @@ import is.hi.hbv501g.hbv1.Persistence.DTOs.ParentChildDTO;
 import is.hi.hbv501g.hbv1.Persistence.DTOs.ParentDTO;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Child;
 import is.hi.hbv501g.hbv1.Persistence.Entities.DayReport;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Parent;
 import is.hi.hbv501g.hbv1.Services.ChildService;
-import is.hi.hbv501g.hbv1.Services.DaycareWorkerService;
 import is.hi.hbv501g.hbv1.Services.ParentService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Controller for Parent logic.
@@ -95,7 +87,7 @@ public class ParentController {
     /**
      * GET on /daycareworkerexists/{id}
      * 
-     * @param id daycareworker id
+     * @param ssn daycareworker ssn
      * @return boolean
      */
     @GetMapping("/parentexists/{ssn}")
@@ -133,20 +125,6 @@ public class ParentController {
         }
     }
 
-    // @GetMapping("/daycareworkers/{id}")
-    // public ResponseEntity<DaycareWorker> getDaycareWorkerByID(@PathVariable("id")
-    // String id) {
-    // DaycareWorker dcw;
-    // try {
-    // Long idAsLong = Long.parseLong(id);
-    // dcw = daycareWorkerService.findDaycareWorkerById(idAsLong);
-    // } catch (Exception e) {
-    // return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
-    //
-    // return new ResponseEntity<>(dcw, HttpStatus.OK);
-    // }
-
     /**
      * POST on /createparent
      * 
@@ -182,7 +160,6 @@ public class ParentController {
 
         String email = root.path("email").asText();
         String id = root.path("_id").asText();
-        System.out.println(id + " : " + email);
 
         // Here we assign the role Parent to the new account on auth0.
         // This has to be done after the user is created.
@@ -234,9 +211,6 @@ public class ParentController {
      */
     @PostMapping("/createchild")
     public ResponseEntity<Child> createChild(@RequestBody ParentChildDTO parentChildDTO) {
-        // Parent parent = parentService.findParentById(id);
-        // child.setParent(parent);
-
         Parent parent = parentService.findParentById(parentChildDTO.getParentId());
         Child child = new Child(parentChildDTO.getSsn(), parentChildDTO.getFirstName(),
                 parentChildDTO.getLastName());
@@ -252,9 +226,6 @@ public class ParentController {
     @PostMapping("/notifysickleave")
     public ResponseEntity<String> notifySickLeave(@RequestBody Long childId) {
         LocalDate today = LocalDate.now();
-
-        System.out.println(childId);
-        System.out.println(childId.getClass());
 
         try {
             Child c = childService.findChildById(childId);

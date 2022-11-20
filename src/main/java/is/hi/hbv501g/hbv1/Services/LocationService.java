@@ -1,7 +1,5 @@
 package is.hi.hbv501g.hbv1.Services;
-import is.hi.hbv501g.hbv1.Persistence.Entities.DaycareWorker;
 import is.hi.hbv501g.hbv1.Persistence.Entities.Location;
-
 import java.util.List;
 
 /**
