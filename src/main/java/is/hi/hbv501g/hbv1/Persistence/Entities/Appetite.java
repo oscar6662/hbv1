@@ -8,18 +8,14 @@ public enum Appetite {
 
     public String getAppetite(Appetite appetite) {
         switch (appetite) {
-            case BAD -> {
+            case BAD:
                 return "Ekki vel";
-            }
-            case OKAY -> {
+            case OKAY:
                 return "Ágætlega";
-            }
-            case GOOD -> {
+            case GOOD:
                 return "Vel";
-            }
-            case VERY_GOOD -> {
+            case VERY_GOOD:
                 return "Mjög vel";
-            }
         }
         return "";
     }
