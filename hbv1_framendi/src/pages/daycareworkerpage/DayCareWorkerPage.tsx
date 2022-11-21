@@ -44,6 +44,10 @@ const isSickToday = (dateStr: string) => {
   return false;
 };
 
+const reloadPage = () => {
+  window.location.reload();
+};
+
 const DayCareWorkerPage = (props: Props) => {
   const { userName, type, userId, children }: any = useSelector(authSelector);
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,6 +74,7 @@ const DayCareWorkerPage = (props: Props) => {
     }
 
     setLoading(false);
+    reloadPage();
   };
 
   return (
