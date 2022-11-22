@@ -23,7 +23,8 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
+        http.cors();
+        http.csrf().disable();
         http.authorizeRequests()
                 .mvcMatchers("/", "/api/daycareworkers", "/api/addlocation", "/api/locations", "/api/adddaycareworker", "/api/isauthenticated", "/api/createparent", "/api/daycareworkerexists/{ssn}", "/api/parentexists/{ssn}").permitAll() // allow all users to access the home pages and the static images directory
                 .anyRequest().authenticated() // all other requests must be authenticated

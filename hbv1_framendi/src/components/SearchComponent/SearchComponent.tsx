@@ -47,7 +47,7 @@ interface Location {
   locationName: string;
 }
 
-const link = 'http://localhost:8080';
+const link = 'https://dashboard.heroku.com/apps/hbv1-db';
 
 export const SearchComponent = (props: Props) => {
   const [form] = Form.useForm();
