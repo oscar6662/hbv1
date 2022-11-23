@@ -13,6 +13,10 @@ public class ParentDTO {
     private String password;
     private final String ROLE = "rol_dkEGajViV24c6fD2";
 
+    public ParentDTO() {
+        
+    }
+
     public ParentDTO(String ssn, String firstName, String lastName, String email, String mobile, String password) {
         this.ssn = ssn;
         this.firstName = firstName;

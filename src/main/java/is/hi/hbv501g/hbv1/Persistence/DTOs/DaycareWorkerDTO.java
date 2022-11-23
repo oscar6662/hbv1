@@ -18,6 +18,10 @@ public class DaycareWorkerDTO {
 
     private final String ROLE = "rol_idVtgstQXiZu1OLv";
 
+    public DaycareWorkerDTO() {
+
+    }
+    
     public DaycareWorkerDTO(String email, String ssn, String firstName, String lastName, String mobile, int experienceInYears, String address, String location, String locationCode, String password) {
         this.email = email;
         this.ssn = ssn;

@@ -15,6 +15,10 @@ public class DayReportDTO {
     private Long dcwId;
     private Long childId;
 
+    public DayReportDTO() {
+
+    }
+    
     public DayReportDTO(LocalDateTime sleepFrom, LocalDateTime sleepTo, Appetite appetite, String comment, Long dcwId, Long childId) {
         this.sleepFrom = sleepFrom;
         this.sleepTo = sleepTo;

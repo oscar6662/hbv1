@@ -1,5 +1,7 @@
 package is.hi.hbv501g.hbv1.Persistence.DTOs;
 
+import org.hibernate.annotations.Parent;
+
 /**
  * Helper Object for working with request bodies for child insertions
  */
@@ -10,6 +12,10 @@ public class ParentChildDTO {
     private String lastName;
     private Long parentId;
 
+    public ParentChildDTO() {
+
+    }
+    
     public ParentChildDTO(String ssn, String firstName, String lastName, Long parentId) {
         this.ssn = ssn;
         this.firstName = firstName;

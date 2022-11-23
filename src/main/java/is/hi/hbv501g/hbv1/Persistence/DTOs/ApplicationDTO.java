@@ -10,6 +10,10 @@ public class ApplicationDTO {
     private Long parentId;
     private Long childId;
 
+    public ApplicationDTO() {
+        
+    }
+
     public ApplicationDTO(Long daycareWorkerId, Long parentId, Long childId) {
         this.daycareWorkerId = daycareWorkerId;
         this.parentId = parentId;

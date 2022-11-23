@@ -16,6 +16,9 @@ public class AlertDTO {
     private Long dcwId;
     private Long childId;
 
+    public AlertDTO() {
+        
+    }
     public AlertDTO(LocalDateTime timeStamp, Severity severity, String title, String description, Long dcwId, Long childId) {
         this.timestamp = timeStamp;
         this.severity = severity;
