@@ -85,6 +85,9 @@ class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         ResourceResolver resolver = new ReactResourceResolver();
+        registry.addResourceHandler("/")
+                .resourceChain(true)
+                .addResolver(resolver);
         registry.addResourceHandler("/**")
                 .resourceChain(true)
                 .addResolver(resolver);
@@ -110,11 +113,11 @@ class WebConfig implements WebMvcConfigurer {
         // this is directory inside REACT_DIR for react static files
         // example REACT_DIR/REACT_STATIC_DIR/js/
         // example REACT_DIR/REACT_STATIC_DIR/css/
-        private static final String REACT_STATIC_DIR = "static";
+        private static final String REACT_STATIC_DIR = "assets";
 
         private Resource index = new ClassPathResource(REACT_DIR + "index.html");
         private List<String> rootStaticFiles = Arrays.asList("vite.svg",
-                "index.6f6ededa.js", "index.8b546473.css");
+                "index.js", "index.css");
 
         @Override
         public Resource resolveResource(HttpServletRequest request, String requestPath,
@@ -138,13 +141,18 @@ class WebConfig implements WebMvcConfigurer {
 
         private Resource resolve(String requestPath, List<? extends Resource> locations) {
 
-            if (requestPath == null) return null;
+            if (requestPath == null)
+                return null;
 
             if (rootStaticFiles.contains(requestPath)
                     || requestPath.startsWith(REACT_STATIC_DIR)) {
+                System.out.println(REACT_DIR + requestPath);
                 return new ClassPathResource(REACT_DIR + requestPath);
-            } else
+            } else {
+                System.out.println("ajshd");
                 return index;
+
+            }
         }
 
     }
