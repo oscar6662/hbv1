@@ -1,0 +1,8 @@
+auth0:
+  audience: https://hbv1-db.herokuapp.com/
+spring:
+  security:
+    oauth2:
+        resourceserver:
+            jwt:
+                issuer-uri: https://hbv1-framendi.herokuapp.com
