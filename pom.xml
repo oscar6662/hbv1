@@ -102,12 +102,7 @@
                 </configuration>
 
                 <executions>
-                    <execution>
-                        <id>install-frontend-tools</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                    </execution>
+
 
                     <execution>
                         <id>npm-install</id>
