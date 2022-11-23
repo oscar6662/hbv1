@@ -144,10 +144,8 @@ class WebConfig implements WebMvcConfigurer {
 
             if (rootStaticFiles.contains(requestPath)
                     || requestPath.startsWith(REACT_STATIC_DIR)) {
-                System.out.println(REACT_DIR + requestPath);
                 return new ClassPathResource(REACT_DIR + requestPath);
             } else {
-                System.out.println("ajshd");
                 return index;
 
             }
