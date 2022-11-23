@@ -77,6 +77,7 @@ class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
     }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         ResourceResolver resolver = new ReactResourceResolver();
@@ -112,6 +113,7 @@ class WebConfig implements WebMvcConfigurer {
             @Override
             public Resource resolveResource(HttpServletRequest request, String requestPath,
                                             List<? extends Resource> locations, ResourceResolverChain chain) {
+                System.out.println("is something happening");
                 return index;
             }
 
@@ -129,7 +131,6 @@ class WebConfig implements WebMvcConfigurer {
             }
 
             private Resource resolve(String requestPath, List<? extends Resource> locations) {
-
                 if (requestPath == null) return null;
                     return index;
             }
