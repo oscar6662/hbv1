@@ -19,7 +19,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <frontend-src-dir>${project.basedir}/hbv1_framendi</frontend-src-dir>
         <node.version>v18.12.1</node.version>
-        <npm.version>v9.1.2</npm.version>
+        <yarn.version>v1.16.0</yarn.version>
         <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
     </properties>
     <dependencies>
@@ -96,18 +96,23 @@
 
                 <configuration>
                     <nodeVersion>${node.version}</nodeVersion>
-                    <npmVersion>${npm.version}</npmVersion>
+                    <yarnVersion>${yarn.version}</yarnVersion>
                     <workingDirectory>${frontend-src-dir}</workingDirectory>
                     <installDirectory>${project.build.directory}</installDirectory>
                 </configuration>
 
                 <executions>
-
+                    <execution>
+                        <id>install-frontend-tools</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                    </execution>
 
                     <execution>
-                        <id>npm-install</id>
+                        <id>yarn-install</id>
                         <goals>
-                            <goal>npm</goal>
+                            <goal>yarn</goal>
                         </goals>
                         <configuration>
                             <arguments>install</arguments>
@@ -117,24 +122,33 @@
                     <execution>
                         <id>build-frontend</id>
                         <goals>
-                            <goal>npm</goal>
+                            <goal>yarn</goal>
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>build</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build-frontend</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <arguments>build</arguments>
                         </configuration>
                     </execution>
                     <execution>
                         <id>build-frontend2</id>
                         <goals>
-                            <goal>npm</goal>
+                            <goal>yarn</goal>
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
-                            <arguments>run postinstall</arguments>
+                            <arguments>postinstall</arguments>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
             <plugin>
