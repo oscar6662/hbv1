@@ -5,4 +5,4 @@ spring:
     oauth2:
         resourceserver:
             jwt:
-                issuer-uri: https://hbv1-db.herokuapp.com
+                issuer-uri: https://hbv1-db.herokuapp.com/
