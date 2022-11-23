@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "/usr/bin/env /Library/Java/JavaVirtualMachines/jdk-18.jdk/Contents/Home/bin/java -XX:+ShowCodeDetailsInExceptionMessages @/var/folders/zm/vhcfd6bs42150k33v24nqd100000gn/T/cp_bv0kq7anj13wloaym5u9nfatb.argfile is.hi.hbv501g.hbv1.Hbv1Application ",
-    "heroku-postbuild": "cd hbv1_framendi && npm install && npm run build"
+    "build": "cd hbv1_framendi && npm install && tsc && vite build",
+    "postinstall": "npm run build && cp -R ./hbv1_framendi/build/* ./src/main/java/resources/static"
   },
   "repository": {
     "type": "git",
