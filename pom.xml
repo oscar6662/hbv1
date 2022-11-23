@@ -129,6 +129,21 @@
                 <arguments>build</arguments>
             </configuration>
         </execution>
+        <execution>
+            <id>copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+                <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/classes/resources</outputDirectory>
+                <resources>
+                    <resource>
+                        <directory>hbv1_framendi/build/</directory>
+                    </resource>
+                </resources>
+            </configuration>
+        </execution>
     </executions>
 </plugin>
         </plugins>
